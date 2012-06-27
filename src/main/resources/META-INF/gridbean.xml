@@ -1,0 +1,11 @@
+<gb:GridBeansInfo xmlns:gb="http://gpe.intel.com/gridbeans">
+  <gb:Name>MP2C</gb:Name>
+  <gb:Author>Björn Hagemeier</gb:Author>
+  <gb:Version>1.0.0</gb:Version>
+  <gb:Application>MP2C</gb:Application>
+  <gb:Description>MP2C GridBean</gb:Description>
+  <gb:GridBean>eu.unicore.applications.mp2c.MP2CGridbean</gb:GridBean>
+  <gb:Plugin type="gb:SWT">eu.unicore.applications.mp2c.MP2CGridBeanPlugin</gb:Plugin>
+  <gb:ApplicationName>MP2C</gb:ApplicationName>
+  <gb:ApplicationVersion>1.0.0</gb:ApplicationVersion>
+</gb:GridBeansInfo>
