@@ -32,6 +32,9 @@
 package eu.unicore.applications.mp2c;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -107,11 +110,15 @@ public class ParallelExecutionSettings extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
-
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
-
+		IObservableValue observeSelectionParDimSpinnerObserveWidget = WidgetProperties
+				.selection().observe(parDimSpinner);
+		IObservableValue dimParallelObserveValue = PojoProperties.value("dim")
+				.observe(parallel);
+		bindingContext.bindValue(observeSelectionParDimSpinnerObserveWidget,
+				dimParallelObserveValue, null, null);
 		//
 		return bindingContext;
 	}

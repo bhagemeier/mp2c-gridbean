@@ -37,6 +37,8 @@ import org.eclipse.swt.widgets.Composite;
 import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
 
+import eu.unicore.applications.mp2c.model.Solvent;
+
 /**
  * @author bjoernh
  *
@@ -45,7 +47,7 @@ import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
  */
 public class SolventSettingsGBPanel extends SWTGridBeanPanel {
 
-	private mp2c_1_0.Solvent solvent;
+	private Solvent solvent;
 
 	/**
 	 * @param client
@@ -53,7 +55,7 @@ public class SolventSettingsGBPanel extends SWTGridBeanPanel {
 	 * @param solvent2
 	 */
 	public SolventSettingsGBPanel(Client client, String name,
-			mp2c_1_0.Solvent solvent2) {
+ Solvent solvent2) {
 		super(client, name);
 
 		this.solvent = solvent2;

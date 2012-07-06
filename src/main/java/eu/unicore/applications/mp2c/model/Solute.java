@@ -31,15 +31,23 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * TODO This class is lacking support for non-bonded interactions. Read
+ * documentation and implement it.
+ * 
  * @author bjoernh
- *
- * 30.03.2012 14:59:44
- *
+ * 
+ *         30.03.2012 14:59:44
+ * 
  */
-public class Solute {
+public class Solute implements Cloneable {
+	private static final String NEWLINE = System.getProperty("line.separator");
+	private static final String END_SECTION = "++end++" + NEWLINE;
 	private List<MolecularSpecies> molecularSpecies;
 	private long molecules;
 	private long partsPerMolecule;
@@ -59,6 +67,13 @@ public class Solute {
 	// what about the length of the bonds list from
 	// molecularSpecies?
 	private long bonds;
+
+	/**
+	 * 
+	 */
+	public Solute() {
+		this.molecularSpecies = new ArrayList<MolecularSpecies>();
+	}
 
 	/**
 	 * @return the molecularSpecies
@@ -255,5 +270,147 @@ public class Solute {
 		sb.append("lj_sp: " + lj_sp);
 
 		return sb.toString();
+	}
+
+	public void write(OutputStream _os) throws IOException {
+		writeHeader(_os);
+		writeAllSpecies(_os);
+
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeAllSpecies(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("**species** number of molecular species").append(NEWLINE);
+		sb.append(molecularSpecies.size()).append("            # n_mol_spec")
+				.append(NEWLINE).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+
+		int i = 1;
+		for (MolecularSpecies species : molecularSpecies) {
+			writeSpecies(species, i++, _os);
+		}
+	}
+
+	/**
+	 * @param species
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeSpecies(MolecularSpecies species, int i, OutputStream _os)
+			throws IOException {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("#####################################").append(NEWLINE)
+				.append("**molecule** parameters for species ").append(i)
+				.append(NEWLINE)
+				.append("#####################################")
+				.append(NEWLINE).append(NEWLINE);
+		
+		sb.append("++number++   number of molecules").append(NEWLINE);
+		sb.append(species.getNumber()).append(NEWLINE).append(NEWLINE);
+		
+		sb.append("++sites++ number of particles in a molecule")
+				.append(NEWLINE);
+		sb.append(species.getSites()).append(NEWLINE).append(NEWLINE);
+		
+		sb.append(
+				"++atom++   identifier, range, mass and charge of individual sites "
+						+ "(first 2 numbers give the range of sites)")
+				.append(NEWLINE);
+		
+		_os.write(sb.toString().getBytes());
+		
+		for (Atom atom : species.getAtoms()) {
+			writeAtom(atom, _os);
+		}
+		
+		sb = new StringBuilder();
+		sb.append("++end++").append(NEWLINE).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes()); // atoms
+
+		sb = new StringBuilder();
+
+		sb.append("++bond++").append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+
+		for (Bond bond : species.getBonds()) {
+			writeBond(bond, _os);
+		}
+
+		sb = new StringBuilder();
+		sb.append("++end++").append(NEWLINE);
+		_os.write(sb.toString().getBytes()); // bonds
+
+		sb = new StringBuilder();
+		sb.append("**finish** molecule ").append(i).append(NEWLINE);
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param bond
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeBond(Bond bond, OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("%%").append(bond.getType()).append("%%").append(NEWLINE);
+		sb.append(bond.getNumber()).append(NEWLINE);
+		sb.append(bond.getFromRange()).append(" ");
+		sb.append(bond.getToRange()).append(" ");
+		sb.append(bond.getK()).append(" ");
+		sb.append(bond.getR()).append(" ");
+		sb.append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param atom
+	 * @throws IOException
+	 */
+	private void writeAtom(Atom atom, OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(atom.getIdentifier()).append(" ");
+		sb.append(atom.getSymbol()).append(" ");
+		sb.append(atom.getFromRange()).append(" ");
+		sb.append(atom.getToRange()).append(" ");
+		sb.append(atom.getMass()).append(" ");
+		sb.append(atom.getCharge()).append(" ");
+		sb.append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeHeader(OutputStream _os) throws IOException {
+		_os.write(("#####################################" + NEWLINE +
+				"# solute settings" + NEWLINE +
+				"#####################################" + NEWLINE + NEWLINE).getBytes());
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Solute clone = (Solute) super.clone();
+		clone.molecularSpecies = new ArrayList<MolecularSpecies>();
+		for (MolecularSpecies species : molecularSpecies) {
+			clone.molecularSpecies.add(species);
+		}
+
+		return clone;
 	}
 }

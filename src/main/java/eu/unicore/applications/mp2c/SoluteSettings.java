@@ -31,8 +31,7 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
-import mp2c_1_0.MolecularSpecies;
-import mp2c_1_0.Mp2c_1_0Factory;
+
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.PojoProperties;
@@ -50,6 +49,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 
+import eu.unicore.applications.mp2c.model.MolecularSpecies;
+import eu.unicore.applications.mp2c.model.Solute;
+
 /**
  * @author bjoernh
  *
@@ -59,7 +61,7 @@ import org.eclipse.swt.widgets.TabItem;
 public class SoluteSettings extends Composite {
 	private DataBindingContext m_bindingContext;
 
-	private mp2c_1_0.Solute solute;
+	private Solute solute;
 	private Button btnUsualLjp;
 	private Button btnShiftedLjp;
 	private Button btnLjShiftedForce;
@@ -74,7 +76,7 @@ public class SoluteSettings extends Composite {
 	 * @param style
 	 * @param solute2
 	 */
-	public SoluteSettings(Composite parent, int style, mp2c_1_0.Solute solute2) {
+	public SoluteSettings(Composite parent, int style, Solute solute2) {
 		super(parent, style);
 		setLayout(new GridLayout(3, false));
 
@@ -99,9 +101,8 @@ public class SoluteSettings extends Composite {
 				// Add a Molecular species Tab
 				TabItem ti = new TabItem(tabFolder, SWT.LEFT);
 				ti.setText("Molecular Species");
-				MolecularSpecies species = Mp2c_1_0Factory.eINSTANCE
-						.createMolecularSpecies();
-				solute.getSpecies().add(species);
+				MolecularSpecies species = new MolecularSpecies();
+				solute.addMolecularSpecies(species);
 				MolecularSpeciesTab molSpecTab = new MolecularSpeciesTab(
 						tabFolder, SWT.FILL, species);
 				ti.setControl(molSpecTab);
@@ -118,7 +119,12 @@ public class SoluteSettings extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Remove currently selected Molecular Species Tab
-
+				if (tabFolder.getSelectionIndex() >= 0) {
+				TabItem ti = tabFolder.getItem(tabFolder.getSelectionIndex());
+				MolecularSpeciesTab mst = (MolecularSpeciesTab) ti.getControl();
+				solute.removeMolecularSpecies(mst.getSpecies());
+				ti.dispose();
+				}
 			}
 		});
 		btnRemoveSpecies.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,

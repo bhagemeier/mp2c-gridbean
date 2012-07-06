@@ -1,10 +1,7 @@
 package eu.unicore.applications.mp2c;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,37 +16,11 @@ import com.intel.gpe.gridbeans.parameters.IGridBeanParameter;
 import com.intel.gpe.gridbeans.parameters.InputFileParameterValue;
 import com.intel.gpe.gridbeans.parameters.processing.ParameterUtils;
 
-import eu.unicore.applications.mp2c.model.MP2CConfig;
+public class MP2CGridbean extends AbstractGridBean {
 
-public class MP2CGridbean extends AbstractGridBean implements
-		PropertyChangeListener {
-
+	final MP2CGridBeanParameter mp2cParam;
 
 	private final Map<QName, String> QNAME_2_FILENAME = new HashMap<QName, String>();
-
-	private static final QName CONTROL_FILE_QNAME = new QName(
-			"http://www.unicore.eu/applications/mp2c", "controlFile");
-	private static final String CONTROL_FILE_NAME = "mp2c_ctrl.inp";
-
-	private static final QName SOLUTE_FILE_QNAME = new QName(
-			"http://www.unicore.eu/applications/mp2c", "soluteFile");
-	private static final String SOLUTE_FILE_NAME = "mp2c_slt.inp";
-
-	private static final QName SOLVENT_FILE_QNAME = new QName(
-			"http://www.unicore.eu/applications/mp2c", "solventFile");
-	private static final String SOLVENT_FILE_NAME = "mp2c_slv.inp";
-
-	private static final QName QUENCH_FILE_QNAME = new QName(
-			"http://www.unicore.eu/applications/mp2c", "quenchFile");
-	private static final String QUENCH_FILE_NAME = "mp2c_quench.inp";
-
-	private static final QName IO_FILE_QNAME = new QName(
-			"http://www.unicore.eu/applications/mp2c", "ioFile");
-	private static final String IO_FILE_NAME = "mp2c_io.inp";
-
-	private static final QName PARALLEL_FILE_QNAME = new QName(
-			"http://www.unicore.eu/applications/mp2c", "quenchFile");
-	private static final String PARALLEL_FILE_NAME = "mp2c_par.inp";
 
 	/**
 	 * 
@@ -62,52 +33,59 @@ public class MP2CGridbean extends AbstractGridBean implements
 	 * configuration should not be used.
 	 */
 	public MP2CGridbean() {
-		QNAME_2_FILENAME.put(CONTROL_FILE_QNAME, CONTROL_FILE_NAME);
-		QNAME_2_FILENAME.put(SOLUTE_FILE_QNAME, SOLUTE_FILE_NAME);
-		QNAME_2_FILENAME.put(SOLVENT_FILE_QNAME, SOLVENT_FILE_NAME);
-		QNAME_2_FILENAME.put(QUENCH_FILE_QNAME, QUENCH_FILE_NAME);
-		QNAME_2_FILENAME.put(IO_FILE_QNAME, IO_FILE_NAME);
-		QNAME_2_FILENAME.put(PARALLEL_FILE_QNAME, PARALLEL_FILE_NAME);
+		// JAXBContextProvider.addPackage(getClass().getPackage());
 
-		addInputParameter(new MP2CGridBeanParameter());
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.CONTROL_FILE_QNAME,
+				MP2CGridBeanParameters.CONTROL_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
+				MP2CGridBeanParameters.SOLUTE_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
+				MP2CGridBeanParameters.SOLVENT_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.QUENCH_FILE_QNAME,
+				MP2CGridBeanParameters.QUENCH_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.IO_FILE_QNAME,
+				MP2CGridBeanParameters.IO_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.PARALLEL_FILE_QNAME,
+				MP2CGridBeanParameters.PARALLEL_FILE_NAME);
+
+		mp2cParam = new MP2CGridBeanParameter();
+		MP2CGridBeanParameterValue mp2cParamValue = new MP2CGridBeanParameterValue();
+		addInputParameter(mp2cParam);
+		set(MP2CGridBeanParameter.MP2C_QNAME, mp2cParamValue);
+
 		List<IGridBeanParameter> inputFiles = ParameterUtils
-				.createFileParameters(new QName[] { CONTROL_FILE_QNAME,
-						IO_FILE_QNAME, QUENCH_FILE_QNAME, SOLUTE_FILE_QNAME,
-						SOLVENT_FILE_QNAME }, true);
-		ParameterUtils.createFileParameterValues(new String[] { "", "", "", "",
-				"" }, true);
-		// ParameterUtils.
-		set(CONTROL_FILE_QNAME, new InputFileParameterValue(CONTROL_FILE_NAME));
-		set(IO_FILE_QNAME, new InputFileParameterValue(IO_FILE_NAME));
-		set(QUENCH_FILE_QNAME, new InputFileParameterValue(QUENCH_FILE_NAME));
-		set(SOLUTE_FILE_QNAME, new InputFileParameterValue(SOLUTE_FILE_NAME));
-		set(SOLVENT_FILE_QNAME, new InputFileParameterValue(SOLVENT_FILE_NAME));
-		set(PARALLEL_FILE_QNAME,
-				new InputFileParameterValue(PARALLEL_FILE_NAME));
-
-		// set local filename for each of the configuration files
-		for (QName qn : QNAME_2_FILENAME.keySet()) {
-				InputFileParameterValue ifpv;
-				try {
-					ifpv = new InputFileParameterValue(File.createTempFile(
-							QNAME_2_FILENAME.get(qn) + "_", null)
-							.getAbsolutePath());
-					ifpv.getTarget().setRelativePath(QNAME_2_FILENAME.get(qn));
-					set(qn, ifpv);
-				} catch (IOException e) {
-				// must not happen, but swallowing is no solution
-				// throw new GridBeanException(e);
-				}
-			}
-
+				.createFileParameters(new QName[] {
+						MP2CGridBeanParameters.CONTROL_FILE_QNAME,
+						MP2CGridBeanParameters.IO_FILE_QNAME,
+						MP2CGridBeanParameters.QUENCH_FILE_QNAME,
+						MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
+						MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
+						MP2CGridBeanParameters.PARALLEL_FILE_QNAME }, true);
 
 		for (IGridBeanParameter iGridBeanParameter : inputFiles) {
 			addInputParameter(iGridBeanParameter);
+//			set(iGridBeanParameter.getName(), new InputFileParameterValue(
+			// QNAME_2_FILENAME.get(iGridBeanParameter.getName())));
+		}
+
+		// set local filename for each of the configuration files
+		for (QName qn : QNAME_2_FILENAME.keySet()) {
+			InputFileParameterValue ifpv;
+			try {
+				ifpv = new InputFileParameterValue(File.createTempFile(
+						QNAME_2_FILENAME.get(qn) + "_", null).getAbsolutePath());
+				ifpv.getTarget().setRelativePath(QNAME_2_FILENAME.get(qn));
+				set(qn, ifpv);
+			} catch (IOException e) {
+				// must not happen, but swallowing is no solution
+				// throw new GridBeanException(e);
+				e.printStackTrace();
+			}
 		}
 
 		new DefaultRealm();
 
-		addPropertyChangeListener(MP2CGridBeanParameter.MP2C_QNAME, this);
+		// addPropertyChangeListener(MP2CGridBeanParameter.MP2C_QNAME, this);
 	}
 
 	/**
@@ -122,80 +100,16 @@ public class MP2CGridbean extends AbstractGridBean implements
 			gpeJob.setApplicationName("MP2C");
 			gpeJob.setApplicationVersion("1.0.0");
 
-			for (IGridBeanParameter inputParameter : getInputParameters()) {
-				if (inputParameter.getName().equals(
-						MP2CGridBeanParameter.MP2C_QNAME)) {
-					MP2CGridBeanParameter mp2cParam = (MP2CGridBeanParameter) inputParameter;
-					MP2CConfig config = mp2cParam.getConfig();
-
-					// System.out.println(config.getRandomSeed());
-					// System.out.println(config.getControl());
-					// System.out.println(config.getIo());
-					// System.out.println(config.getQuench());
-					// System.out.println(config.getSolute());
-					// System.out.println(config.getSolvent());
-				} else if (inputParameter.getName().equals(CONTROL_FILE_QNAME)) {
-					writeControlFile();
-				} else if (inputParameter.getName().equals(SOLUTE_FILE_QNAME)) {
-					writeSoluteFile();
-				} else if (inputParameter.getName().equals(SOLVENT_FILE_QNAME)) {
-					writeSolventFile();
-				} else if (inputParameter.getName().equals(QUENCH_FILE_QNAME)) {
-					writeQuenchFile();
-				} else if (inputParameter.getName().equals(IO_FILE_QNAME)) {
-					writeIoFile();
-				} else if (inputParameter.getName().equals(PARALLEL_FILE_QNAME)) {
-					writeParallelFile();
-				}
-
-
-
-			}
 		}
 
 	}
 
-
 	/**
-	 * 
+	 * @see com.intel.gpe.gridbeans.AbstractGridBean#parseJobDefinition(com.intel.gpe.clients.api.Job)
 	 */
-	private void writeParallelFile() {
-		System.out.println("Writing parallel configuration file.");
-	}
-
-	/**
-	 * 
-	 */
-	private void writeIoFile() {
-		System.out.println("Writing IO configuration file.");
-	}
-
-	/**
-	 * 
-	 */
-	private void writeQuenchFile() {
-		System.out.println("Writing quench configuration file.");
-	}
-
-	/**
-	 * 
-	 */
-	private void writeSolventFile() {
-		System.out.println("Writing solvent configuration file.");
-	}
-
-	/**
-	 * 
-	 */
-	private void writeSoluteFile() {
-		System.out.println("Writing solute configuration file.");
-	}
-
-	/**
-	 * 
-	 */
-	private void writeControlFile() {
-		System.out.println("Writing general configuration file.");
+	@Override
+	public void parseJobDefinition(Job job) throws GridBeanException {
+		super.parseJobDefinition(job);
 	}
 
 	/**
@@ -203,22 +117,6 @@ public class MP2CGridbean extends AbstractGridBean implements
 	 */
 	public String getName() {
 		return "MP2C";
-	}
-
-	/**
-	 * @see com.intel.gpe.gridbeans.AbstractGridBean#getIconURL()
-	 */
-	@Override
-	public URL getIconURL() {
-		return getClass().getResource("mp2c.png");
-	}
-
-	/**
-	 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-	 */
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
 	}
 
 }

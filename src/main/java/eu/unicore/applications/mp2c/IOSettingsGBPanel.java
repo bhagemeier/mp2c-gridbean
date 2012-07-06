@@ -37,6 +37,8 @@ import org.eclipse.swt.widgets.Composite;
 import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
 
+import eu.unicore.applications.mp2c.model.IO;
+
 /**
  * @author bjoernh
  *
@@ -45,14 +47,14 @@ import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
  */
 public class IOSettingsGBPanel extends SWTGridBeanPanel {
 
-	private mp2c_1_0.IO io;
+	private IO io;
 
 	/**
 	 * @param client
 	 * @param name
 	 * @param io2
 	 */
-	public IOSettingsGBPanel(Client client, String name, mp2c_1_0.IO io2) {
+	public IOSettingsGBPanel(Client client, String name, IO io2) {
 		super(client, name);
 
 		this.io = io2;

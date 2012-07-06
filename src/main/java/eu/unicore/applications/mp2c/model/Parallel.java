@@ -31,13 +31,24 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.OutputStream;
+
 /**
  * @author bjoernh
  *
  * 04.06.2012 14:22:04
  *
  */
-public class Parallel {
+public class Parallel implements Cloneable {
+	private static final String NEWLINE = System.getProperty("line.separator");
+
+	/**
+	 * 
+	 */
+	public Parallel() {
+		this(0);
+	}
+
 	/**
 	 * @param i
 	 */
@@ -62,4 +73,16 @@ public class Parallel {
 
 	private int dim;
 
+	public void write(OutputStream _os) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(dim).append(NEWLINE);
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }

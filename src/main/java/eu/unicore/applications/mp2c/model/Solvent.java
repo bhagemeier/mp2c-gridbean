@@ -31,13 +31,15 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.OutputStream;
+
 /**
  * @author bjoernh
  *
  * 30.03.2012 14:59:49
  *
  */
-public class Solvent {
+public class Solvent implements Cloneable {
 	private long partsPerCell;
 	private long particles;
 	private double mass;
@@ -117,5 +119,17 @@ public class Solvent {
 	 */
 	public void setAlpha(double alpha) {
 		this.alpha = alpha;
+	}
+
+	public void write(OutputStream _os) {
+
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 }

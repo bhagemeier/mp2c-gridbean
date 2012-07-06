@@ -31,13 +31,16 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 /**
  * @author bjoernh
  *
  * 30.03.2012 14:58:32
  *
  */
-public class Control {
+public class Control implements Cloneable {
 	private boolean simulateSolute;
 	private boolean simulateSolvent;
 	private long timeSteps;
@@ -55,14 +58,20 @@ public class Control {
 	private double shearRateY;
 	private double shearRateZ;
 	private int collisionSteps;
-	private double externalForces;
+	private boolean externalForce;
+	private double externalForceX;
+	private double externalForceY;
+	private double externalForceZ;
 	private boolean restartSolute;
 	private boolean restartSolvent;
-	private double randomSeed;
+	private int randomSeed;
 	private boolean langevin;
 	private double langevinGamma;
 	private int coupling;
 	private int strictScalingSteps;
+
+	private static final String NEWLINE = System.getProperty("line.separator");
+	private static final String END_SECTION = "**end**" + NEWLINE + NEWLINE;
 
 	/**
 	 * @return the simulateSolute
@@ -218,6 +227,50 @@ public class Control {
 	}
 
 	/**
+	 * @return the externalForceX
+	 */
+	public double getExternalForceX() {
+		return externalForceX;
+	}
+
+	/**
+	 * @param externalForceX the externalForceX to set
+	 */
+	public void setExternalForceX(double externalForceX) {
+		this.externalForceX = externalForceX;
+	}
+
+	/**
+	 * @return the externalForceY
+	 */
+	public double getExternalForceY() {
+		return externalForceY;
+	}
+
+	/**
+	 * @param externalForceY
+	 *            the externalForceY to set
+	 */
+	public void setExternalForceY(double externalForceY) {
+		this.externalForceY = externalForceY;
+	}
+
+	/**
+	 * @return the externalForceZ
+	 */
+	public double getExternalForceZ() {
+		return externalForceZ;
+	}
+
+	/**
+	 * @param externalForceZ
+	 *            the externalForceZ to set
+	 */
+	public void setExternalForceZ(double externalForceZ) {
+		this.externalForceZ = externalForceZ;
+	}
+
+	/**
 	 * @return the shearRateX
 	 */
 	public double getShearRateX() {
@@ -278,21 +331,6 @@ public class Control {
 	}
 
 	/**
-	 * @return the externalForces
-	 */
-	public double getExternalForces() {
-		return externalForces;
-	}
-
-	/**
-	 * @param externalForces
-	 *            the externalForces to set
-	 */
-	public void setExternalForces(double externalForces) {
-		this.externalForces = externalForces;
-	}
-
-	/**
 	 * @return the restartSolute
 	 */
 	public boolean isRestartSolute() {
@@ -325,7 +363,7 @@ public class Control {
 	/**
 	 * @return the randomSeed
 	 */
-	public double getRandomSeed() {
+	public int getRandomSeed() {
 		return randomSeed;
 	}
 
@@ -333,7 +371,7 @@ public class Control {
 	 * @param randomSeed
 	 *            the randomSeed to set
 	 */
-	public void setRandomSeed(double randomSeed) {
+	public void setRandomSeed(int randomSeed) {
 		this.randomSeed = randomSeed;
 	}
 
@@ -397,4 +435,275 @@ public class Control {
 		this.strictScalingSteps = strictScalingSteps;
 	}
 
+	public void write(OutputStream _os) throws IOException {
+		writeHeader(_os);
+
+		writeSolute(_os);
+		writeSolvent(_os);
+		writeTimeSteps(_os);
+		writeTemperature(_os);
+		writeBoxRatio(_os);
+		writeBoundaries(_os);
+		writeShearRate(_os);
+		writeCollisionSteps(_os);
+		writeExternalForce(_os);
+		writeRestart(_os);
+		writeRandomSeed(_os);
+		writeLangevin(_os);
+		writeThermostat(_os);
+		writeMaxScal(_os);
+
+		_os.flush();
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeHeader(OutputStream _os) throws IOException {
+		String s = "#####################################" + NEWLINE +
+				"# general control settings for MP2C" + NEWLINE +
+ "#####################################" + NEWLINE + NEWLINE;
+
+		_os.write(s.getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeMaxScal(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("++max-scal++     max. number of steps for strict scaling")
+				.append(NEWLINE);
+		sb.append("10000").append(NEWLINE);
+		sb.append(END_SECTION);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeThermostat(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+				"*Off*thermostat** at present only Berendsen weak-coupling version")
+				.append(NEWLINE);
+		sb.append("++coupl++     coupling constant").append(NEWLINE);
+		sb.append("1000").append(NEWLINE);
+		sb.append(END_SECTION);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeLangevin(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("*Off*langevin**    perform langevin dynamics").append(
+				NEWLINE);
+		sb.append("++gamma++").append(NEWLINE);
+		sb.append("1.0").append(NEWLINE);
+		sb.append(END_SECTION);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeRandomSeed(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("**random-seed**").append(NEWLINE);
+		sb.append(randomSeed).append(NEWLINE).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeExternalForce(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		if (!externalForce) {
+			sb.append("*Off*ext-force**     external force").append(NEWLINE);
+		} else {
+			sb.append("**ext-force**     external force").append(NEWLINE);
+		}
+		sb.append(externalForceX).append(" ").append(externalForceY)
+				.append(" ").append(externalForceZ).append(NEWLINE)
+				.append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeCollisionSteps(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("**coll-step**    interval for collision steps").append(
+				NEWLINE);
+		sb.append(collisionSteps).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeShearRate(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("**shear-rate**").append(NEWLINE);
+		sb.append(shearRateX).append(" ");
+		sb.append(shearRateY).append(" ");
+		sb.append(shearRateZ).append(NEWLINE).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeBoundaries(OutputStream _os) throws IOException {
+		// TODO Generate correct mapping from human readable Strings to
+		// application Strings
+		StringBuilder sb = new StringBuilder();
+		sb.append("**boundary**     boundary conditions").append(NEWLINE);
+		sb.append(bcX).append(" ");
+		sb.append(bcY).append(" ");
+		sb.append(bcZ).append(NEWLINE).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeBoxRatio(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("**box-ratio**    ratio of box-lengths").append(NEWLINE);
+		sb.append(boxRatioX).append(" ");
+		sb.append(boxRatioY).append(" ");
+		sb.append(boxRatioZ).append(NEWLINE).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeTemperature(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("**temperature**  temperature in kT").append(NEWLINE);
+		sb.append(temperature).append(NEWLINE).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeTimeSteps(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("**nsteps**   number of time steps").append(NEWLINE);
+		sb.append(timeSteps).append(NEWLINE).append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeSolvent(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("**solvent**      solvent is simulated").append(NEWLINE);
+		sb.append(".").append(simulateSolvent).append(".").append(NEWLINE)
+				.append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeSolute(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("**solute**      solutes are simulated").append(NEWLINE);
+		sb.append(".").append(simulateSolute).append(".").append(NEWLINE)
+				.append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeRestart(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append(
+				"**restart**      switches to start from restart configurations")
+				.append(NEWLINE);
+		_os.write(sb.toString().getBytes());
+		writeRestartSolute(_os);
+		writeRestartSolvent(_os);
+
+		sb = new StringBuilder();
+		sb.append(END_SECTION);
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeRestartSolvent(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("++solvent++").append(NEWLINE);
+		sb.append(".").append(restartSolvent).append(".");
+		sb.append(" ");
+		sb.append(".").append(restartSolvent).append(".").append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @param _os
+	 * @throws IOException
+	 */
+	private void writeRestartSolute(OutputStream _os) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("++solute++").append(NEWLINE);
+		sb.append(".").append(restartSolute).append(".");
+		sb.append(" ");
+		sb.append(".").append(restartSolute).append(".").append(NEWLINE);
+
+		_os.write(sb.toString().getBytes());
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }

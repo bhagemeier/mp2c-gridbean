@@ -31,34 +31,19 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
-import java.util.HashMap;
-
-import mp2c_1_0.Atom;
-import mp2c_1_0.Mp2c_1_0Factory;
-import mp2c_1_0.Mp2c_1_0Package;
-import mp2c_1_0.Mp2c_1_0Package.Literals;
-import mp2c_1_0.provider.Mp2c_1_0ItemProviderAdapterFactory;
-
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoObservables;
+import org.eclipse.core.databinding.beans.PojoProperties;
+import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.databinding.EMFObservables;
-import org.eclipse.emf.databinding.EMFProperties;
-import org.eclipse.emf.databinding.edit.EMFEditProperties;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
-import org.eclipse.jface.databinding.viewers.ObservableValueEditingSupport;
+import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -66,7 +51,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
 
-import eu.unicore.applications.mp2c.converters.EMFObservableValueEditingSupport;
+import eu.unicore.applications.mp2c.model.MolecularSpecies;
 
 /**
  * @author bjoernh
@@ -79,13 +64,14 @@ public class MolecularSpeciesTab extends Composite {
 	private Spinner spnNumberSites;
 	private Composite molecularSpeciesComposite;
 	private Label lblBonds;
-	private mp2c_1_0.MolecularSpecies species;
+	private MolecularSpecies species;
 	private Spinner spnNumberAtoms;
-	private ScrolledComposite scrolledComposite;
 	private Table atomTable;
 	private TableViewer atomTableViewer;
 	private Table bondsTable;
 	private TableViewer bondsTableViewer;
+	private ScrolledComposite scrolledComposite;
+	private Composite composite_1;
 
 	/**
 	 * Create the composite.
@@ -94,175 +80,69 @@ public class MolecularSpeciesTab extends Composite {
 	 * @param style
 	 */
 	public MolecularSpeciesTab(Composite parent, int style,
-			mp2c_1_0.MolecularSpecies _species) {
+			MolecularSpecies _species) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 
 		this.species = _species;
 
-		Atom atom = Mp2c_1_0Factory.eINSTANCE.createAtom();
-		atom.setIdentifier("Nitrogen");
-		atom.setSymbol("N");
-		species.getAtoms().add(atom);
+		molecularSpeciesComposite = createComposite(parent);
+		molecularSpeciesComposite.setLayout(new StackLayout());
 
-		scrolledComposite = new ScrolledComposite(this, SWT.BORDER
-				| SWT.H_SCROLL | SWT.V_SCROLL);
-		scrolledComposite.setAlwaysShowScrollBars(true);
-		scrolledComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 1, 1));
+		scrolledComposite = new ScrolledComposite(molecularSpeciesComposite,
+				SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
-		molecularSpeciesComposite = createComposite(scrolledComposite);
-		GridLayout gridLayout = (GridLayout) molecularSpeciesComposite
-				.getLayout();
-		gridLayout.numColumns = 4;
+		composite_1 = new Composite(scrolledComposite, SWT.NONE);
+		composite_1.setLayout(new GridLayout(4, false));
 
-		Label lblNumber = new Label(molecularSpeciesComposite, SWT.NONE);
-		lblNumber.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
+		Label lblNumber = new Label(composite_1, SWT.NONE);
 		lblNumber.setText("Number");
 
-		spnNumberAtoms = new Spinner(molecularSpeciesComposite, SWT.BORDER);
+		spnNumberAtoms = new Spinner(composite_1, SWT.BORDER);
 
-		Label lblSites = new Label(molecularSpeciesComposite, SWT.NONE);
+		Label lblSites = new Label(composite_1, SWT.NONE);
+		lblSites.setSize(654, 544);
 		lblSites.setText("Sites");
 
-		spnNumberSites = new Spinner(molecularSpeciesComposite, SWT.BORDER);
+		spnNumberSites = new Spinner(composite_1, SWT.BORDER);
+		spnNumberSites.setSize(654, 544);
 
-		Label lblAtom = new Label(molecularSpeciesComposite, SWT.NONE);
+		Label lblAtom = new Label(composite_1, SWT.NONE);
+		lblAtom.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1,
+				1));
+		lblAtom.setSize(654, 544);
 		lblAtom.setText("Atom");
 
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		new Label(molecularSpeciesComposite, SWT.NONE);
-
-		atomTableViewer = new TableViewer(molecularSpeciesComposite, SWT.BORDER
+		atomTableViewer = new TableViewer(composite_1, SWT.BORDER
 				| SWT.FULL_SELECTION);
 		atomTable = atomTableViewer.getTable();
+		atomTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3,
+				1));
+		atomTable.setSize(654, 544);
 		atomTable.setLinesVisible(true);
 		atomTable.setHeaderVisible(true);
-		atomTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
+
+		lblBonds = new Label(composite_1, SWT.NONE);
+		lblBonds.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1,
 				1));
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		new Label(molecularSpeciesComposite, SWT.NONE);
-
-		lblBonds = new Label(molecularSpeciesComposite, SWT.NONE);
+		lblBonds.setSize(654, 544);
 		lblBonds.setText("Bonds");
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		new Label(molecularSpeciesComposite, SWT.NONE);
 
-		bondsTableViewer = new TableViewer(molecularSpeciesComposite,
-				SWT.BORDER | SWT.FULL_SELECTION);
+		bondsTableViewer = new TableViewer(composite_1, SWT.BORDER
+				| SWT.FULL_SELECTION);
 		bondsTable = bondsTableViewer.getTable();
+		bondsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
+				3, 1));
+		bondsTable.setSize(654, 544);
 		bondsTable.setLinesVisible(true);
 		bondsTable.setHeaderVisible(true);
-		bondsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
-				1, 1));
-
-		// cf.
-		// http://www.vogella.com/code/de.vogella.databinding.emf.table/src/de/vogella/databinding/emf/table/ExampleTableViewer.html
-		// The table viewer
-		ObservableListContentProvider atomCp = new ObservableListContentProvider();
-		// AdapterFactoryContentProvider atomCp = new
-		// AdapterFactoryContentProvider(
-		// new Mp2c_1_0ItemProviderAdapterFactory());
-
-		HashMap<EAttribute, String> atomAttributeMap = new HashMap<EAttribute, String>();
-		atomAttributeMap.put(Mp2c_1_0Package.Literals.ATOM__IDENTIFIER,
-				"Identifier");
-		atomAttributeMap.put(Mp2c_1_0Package.Literals.ATOM__SYMBOL, "Symbol");
-		atomAttributeMap.put(Mp2c_1_0Package.Literals.ATOM__FROM_RANGE,
-				"Range From");
-		atomAttributeMap.put(Mp2c_1_0Package.Literals.ATOM__TO_RANGE,
-				"Range To");
-		atomAttributeMap.put(Mp2c_1_0Package.Literals.ATOM__MASS, "Mass");
-		atomAttributeMap.put(Mp2c_1_0Package.Literals.ATOM__CHARGE, "Charge");
+		scrolledComposite.setContent(composite_1);
+		scrolledComposite.setMinSize(composite_1.computeSize(SWT.DEFAULT,
+				SWT.DEFAULT));
 
 		m_bindingContext = initDataBindings();
-
-		EditingDomain ed = new AdapterFactoryEditingDomain(
-				new Mp2c_1_0ItemProviderAdapterFactory(),
-				new BasicCommandStack());
-
-		Mp2c_1_0ItemProviderAdapterFactory af = new Mp2c_1_0ItemProviderAdapterFactory();
-		// atomTableViewer
-		// .setContentProvider(new AdapterFactoryContentProvider(af));
-		// atomTableViewer.setLabelProvider(new
-		// AdapterFactoryLabelProvider(af));
-
-		for (EAttribute attribute : atomAttributeMap.keySet()) {
-			TableViewerColumn tvc = new TableViewerColumn(atomTableViewer,
-					SWT.LEAD);
-			IObservableMap map = EMFProperties.value(attribute).observeDetail(
-					atomCp.getKnownElements());
-			// tvc.setLabelProvider(new PropertyColumnLabelProvider(
-			// new AdapterFactoryContentProvider(af), atomAttributeMap
-			// .get(attribute)));
-			tvc.setLabelProvider(new ObservableMapCellLabelProvider(map));
-			tvc.getColumn().setText(atomAttributeMap.get(attribute));
-			tvc.getColumn().setWidth(80);
-			// org.eclipse.jface.viewers.CellEditor ce = new TextCellEditor(
-			// atomTable);
-			// tvc.setEditingSupport(new PropertyEditingSupport(tvc.getViewer(),
-			// new AdapterFactoryContentProvider(af), attribute));
-			TextCellEditor ce = new TextCellEditor(atomTable);
-			// This forum post helped me determine what IValueProperty needs to
-			// go in the create method.
-			// http://www.eclipse.org/forums/index.php/m/542335/
-			tvc.setEditingSupport(EMFObservableValueEditingSupport.create(tvc
-					.getViewer(), m_bindingContext, ce, CellEditorProperties
-					.control().value(WidgetProperties.text(SWT.Modify)),
-					EMFEditProperties.value(ed, attribute)));
-		}
-
-		// atomTableViewer.setContentProvider(ArrayContentProvider.getInstance());
-		atomTableViewer.setContentProvider(atomCp);
-		atomTableViewer.setInput(EMFProperties.list(
-				Mp2c_1_0Package.Literals.MOLECULAR_SPECIES__ATOMS).observe(
-				_species));
-
-		// atomTableViewer.setLabelProvider(new
-		// AdapterFactoryLabelProvider(af));
-
-		// The bonds viewer
-		ObservableListContentProvider bondsCp = new ObservableListContentProvider();
-		HashMap<EAttribute, String> bondsAttributeMap = new HashMap<EAttribute, String>();
-		bondsAttributeMap.put(Mp2c_1_0Package.Literals.BOND__TYPE, "Type");
-		bondsAttributeMap.put(Mp2c_1_0Package.Literals.BOND__NUMBER, "Number");
-		bondsAttributeMap.put(Mp2c_1_0Package.Literals.BOND__TO_RANGE,
-				"Range To");
-		bondsAttributeMap.put(Mp2c_1_0Package.Literals.BOND__FROM_RANGE,
-				"Range From");
-		bondsAttributeMap.put(Mp2c_1_0Package.Literals.BOND__K, "k-Param");
-		bondsAttributeMap.put(Mp2c_1_0Package.Literals.BOND__R, "r-Param");
-
-		for (EAttribute attribute : bondsAttributeMap.keySet()) {
-			TableViewerColumn tvc = new TableViewerColumn(bondsTableViewer,
-					SWT.LEFT);
-			IObservableMap map = EMFProperties.value(attribute).observeDetail(
-					bondsCp.getKnownElements());
-			tvc.setLabelProvider(new ObservableMapCellLabelProvider(map));
-			tvc.getColumn().setText(bondsAttributeMap.get(attribute));
-			tvc.getColumn().setWidth(80);
-			tvc.setEditingSupport(ObservableValueEditingSupport.create(tvc
-					.getViewer(), m_bindingContext, new TextCellEditor(
-					bondsTable), CellEditorProperties.control(), EMFProperties
-					.value(attribute)));
-		}
-
-		bondsTableViewer.setContentProvider(bondsCp);
-		bondsTableViewer.setInput(EMFProperties.list(
-				Mp2c_1_0Package.Literals.MOLECULAR_SPECIES__BONDS).observe(
-				_species));
-
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		new Label(molecularSpeciesComposite, SWT.NONE);
-		scrolledComposite.setContent(molecularSpeciesComposite);
-
 	}
 
 	@Override
@@ -284,24 +164,55 @@ public class MolecularSpeciesTab extends Composite {
 				1, 1));
 		return composite;
 	}
-
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
 		IObservableValue observeSelectionSpnNumberAtomsObserveWidget = WidgetProperties
 				.selection().observe(spnNumberAtoms);
-		IObservableValue speciesNumberObserveValue = EMFObservables
-				.observeValue(species, Literals.MOLECULAR_SPECIES__NUMBER);
+		IObservableValue numberSpeciesObserveValue = PojoProperties.value(
+				"number").observe(species);
 		bindingContext.bindValue(observeSelectionSpnNumberAtomsObserveWidget,
-				speciesNumberObserveValue, null, null);
+				numberSpeciesObserveValue, null, null);
 		//
 		IObservableValue observeSelectionSpnNumberSitesObserveWidget = WidgetProperties
 				.selection().observe(spnNumberSites);
-		IObservableValue speciesSitesObserveValue = EMFObservables
-				.observeValue(species, Literals.MOLECULAR_SPECIES__SITES);
+		IObservableValue sitesSpeciesObserveValue = PojoProperties.value(
+				"sites").observe(species);
 		bindingContext.bindValue(observeSelectionSpnNumberSitesObserveWidget,
-				speciesSitesObserveValue, null, null);
+				sitesSpeciesObserveValue, null, null);
+		//
+		ObservableListContentProvider listContentProvider = new ObservableListContentProvider();
+		IObservableMap observeMap = PojoObservables.observeMap(
+				listContentProvider.getKnownElements(), MolecularSpecies.class,
+				"atoms");
+		atomTableViewer.setLabelProvider(new ObservableMapLabelProvider(
+				observeMap));
+		atomTableViewer.setContentProvider(listContentProvider);
+		//
+		IObservableList atomsSpeciesObserveList = PojoProperties.list("atoms")
+				.observe(species);
+		atomTableViewer.setInput(atomsSpeciesObserveList);
+		//
+		ObservableListContentProvider listContentProvider_1 = new ObservableListContentProvider();
+		IObservableMap observeMap_1 = PojoObservables.observeMap(
+				listContentProvider_1.getKnownElements(),
+				MolecularSpecies.class, "bonds");
+		bondsTableViewer.setLabelProvider(new ObservableMapLabelProvider(
+				observeMap_1));
+		bondsTableViewer.setContentProvider(listContentProvider_1);
+		//
+		IObservableList bondsSpeciesObserveList = PojoProperties.list("bonds")
+				.observe(species);
+		bondsTableViewer.setInput(bondsSpeciesObserveList);
 		//
 		return bindingContext;
+	}
+
+	/**
+	 * @return
+	 * 
+	 */
+	public MolecularSpecies getSpecies() {
+		return species;
 	}
 }

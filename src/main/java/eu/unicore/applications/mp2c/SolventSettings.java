@@ -31,12 +31,10 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
-import mp2c_1_0.Mp2c_1_0Package.Literals;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -48,6 +46,7 @@ import org.eclipse.swt.widgets.Text;
 
 import eu.unicore.applications.mp2c.converters.DoubleToStringConverter;
 import eu.unicore.applications.mp2c.converters.StringToDoubleConverter;
+import eu.unicore.applications.mp2c.model.Solvent;
 
 /**
  * @author bjoernh
@@ -59,7 +58,7 @@ public class SolventSettings extends Composite {
 	private DataBindingContext m_bindingContext;
 	private Text txtPartmass;
 	private Text txtFreepath;
-	private mp2c_1_0.Solvent solvent;
+	private Solvent solvent;
 	private Spinner spnParticlesPerCell;
 	private Spinner spnNrParticles;
 	private Spinner rotAngle;
@@ -70,7 +69,7 @@ public class SolventSettings extends Composite {
 	 * @param style
 	 */
 	public SolventSettings(Composite parent, int style,
-			mp2c_1_0.Solvent solvent2) {
+ Solvent solvent2) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
 
@@ -120,47 +119,47 @@ public class SolventSettings extends Composite {
 		//
 		IObservableValue observeSelectionSpnParticlesPerCellObserveWidget = WidgetProperties
 				.selection().observe(spnParticlesPerCell);
-		IObservableValue solventParticlesPerCellObserveValue = EMFObservables
-				.observeValue(solvent, Literals.SOLVENT__PARTICLES_PER_CELL);
+		IObservableValue partsPerCellSolventObserveValue = PojoProperties
+				.value("partsPerCell").observe(solvent);
 		bindingContext.bindValue(
 				observeSelectionSpnParticlesPerCellObserveWidget,
-				solventParticlesPerCellObserveValue, null, null);
+				partsPerCellSolventObserveValue, null, null);
 		//
 		IObservableValue observeSelectionSpnNrParticlesObserveWidget = WidgetProperties
 				.selection().observe(spnNrParticles);
-		IObservableValue solventParticlesObserveValue = EMFObservables
-				.observeValue(solvent, Literals.SOLVENT__PARTICLES);
+		IObservableValue particlesSolventObserveValue = PojoProperties.value(
+				"particles").observe(solvent);
 		bindingContext.bindValue(observeSelectionSpnNrParticlesObserveWidget,
-				solventParticlesObserveValue, null, null);
+				particlesSolventObserveValue, null, null);
 		//
 		IObservableValue observeTextTxtPartmassObserveWidget = WidgetProperties
 				.text(SWT.Modify).observe(txtPartmass);
-		IObservableValue solventMassObserveValue = EMFObservables.observeValue(
-				solvent, Literals.SOLVENT__MASS);
+		IObservableValue massSolventObserveValue = PojoProperties.value("mass")
+				.observe(solvent);
 		UpdateValueStrategy strategy = new UpdateValueStrategy();
 		strategy.setConverter(new StringToDoubleConverter());
 		UpdateValueStrategy strategy_1 = new UpdateValueStrategy();
 		strategy_1.setConverter(new DoubleToStringConverter());
 		bindingContext.bindValue(observeTextTxtPartmassObserveWidget,
-				solventMassObserveValue, strategy, strategy_1);
+				massSolventObserveValue, strategy, strategy_1);
 		//
 		IObservableValue observeTextTxtFreepathObserveWidget = WidgetProperties
 				.text(SWT.Modify).observe(txtFreepath);
-		IObservableValue solventLambdaObserveValue = EMFObservables
-				.observeValue(solvent, Literals.SOLVENT__LAMBDA);
+		IObservableValue lambdaSolventObserveValue = PojoProperties.value(
+				"lambda").observe(solvent);
 		UpdateValueStrategy strategy_2 = new UpdateValueStrategy();
 		strategy_2.setConverter(new StringToDoubleConverter());
 		UpdateValueStrategy strategy_3 = new UpdateValueStrategy();
 		strategy_3.setConverter(new DoubleToStringConverter());
 		bindingContext.bindValue(observeTextTxtFreepathObserveWidget,
-				solventLambdaObserveValue, strategy_2, strategy_3);
+				lambdaSolventObserveValue, strategy_2, strategy_3);
 		//
 		IObservableValue observeSelectionRotAngleObserveWidget = WidgetProperties
 				.selection().observe(rotAngle);
-		IObservableValue solventAlphaObserveValue = EMFObservables
-				.observeValue(solvent, Literals.SOLVENT__ALPHA);
+		IObservableValue alphaSolventObserveValue = PojoProperties.value(
+				"alpha").observe(solvent);
 		bindingContext.bindValue(observeSelectionRotAngleObserveWidget,
-				solventAlphaObserveValue, null, null);
+				alphaSolventObserveValue, null, null);
 		//
 		return bindingContext;
 	}

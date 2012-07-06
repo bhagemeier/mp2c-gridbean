@@ -31,6 +31,7 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ import java.util.List;
  * 30.03.2012 14:58:57
  *
  */
-public class MolecularSpecies {
+public class MolecularSpecies implements Cloneable {
 	private List<Atom> atoms;
 	private List<Bond> bonds;
 
@@ -95,6 +96,7 @@ public class MolecularSpecies {
 	 * @return the atoms
 	 */
 	public List<Atom> getAtoms() {
+		createAtomsListIfNeeded();
 		return atoms;
 	}
 
@@ -110,6 +112,7 @@ public class MolecularSpecies {
 	 * @return the bonds
 	 */
 	public List<Bond> getBonds() {
+		createBondsListIfNeede();
 		return bonds;
 	}
 
@@ -149,5 +152,27 @@ public class MolecularSpecies {
 	 */
 	public void setSites(int sites) {
 		this.sites = sites;
+	}
+
+	public void write(OutputStream _os) {
+
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		MolecularSpecies clone = (MolecularSpecies) super.clone();
+		clone.atoms = new ArrayList<Atom>();
+		for (Atom atom : atoms) {
+			clone.atoms.add((Atom) atom.clone());
+		}
+		clone.bonds = new ArrayList<Bond>();
+		for (Bond bond : bonds) {
+			clone.bonds.add((Bond) bond.clone());
+		}
+		
+		return clone;
 	}
 }

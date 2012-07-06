@@ -31,6 +31,8 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.IOException;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -53,6 +55,12 @@ public class ControlTest {
 	public void test() {
 		Control ctrl = new Control();
 
+	}
+
+	@Test
+	public void testWrite() throws IOException {
+		Control ctrl = new Control();
+		ctrl.write(System.out);
 	}
 
 }

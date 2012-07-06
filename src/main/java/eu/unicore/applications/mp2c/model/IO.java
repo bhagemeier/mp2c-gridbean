@@ -31,13 +31,15 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.OutputStream;
+
 /**
  * @author bjoernh
  *
  * 30.03.2012 14:58:24
  *
  */
-public class IO {
+public class IO implements Cloneable {
 	private boolean standard;
 	private int standardSteps;
 	private boolean standardSolutes;
@@ -485,5 +487,17 @@ public class IO {
 	 */
 	public void setUserOutputSteps(int userOutputSteps) {
 		this.userOutputSteps = userOutputSteps;
+	}
+
+	public void write(OutputStream _os) {
+
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 }

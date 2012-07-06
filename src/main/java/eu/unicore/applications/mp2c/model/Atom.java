@@ -37,7 +37,7 @@ package eu.unicore.applications.mp2c.model;
  * 30.03.2012 14:58:07
  *
  */
-public class Atom {
+public class Atom implements Cloneable {
 	private String identifier;
 	private String symbol;
 	private int fromRange;
@@ -148,5 +148,13 @@ public class Atom {
 		sb.append("Mass: " + mass).append(nl);
 		sb.append("Symbol: " + symbol);
 		return sb.toString();
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 }

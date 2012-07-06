@@ -31,115 +31,65 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
+import org.junit.Test;
+
+import eu.unicore.applications.mp2c.MP2CGridBeanParameter;
+import eu.unicore.applications.mp2c.MP2CGridBeanParameterValue;
+
 /**
  * @author bjoernh
  *
- * 30.03.2012 14:58:15
+ * 29.06.2012 12:25:14
  *
  */
-public class Bond implements Cloneable {
-	private String type;
-	private int number;
-	private int fromRange;
-	private int toRange;
-	private double k;
-	private double r;
+public class JaxBTest {
+	@Test
+	public void testJaxB() throws JAXBException {
+		JAXBContext ctx = JAXBContext
+				.newInstance("eu.unicore.applications.mp2c.model");
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
+		MP2CConfig config = new MP2CConfig();
+		
+		Marshaller m = ctx.createMarshaller();
+		Unmarshaller um = ctx.createUnmarshaller();
+
+		File f = new File("/tmp/marshalled_config.jaxb");
+
+		m.marshal(config, f);
+
+		MP2CConfig newConfig = (MP2CConfig) um.unmarshal(f);
+
+		m.marshal(newConfig, new File("/tmp/marshalled_config2.jaxb"));
 	}
 
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
+	@Test
+	public void testJaxBGPV() throws JAXBException, IOException {
+		JAXBContext ctx = JAXBContext
+				.newInstance("eu.unicore.applications.mp2c");
+
+		MP2CGridBeanParameterValue gbpv = new MP2CGridBeanParameterValue();
+		MP2CConfig c = new MP2CConfig();
+		gbpv.setConfig(c);
+
+		ctx.createMarshaller().marshal(gbpv,
+				File.createTempFile("jaxbtest", null));
 	}
 
-	/**
-	 * @return the number
-	 */
-	public int getNumber() {
-		return number;
-	}
-
-	/**
-	 * @param number
-	 *            the number to set
-	 */
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
-	/**
-	 * @return the fromRange
-	 */
-	public int getFromRange() {
-		return fromRange;
-	}
-
-	/**
-	 * @param fromRange
-	 *            the fromRange to set
-	 */
-	public void setFromRange(int fromRange) {
-		this.fromRange = fromRange;
-	}
-
-	/**
-	 * @return the toRange
-	 */
-	public int getToRange() {
-		return toRange;
-	}
-
-	/**
-	 * @param toRange
-	 *            the toRange to set
-	 */
-	public void setToRange(int toRange) {
-		this.toRange = toRange;
-	}
-
-	/**
-	 * @return the k
-	 */
-	public double getK() {
-		return k;
-	}
-
-	/**
-	 * @param k
-	 *            the k to set
-	 */
-	public void setK(double k) {
-		this.k = k;
-	}
-
-	/**
-	 * @return the r
-	 */
-	public double getR() {
-		return r;
-	}
-
-	/**
-	 * @param r
-	 *            the r to set
-	 */
-	public void setR(double r) {
-		this.r = r;
-	}
-
-	/**
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
+	@Test
+	public void testJaxBGBP() throws JAXBException, IOException {
+		MP2CGridBeanParameter gbp = new MP2CGridBeanParameter();
+		
+		JAXBContext ctx = JAXBContext
+				.newInstance("eu.unicore.applications.mp2c");
+		ctx.createMarshaller().marshal(gbp,
+				File.createTempFile("jabx_gbp.xml", null));
 	}
 }

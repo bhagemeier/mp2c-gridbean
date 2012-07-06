@@ -29,117 +29,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ********************************************************************************/
-package eu.unicore.applications.mp2c.model;
+package eu.unicore.applications.mp2c;
+
+import javax.xml.namespace.QName;
 
 /**
+ * This file contains constants and other information shared by several of the
+ * classes of this GridBean.
+ * 
  * @author bjoernh
- *
- * 30.03.2012 14:58:15
- *
+ * 
+ *         29.06.2012 09:42:05
+ * 
  */
-public class Bond implements Cloneable {
-	private String type;
-	private int number;
-	private int fromRange;
-	private int toRange;
-	private double k;
-	private double r;
+public class MP2CGridBeanParameters {
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
+	static final QName CONTROL_FILE_QNAME = new QName(
+	"http://www.unicore.eu/applications/mp2c", "controlFile");
+	static final String CONTROL_FILE_NAME = "mp2c_ctrl.inp";
+	static final QName SOLUTE_FILE_QNAME = new QName(
+	"http://www.unicore.eu/applications/mp2c", "soluteFile");
+	static final String SOLUTE_FILE_NAME = "mp2c_slt.inp";
+	static final QName SOLVENT_FILE_QNAME = new QName(
+	"http://www.unicore.eu/applications/mp2c", "solventFile");
+	static final String SOLVENT_FILE_NAME = "mp2c_slv.inp";
+	static final QName QUENCH_FILE_QNAME = new QName(
+	"http://www.unicore.eu/applications/mp2c", "quenchFile");
+	static final String QUENCH_FILE_NAME = "mp2c_quench.inp";
+	static final QName IO_FILE_QNAME = new QName(
+	"http://www.unicore.eu/applications/mp2c", "ioFile");
+	static final String IO_FILE_NAME = "mp2c_io.inp";
+	static final QName PARALLEL_FILE_QNAME = new QName(
+	"http://www.unicore.eu/applications/mp2c", "quenchFile");
+	static final String PARALLEL_FILE_NAME = "mp2c_par.inp";
 
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	/**
-	 * @return the number
-	 */
-	public int getNumber() {
-		return number;
-	}
-
-	/**
-	 * @param number
-	 *            the number to set
-	 */
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
-	/**
-	 * @return the fromRange
-	 */
-	public int getFromRange() {
-		return fromRange;
-	}
-
-	/**
-	 * @param fromRange
-	 *            the fromRange to set
-	 */
-	public void setFromRange(int fromRange) {
-		this.fromRange = fromRange;
-	}
-
-	/**
-	 * @return the toRange
-	 */
-	public int getToRange() {
-		return toRange;
-	}
-
-	/**
-	 * @param toRange
-	 *            the toRange to set
-	 */
-	public void setToRange(int toRange) {
-		this.toRange = toRange;
-	}
-
-	/**
-	 * @return the k
-	 */
-	public double getK() {
-		return k;
-	}
-
-	/**
-	 * @param k
-	 *            the k to set
-	 */
-	public void setK(double k) {
-		this.k = k;
-	}
-
-	/**
-	 * @return the r
-	 */
-	public double getR() {
-		return r;
-	}
-
-	/**
-	 * @param r
-	 *            the r to set
-	 */
-	public void setR(double r) {
-		this.r = r;
-	}
-
-	/**
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
 }

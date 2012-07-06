@@ -31,115 +31,61 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.IOException;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 /**
  * @author bjoernh
  *
- * 30.03.2012 14:58:15
+ * 28.06.2012 12:36:26
  *
  */
-public class Bond implements Cloneable {
-	private String type;
-	private int number;
-	private int fromRange;
-	private int toRange;
-	private double k;
-	private double r;
+public class SoluteTest {
 
 	/**
-	 * @return the type
+	 * @throws java.lang.Exception
 	 */
-	public String getType() {
-		return type;
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
 	}
 
 	/**
-	 * @param type
-	 *            the type to set
+	 * Test method for
+	 * {@link eu.unicore.applications.mp2c.model.Solute#write(java.io.OutputStream)}
+	 * .
+	 * 
+	 * @throws IOException
 	 */
-	public void setType(String type) {
-		this.type = type;
+	@Test
+	public void testWrite() throws IOException {
+		Solute s = new Solute();
+
+		MolecularSpecies m = new MolecularSpecies();
+		Atom a = new Atom();
+		a.setCharge(0);
+		a.setMass(10);
+		a.setFromRange(1);
+		a.setToRange(1);
+		a.setIdentifier("O_1");
+		a.setSymbol("O");
+
+		m.addAtom(a);
+
+		Bond b = new Bond();
+		b.setFromRange(1);
+		b.setToRange(250);
+		b.setNumber(250);
+		b.setK(5000);
+		b.setR(1.0);
+		b.setType("harm12");
+
+		m.addBond(b);
+
+		s.addMolecularSpecies(m);
+
+		s.write(System.out);
 	}
 
-	/**
-	 * @return the number
-	 */
-	public int getNumber() {
-		return number;
-	}
-
-	/**
-	 * @param number
-	 *            the number to set
-	 */
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
-	/**
-	 * @return the fromRange
-	 */
-	public int getFromRange() {
-		return fromRange;
-	}
-
-	/**
-	 * @param fromRange
-	 *            the fromRange to set
-	 */
-	public void setFromRange(int fromRange) {
-		this.fromRange = fromRange;
-	}
-
-	/**
-	 * @return the toRange
-	 */
-	public int getToRange() {
-		return toRange;
-	}
-
-	/**
-	 * @param toRange
-	 *            the toRange to set
-	 */
-	public void setToRange(int toRange) {
-		this.toRange = toRange;
-	}
-
-	/**
-	 * @return the k
-	 */
-	public double getK() {
-		return k;
-	}
-
-	/**
-	 * @param k
-	 *            the k to set
-	 */
-	public void setK(double k) {
-		this.k = k;
-	}
-
-	/**
-	 * @return the r
-	 */
-	public double getR() {
-		return r;
-	}
-
-	/**
-	 * @param r
-	 *            the r to set
-	 */
-	public void setR(double r) {
-		this.r = r;
-	}
-
-	/**
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
 }

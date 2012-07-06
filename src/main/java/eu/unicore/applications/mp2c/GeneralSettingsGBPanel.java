@@ -31,22 +31,21 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
-import mp2c_1_0.Control;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
 
+import eu.unicore.applications.mp2c.model.Control;
+
 /**
  * @author bjoernh
- *
- * 23.03.2012 11:52:35
- *
+ * 
+ *         23.03.2012 11:52:35
+ * 
  */
-public class GeneralSettingsGBPanel extends
-		SWTGridBeanPanel {
+public class GeneralSettingsGBPanel extends SWTGridBeanPanel {
 
 	private Control generalConfig;
 
@@ -54,8 +53,7 @@ public class GeneralSettingsGBPanel extends
 	 * @param client
 	 * @param name
 	 */
-	public GeneralSettingsGBPanel(Client client, String name,
- Control control) {
+	public GeneralSettingsGBPanel(Client client, String name, Control control) {
 		super(client, name);
 		this.generalConfig = control;
 	}

@@ -32,13 +32,12 @@
 package eu.unicore.applications.mp2c;
 
 
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import com.intel.gpe.gridbeans.parameters.GridBeanParameter;
 import com.intel.gpe.gridbeans.parameters.GridBeanParameterType;
 import com.intel.gpe.gridbeans.parameters.IGridBeanParameter;
-
-import eu.unicore.applications.mp2c.model.MP2CConfig;
 
 /**
  * @author bjoernh
@@ -46,13 +45,15 @@ import eu.unicore.applications.mp2c.model.MP2CConfig;
  * 23.03.2012 11:22:39
  *
  */
+@XmlRootElement
 public class MP2CGridBeanParameter extends GridBeanParameter implements
 		IGridBeanParameter {
 
 	public static final QName MP2C_QNAME = new QName(
 			"http://www.unicore.eu/applications/mp2c",
-			"GridBeanModel"); 
-	MP2CConfig config = new MP2CConfig();
+ "GridBeanModel");
+
+	GridBeanParameterType paramType = null;
 
 	/**
 	 * @see com.intel.gpe.gridbeans.parameters.IGridBeanParameter#getName()
@@ -71,8 +72,11 @@ public class MP2CGridBeanParameter extends GridBeanParameter implements
 	/**
 	 * @see com.intel.gpe.gridbeans.parameters.IGridBeanParameter#getType()
 	 */
-	public GridBeanParameterType getType() {
-		return new GridBeanParameterType("MP2CGridBeanModel");
+	public synchronized GridBeanParameterType getType() {
+		if (paramType == null) {
+			paramType = new GridBeanParameterType("MP2CGridBeanModel");
+		}
+		return paramType;
 	}
 
 	/**
@@ -80,13 +84,6 @@ public class MP2CGridBeanParameter extends GridBeanParameter implements
 	 */
 	public boolean isInputParameter() {
 		return true;
-	}
-
-	/**
-	 * @return the config
-	 */
-	public MP2CConfig getConfig() {
-		return config;
 	}
 
 }

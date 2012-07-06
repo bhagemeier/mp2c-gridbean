@@ -31,13 +31,17 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author bjoernh
- *
- * 30.03.2012 15:00:05
- *
+ * 
+ *         30.03.2012 15:00:05
+ * 
+ * 
  */
-public class MP2CConfig {
+@XmlRootElement
+public class MP2CConfig implements Cloneable {
 	private Solvent solvent;
 	private Solute solute;
 
@@ -47,7 +51,7 @@ public class MP2CConfig {
 
 	private Control control;
 
-	private int randomSeed;
+	private Parallel parallel;
 
 	/**
 	 * 
@@ -58,7 +62,7 @@ public class MP2CConfig {
 		quench = new Quench();
 		io = new IO();
 		control = new Control();
-
+		parallel = new Parallel(3);
 	}
 
 	public Control getControl() {
@@ -71,10 +75,6 @@ public class MP2CConfig {
 
 	public Quench getQuench() {
 		return quench;
-	}
-
-	public int getRandomSeed() {
-		return randomSeed;
 	}
 
 	public Solute getSolute() {
@@ -91,10 +91,6 @@ public class MP2CConfig {
 	}
 	public void setQuench(Quench quench) {
 		this.quench = quench;
-	}
-
-	public void setRandomSeed(int randomSeed) {
-		this.randomSeed = randomSeed;
 	}
 
 	public void setSolute(Solute solute) {
@@ -121,5 +117,36 @@ public class MP2CConfig {
 		sb.append(System.getProperty("line.separator"));
 		sb.append(control.toString());
 		return sb.toString();
+	}
+
+	/**
+	 * @return the parallel
+	 */
+	public Parallel getParallel() {
+		return parallel;
+	}
+
+	/**
+	 * @param parallel
+	 */
+	public void setParallel(Parallel parallel) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		MP2CConfig clone = (MP2CConfig) super.clone();
+		clone.control = (Control) control.clone();
+		clone.io = (IO) io.clone();
+		clone.parallel = (Parallel) parallel.clone();
+		clone.quench = (Quench) quench.clone();
+		clone.solute = (Solute) solute.clone();
+		clone.solvent = (Solvent) solvent.clone();
+
+		return clone;
 	}
 }

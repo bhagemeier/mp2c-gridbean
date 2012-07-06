@@ -31,12 +31,24 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.io.OutputStream;
+
 /**
  * @author bjoernh
  *
  * 30.03.2012 14:59:26
  *
  */
-public class Quench {
+public class Quench implements Cloneable {
+	public void write(OutputStream _os) {
 
+	}
+
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 }
