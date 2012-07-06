@@ -69,7 +69,7 @@ public class MP2CGridbean extends AbstractGridBean implements
 		QNAME_2_FILENAME.put(IO_FILE_QNAME, IO_FILE_NAME);
 		QNAME_2_FILENAME.put(PARALLEL_FILE_QNAME, PARALLEL_FILE_NAME);
 
-		addInputParameter(new MP2CGridBeanParameter());
+		// addInputParameter(new MP2CGridBeanParameter());
 		List<IGridBeanParameter> inputFiles = ParameterUtils
 				.createFileParameters(new QName[] { CONTROL_FILE_QNAME,
 						IO_FILE_QNAME, QUENCH_FILE_QNAME, SOLUTE_FILE_QNAME,
