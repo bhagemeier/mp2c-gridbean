@@ -31,42 +31,49 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
+import javax.xml.namespace.QName;
+
+import org.eclipse.swt.widgets.Spinner;
 
 import com.intel.gpe.clients.api.Client;
+import com.intel.gpe.gridbeans.plugins.IDataControl;
 import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
-
-import eu.unicore.applications.mp2c.model.Solute;
+import com.intel.gpe.util.defaults.preferences.INode;
 
 /**
  * @author bjoernh
  *
- * 26.03.2012 15:11:20
+ * 23.07.2012 15:40:28
  *
  */
-public class SoluteSettingsGBPanel extends SWTGridBeanPanel {
-
-	private Solute solute;
+public abstract class MP2CSWTGridBeanPanel extends SWTGridBeanPanel {
 
 	/**
 	 * @param client
 	 * @param name
-	 * @param solute2
 	 */
-	public SoluteSettingsGBPanel(Client client, String name,
- Solute solute2) {
+	public MP2CSWTGridBeanPanel(Client client, String name) {
 		super(client, name);
-
-		this.solute = solute2;
 	}
 
 	/**
-	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
+	 * @param client
+	 * @param name
+	 * @param node
 	 */
-	public void createControl(Composite parent) {
-		new SoluteSettings(parent, SWT.NONE, solute);
+	public MP2CSWTGridBeanPanel(Client client, String name, INode node) {
+		super(client, name, node);
+	}
 
+	/**
+	 * @param _key
+	 * @param _spinner
+	 */
+	protected void linkSpinBox(QName _key, Spinner _spinner) {
+		IDataControl control = new SWTSpinBoxControl(getClient(), _key,
+				_spinner);
+		linkDataControl(_key, control);
+	
 	}
 
 }

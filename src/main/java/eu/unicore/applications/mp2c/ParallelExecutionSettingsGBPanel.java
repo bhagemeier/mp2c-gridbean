@@ -35,9 +35,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
-import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
-
-import eu.unicore.applications.mp2c.model.Parallel;
 
 /**
  * @author bjoernh
@@ -45,27 +42,24 @@ import eu.unicore.applications.mp2c.model.Parallel;
  * 26.03.2012 15:11:20
  *
  */
-public class ParallelExecutionSettingsGBPanel extends SWTGridBeanPanel {
+public class ParallelExecutionSettingsGBPanel extends MP2CSWTGridBeanPanel {
 
-	private Parallel parallel;
 
 	/**
 	 * @param client
 	 * @param name
 	 * @param parallel
 	 */
-	public ParallelExecutionSettingsGBPanel(Client client, String name,
-			Parallel _parallel) {
+	public ParallelExecutionSettingsGBPanel(Client client, String name) {
 		super(client, name);
 
-		this.parallel = _parallel;
 	}
 
 	/**
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new ParallelExecutionSettings(parent, SWT.NONE, parallel);
+		new ParallelExecutionSettings(parent, SWT.NONE);
 
 	}
 

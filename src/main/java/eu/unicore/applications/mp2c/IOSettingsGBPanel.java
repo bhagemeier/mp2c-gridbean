@@ -35,9 +35,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
-import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
-
-import eu.unicore.applications.mp2c.model.IO;
 
 /**
  * @author bjoernh
@@ -45,26 +42,101 @@ import eu.unicore.applications.mp2c.model.IO;
  * 26.03.2012 15:11:20
  *
  */
-public class IOSettingsGBPanel extends SWTGridBeanPanel {
+public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 
-	private IO io;
 
 	/**
 	 * @param client
 	 * @param name
 	 * @param io2
 	 */
-	public IOSettingsGBPanel(Client client, String name, IO io2) {
+	public IOSettingsGBPanel(Client client, String name) {
 		super(client, name);
 
-		this.io = io2;
 	}
 
 	/**
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new IOSettings(parent, SWT.NONE, this.io);
+		IOSettings io = new IOSettings(parent, SWT.NONE);
+
+		// standard io
+		// std out
+		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_OUT,
+				io.getBtnGeneral());
+		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS,
+				io.getSpnGeneralSteps());
+		// solute
+		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_SOLUTES,
+				io.getBtnSolute());
+		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS,
+				io.getSpnSoluteSteps());
+		// solvent
+		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_SOLVENT,
+				io.getBtnSolvent());
+		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS,
+				io.getSpnSolventSteps());
+
+		// restart information
+		// solute
+		linkCheckButton(MP2CGridBeanParameters.IO_RESTART_SOLUTE,
+				io.getBtnRestartSolute());
+		linkComboBox(MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
+				io.getCmbRestartSoluteType());
+		linkSpinBox(MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS,
+				io.getSpnRestartSoluteSteps());
+		// solvent
+		linkCheckButton(MP2CGridBeanParameters.IO_RESTART_SOLVENT,
+				io.getBtnRestartSolute());
+		linkComboBox(MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
+				io.getCmbRestartSoluteType());
+		linkSpinBox(MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS,
+				io.getSpnRestartSoluteSteps());
+
+		// history
+		// solute
+		linkCheckButton(MP2CGridBeanParameters.IO_HISTORY_SOLUTE,
+				io.getBtnSoluteHistory());
+		linkComboBox(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
+				io.getCmbSoluteHistoryType());
+		linkSpinBox(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS,
+				io.getSpnSoluteHistorySteps());
+
+		// solvent
+		linkCheckButton(MP2CGridBeanParameters.IO_HISTORY_SOLVENT,
+				io.getBtnSolventHistory());
+		linkComboBox(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
+				io.getCmbSolventHistoryType());
+		linkSpinBox(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS,
+				io.getSpnSolventHistorySteps());
+
+		// XYZ
+		// general
+		linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SYSTEM,
+				io.getBtnGeneral());
+		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS,
+				io.getSpnGeneralXYZSteps());
+		// solute
+		linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SOLUTE,
+				io.getBtnSoluteXYZ());
+		linkComboBox(MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
+				io.getCmbSoluteXYZType());
+		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS,
+				io.getSpnSoluteXYZSteps());
+		// solvent
+		linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SOLVENT,
+				io.getBtnSolventXYZ());
+		linkComboBox(MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
+				io.getCmbSolventXYZType());
+		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS,
+				io.getSpnSolventXYZSteps());
+
+		// user specific output
+		linkCheckButton(MP2CGridBeanParameters.IO_USER_OUTPUT,
+				io.getBtnEndtoendDistances());
+		linkSpinBox(MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS,
+				io.getSpnUserOutputSteps());
 
 	}
 

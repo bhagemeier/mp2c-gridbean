@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class MP2CConfig implements Cloneable {
 	private Solvent solvent;
-	private Solute solute;
+	// private Solute solute;
 
 	private Quench quench;
 
@@ -58,7 +58,7 @@ public class MP2CConfig implements Cloneable {
 	 */
 	public MP2CConfig() {
 		solvent = new Solvent();
-		solute = new Solute();
+		// solute = new Solute();
 		quench = new Quench();
 		io = new IO();
 		control = new Control();
@@ -77,9 +77,9 @@ public class MP2CConfig implements Cloneable {
 		return quench;
 	}
 
-	public Solute getSolute() {
-		return solute;
-	}
+	// public Solute getSolute() {
+	// return solute;
+	// }
 	public Solvent getSolvent() {
 		return solvent;
 	}
@@ -93,9 +93,9 @@ public class MP2CConfig implements Cloneable {
 		this.quench = quench;
 	}
 
-	public void setSolute(Solute solute) {
-		this.solute = solute;
-	}
+	// public void setSolute(Solute solute) {
+	// this.solute = solute;
+	// }
 
 	public void setSolvent(Solvent solvent) {
 		this.solvent = solvent;
@@ -109,7 +109,7 @@ public class MP2CConfig implements Cloneable {
 		StringBuilder sb = new StringBuilder();
 		sb.append(solvent.toString());
 		sb.append(System.getProperty("line.separator"));
-		sb.append(solute.toString());
+		// sb.append(solute.toString());
 		sb.append(System.getProperty("line.separator"));
 		sb.append(quench.toString());
 		sb.append(System.getProperty("line.separator"));
@@ -144,7 +144,7 @@ public class MP2CConfig implements Cloneable {
 		clone.io = (IO) io.clone();
 		clone.parallel = (Parallel) parallel.clone();
 		clone.quench = (Quench) quench.clone();
-		clone.solute = (Solute) solute.clone();
+		// clone.solute = (Solute) solute.clone();
 		clone.solvent = (Solvent) solvent.clone();
 
 		return clone;

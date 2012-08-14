@@ -32,9 +32,6 @@
 package eu.unicore.applications.mp2c;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -43,8 +40,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
-
-import eu.unicore.applications.mp2c.model.Parallel;
 
 /**
  * @author bjoernh
@@ -55,7 +50,6 @@ import eu.unicore.applications.mp2c.model.Parallel;
 public class ParallelExecutionSettings extends Composite {
 	private DataBindingContext m_bindingContext;
 
-	private Parallel parallel;
 	private Button btndimensionalCut;
 	private Spinner parDimSpinner;
 
@@ -66,12 +60,10 @@ public class ParallelExecutionSettings extends Composite {
 	 * @param style
 	 * @param parallel
 	 */
-	public ParallelExecutionSettings(Composite parent, int style,
-			Parallel _parallel) {
+	public ParallelExecutionSettings(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 
-		this.parallel = _parallel;
 
 		Group grpDimensionOfParallel = new Group(this, SWT.NONE);
 		grpDimensionOfParallel.setLayoutData(new GridData(SWT.FILL, SWT.TOP,
@@ -112,13 +104,6 @@ public class ParallelExecutionSettings extends Composite {
 	}
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
-		//
-		IObservableValue observeSelectionParDimSpinnerObserveWidget = WidgetProperties
-				.selection().observe(parDimSpinner);
-		IObservableValue dimParallelObserveValue = PojoProperties.value("dim")
-				.observe(parallel);
-		bindingContext.bindValue(observeSelectionParDimSpinnerObserveWidget,
-				dimParallelObserveValue, null, null);
 		//
 		return bindingContext;
 	}

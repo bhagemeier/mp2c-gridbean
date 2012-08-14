@@ -32,10 +32,6 @@
 package eu.unicore.applications.mp2c;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -46,8 +42,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 
-import eu.unicore.applications.mp2c.model.IO;
-
 /**
  * @author bjoernh
  *
@@ -55,7 +49,7 @@ import eu.unicore.applications.mp2c.model.IO;
  *
  */
 public class IOSettings extends Composite {
-	private IO io;
+
 	private Button btnGeneral;
 	private Button btnSolute;
 	private Button btnSolvent;
@@ -92,11 +86,10 @@ public class IOSettings extends Composite {
 	 * @param style
 	 * @param io2
 	 */
-	public IOSettings(Composite parent, int style, IO io2) {
+	public IOSettings(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 
-		this.io = io2;
 
 		Group grpStandardIo = new Group(this, SWT.NONE);
 		grpStandardIo.setLayout(new GridLayout(2, false));
@@ -260,236 +253,118 @@ public class IOSettings extends Composite {
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
-		IObservableValue observeSelectionBtnGeneralObserveWidget = WidgetProperties.selection().observe(btnGeneral);
-		IObservableValue standardIoObserveValue = PojoProperties.value(
-				"standard").observe(io);
-		bindingContext.bindValue(observeSelectionBtnGeneralObserveWidget,
-				standardIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnSoluteObserveWidget = WidgetProperties.selection().observe(btnSolute);
-		IObservableValue standardSolutesIoObserveValue = PojoProperties.value(
-				"standardSolutes").observe(io);
-		bindingContext.bindValue(observeSelectionBtnSoluteObserveWidget,
-				standardSolutesIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnSolventObserveWidget = WidgetProperties.selection().observe(btnSolvent);
-		IObservableValue standardSolventIoObserveValue = PojoProperties.value(
-				"standardSolvent").observe(io);
-		bindingContext.bindValue(observeSelectionBtnSolventObserveWidget,
-				standardSolventIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnGeneralStepsObserveWidget = WidgetProperties.selection().observe(spnGeneralSteps);
-		IObservableValue standardStepsIoObserveValue = PojoProperties.value(
-				"standardSteps").observe(io);
-		bindingContext.bindValue(observeSelectionSpnGeneralStepsObserveWidget,
-				standardStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnSoluteStepsObserveWidget = WidgetProperties.selection().observe(spnSoluteSteps);
-		IObservableValue standardSolutesStepsIoObserveValue = PojoProperties
-				.value("standardSolutesSteps").observe(io);
-		bindingContext.bindValue(observeSelectionSpnSoluteStepsObserveWidget,
-				standardSolutesStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnSolventStepsObserveWidget = WidgetProperties.selection().observe(spnSolventSteps);
-		IObservableValue standardSolventStepsIoObserveValue = PojoProperties
-				.value("standardSolventSteps").observe(io);
-		bindingContext.bindValue(observeSelectionSpnSolventStepsObserveWidget,
-				standardSolventStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnRestartSoluteObserveWidget = WidgetProperties
-				.selection().observe(btnRestartSolute);
-		IObservableValue restartSoluteIoObserveValue = PojoProperties.value(
-				"restartSolute").observe(io);
-		bindingContext.bindValue(observeSelectionBtnRestartSoluteObserveWidget,
-				restartSoluteIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnRestartSolventObserveWidget = WidgetProperties
-				.selection().observe(btnRestartSolvent);
-		IObservableValue restartSolventIoObserveValue = PojoProperties.value(
-				"restartSolvent").observe(io);
-		bindingContext.bindValue(
-				observeSelectionBtnRestartSolventObserveWidget,
-				restartSolventIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionCmbRestartSoluteTypeObserveWidget = WidgetProperties
-				.selection().observe(cmbRestartSoluteType);
-		IObservableValue restartSoluteTypeIoObserveValue = PojoProperties
-				.value("restartSoluteType").observe(io);
-		bindingContext.bindValue(
-				observeSelectionCmbRestartSoluteTypeObserveWidget,
-				restartSoluteTypeIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnRestartSoluteStepsObserveWidget = WidgetProperties
-				.selection().observe(spnRestartSoluteSteps);
-		IObservableValue restartSoluteStepsIoObserveValue = PojoProperties
-				.value("restartSoluteSteps").observe(io);
-		bindingContext.bindValue(
-				observeSelectionSpnRestartSoluteStepsObserveWidget,
-				restartSoluteStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionCmbRestartSolventTypeObserveWidget = WidgetProperties
-				.selection().observe(cmbRestartSolventType);
-		IObservableValue restartSolventTypeIoObserveValue = PojoProperties
-				.value("restartSolventType").observe(io);
-		bindingContext.bindValue(
-				observeSelectionCmbRestartSolventTypeObserveWidget,
-				restartSolventTypeIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnRestartSolventStepsObserveWidget = WidgetProperties
-				.selection().observe(spnRestartSolventSteps);
-		IObservableValue restartSolventStepsIoObserveValue = PojoProperties
-				.value("restartSolventSteps").observe(io);
-		bindingContext.bindValue(
-				observeSelectionSpnRestartSolventStepsObserveWidget,
-				restartSolventStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnSoluteHistoryObserveWidget = WidgetProperties
-				.selection().observe(btnSoluteHistory);
-		IObservableValue historySoluteIoObserveValue = PojoProperties.value(
-				"historySolute").observe(io);
-		bindingContext.bindValue(observeSelectionBtnSoluteHistoryObserveWidget,
-				historySoluteIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionCmbSoluteHistoryTypeObserveWidget = WidgetProperties
-				.selection().observe(cmbSoluteHistoryType);
-		IObservableValue historySoluteTypeIoObserveValue = PojoProperties
-				.value("historySoluteType").observe(io);
-		bindingContext.bindValue(
-				observeSelectionCmbSoluteHistoryTypeObserveWidget,
-				historySoluteTypeIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnSoluteHistoryStepsObserveWidget = WidgetProperties
-				.selection().observe(spnSoluteHistorySteps);
-		IObservableValue historySoluteStepsIoObserveValue = PojoProperties
-				.value("historySoluteSteps").observe(io);
-		bindingContext.bindValue(
-				observeSelectionSpnSoluteHistoryStepsObserveWidget,
-				historySoluteStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnSolventHistoryObserveWidget = WidgetProperties
-				.selection().observe(btnSolventHistory);
-		IObservableValue historySolventIoObserveValue = PojoProperties.value(
-				"historySolvent").observe(io);
-		bindingContext.bindValue(
-				observeSelectionBtnSolventHistoryObserveWidget,
-				historySolventIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionCmbSolventHistoryTypeObserveWidget = WidgetProperties
-				.selection().observe(cmbSolventHistoryType);
-		IObservableValue historySolventTypeIoObserveValue = PojoProperties
-				.value("historySolventType").observe(io);
-		bindingContext.bindValue(
-				observeSelectionCmbSolventHistoryTypeObserveWidget,
-				historySolventTypeIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnSolventHistoryStepsObserveWidget = WidgetProperties
-				.selection().observe(spnSolventHistorySteps);
-		IObservableValue historySolventStepsIoObserveValue = PojoProperties
-				.value("historySolventSteps").observe(io);
-		bindingContext.bindValue(
-				observeSelectionSpnSolventHistoryStepsObserveWidget,
-				historySolventStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnGeneralXYZObserveWidget = WidgetProperties
-				.selection().observe(btnGeneralXYZ);
-		IObservableValue xyzSystemIoObserveValue = PojoProperties.value(
-				"xyzSystem").observe(io);
-		bindingContext.bindValue(observeSelectionBtnGeneralXYZObserveWidget,
-				xyzSystemIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnGeneralXYZStepsObserveWidget = WidgetProperties
-				.selection().observe(spnGeneralXYZSteps);
-		IObservableValue xyzSystemStepsIoObserveValue = PojoProperties.value(
-				"xyzSystemSteps").observe(io);
-		bindingContext.bindValue(
-				observeSelectionSpnGeneralXYZStepsObserveWidget,
-				xyzSystemStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnSoluteXYZObserveWidget = WidgetProperties
-				.selection().observe(btnSoluteXYZ);
-		IObservableValue xyzSoluteIoObserveValue = PojoProperties.value(
-				"xyzSolute").observe(io);
-		bindingContext.bindValue(observeSelectionBtnSoluteXYZObserveWidget,
-				xyzSoluteIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionCmbSoluteXYZTypeObserveWidget = WidgetProperties
-				.selection().observe(cmbSoluteXYZType);
-		IObservableValue xyzSoluteTypeIoObserveValue = PojoProperties.value(
-				"xyzSoluteType").observe(io);
-		bindingContext.bindValue(observeSelectionCmbSoluteXYZTypeObserveWidget,
-				xyzSoluteTypeIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnSoluteXYZStepsObserveWidget = WidgetProperties
-				.selection().observe(spnSoluteXYZSteps);
-		IObservableValue xyzSoluteStepsIoObserveValue = PojoProperties.value(
-				"xyzSoluteSteps").observe(io);
-		bindingContext.bindValue(
-				observeSelectionSpnSoluteXYZStepsObserveWidget,
-				xyzSoluteStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnSolventXYZObserveWidget = WidgetProperties
-				.selection().observe(btnSolventXYZ);
-		IObservableValue xyzSolventIoObserveValue = PojoProperties.value(
-				"xyzSolvent").observe(io);
-		bindingContext.bindValue(observeSelectionBtnSolventXYZObserveWidget,
-				xyzSolventIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionCmbSolventXYZTypeObserveWidget = WidgetProperties
-				.selection().observe(cmbSolventXYZType);
-		IObservableValue xyzSolventTypeIoObserveValue = PojoProperties.value(
-				"xyzSolventType").observe(io);
-		bindingContext.bindValue(
-				observeSelectionCmbSolventXYZTypeObserveWidget,
-				xyzSolventTypeIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnSolventXYZStepsObserveWidget = WidgetProperties
-				.selection().observe(spnSolventXYZSteps);
-		IObservableValue xyzSolventStepsIoObserveValue = PojoProperties.value(
-				"xyzSolventSteps").observe(io);
-		bindingContext.bindValue(
-				observeSelectionSpnSolventXYZStepsObserveWidget,
-				xyzSolventStepsIoObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnGeneralXYZObserveWidget_1 = WidgetProperties
-				.selection().observe(btnGeneralXYZ);
-		IObservableValue observeEnabledSpnGeneralXYZStepsObserveWidget = WidgetProperties
-				.enabled().observe(spnGeneralXYZSteps);
-		bindingContext.bindValue(observeSelectionBtnGeneralXYZObserveWidget_1,
-				observeEnabledSpnGeneralXYZStepsObserveWidget, null,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		//
-		IObservableValue observeSelectionBtnSoluteXYZObserveWidget_1 = WidgetProperties
-				.selection().observe(btnSoluteXYZ);
-		IObservableValue observeEnabledCmbSoluteXYZTypeObserveWidget = WidgetProperties
-				.enabled().observe(cmbSoluteXYZType);
-		bindingContext.bindValue(observeSelectionBtnSoluteXYZObserveWidget_1,
-				observeEnabledCmbSoluteXYZTypeObserveWidget, null,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		//
-		IObservableValue observeSelectionBtnSoluteXYZObserveWidget_2 = WidgetProperties
-				.selection().observe(btnSoluteXYZ);
-		IObservableValue observeEnabledSpnSoluteXYZStepsObserveWidget = WidgetProperties
-				.enabled().observe(spnSoluteXYZSteps);
-		bindingContext.bindValue(observeSelectionBtnSoluteXYZObserveWidget_2,
-				observeEnabledSpnSoluteXYZStepsObserveWidget, null,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		//
-		IObservableValue observeSelectionBtnSolventXYZObserveWidget_1 = WidgetProperties
-				.selection().observe(btnSolventXYZ);
-		IObservableValue observeEnabledCmbSolventXYZTypeObserveWidget = WidgetProperties
-				.enabled().observe(cmbSolventXYZType);
-		bindingContext.bindValue(observeSelectionBtnSolventXYZObserveWidget_1,
-				observeEnabledCmbSolventXYZTypeObserveWidget, null,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		//
-		IObservableValue observeSelectionBtnSolventXYZObserveWidget_2 = WidgetProperties
-				.selection().observe(btnSolventXYZ);
-		IObservableValue observeEnabledSpnSolventXYZStepsObserveWidget = WidgetProperties
-				.enabled().observe(spnSolventXYZSteps);
-		bindingContext.bindValue(observeSelectionBtnSolventXYZObserveWidget_2,
-				observeEnabledSpnSolventXYZStepsObserveWidget, null,
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
-		//
 		return bindingContext;
+	}
+
+	public Button getBtnSolvent() {
+		return btnSolvent;
+	}
+
+	public Button getBtnSoluteHistory() {
+		return btnSoluteHistory;
+	}
+
+	public Button getBtnSolute() {
+		return btnSolute;
+	}
+
+	public Spinner getSpnUserOutputSteps() {
+		return spnUserOutputSteps;
+	}
+
+	public Button getBtnRestartSolute() {
+		return btnRestartSolute;
+	}
+
+	public Combo getCmbRestartSoluteType() {
+		return cmbRestartSoluteType;
+	}
+
+	public Combo getCmbSolventHistoryType() {
+		return cmbSolventHistoryType;
+	}
+
+	public Spinner getSpnRestartSoluteSteps() {
+		return spnRestartSoluteSteps;
+	}
+
+	public Spinner getSpnSoluteHistorySteps() {
+		return spnSoluteHistorySteps;
+	}
+
+	public Combo getCmbSoluteXYZType() {
+		return cmbSoluteXYZType;
+	}
+
+	public Spinner getSpnGeneralXYZSteps() {
+		return spnGeneralXYZSteps;
+	}
+
+	public Spinner getSpnSoluteSteps() {
+		return spnSoluteSteps;
+	}
+
+	public Button getBtnSolventHistory() {
+		return btnSolventHistory;
+	}
+
+	public Combo getCmbRestartSolventType() {
+		return cmbRestartSolventType;
+	}
+
+	public Spinner getSpnSolventHistorySteps() {
+		return spnSolventHistorySteps;
+	}
+
+	public Spinner getSpnRestartSolventSteps() {
+		return spnRestartSolventSteps;
+	}
+
+	public Button getBtnEndtoendDistances() {
+		return btnEndtoendDistances;
+	}
+
+	public Button getBtnRestartSolvent() {
+		return btnRestartSolvent;
+	}
+
+	public Spinner getSpnSoluteXYZSteps() {
+		return spnSoluteXYZSteps;
+	}
+
+	public Spinner getSpnSolventXYZSteps() {
+		return spnSolventXYZSteps;
+	}
+
+	public Combo getCmbSolventXYZType() {
+		return cmbSolventXYZType;
+	}
+
+	public Spinner getSpnSolventSteps() {
+		return spnSolventSteps;
+	}
+
+	public Button getBtnGeneralXYZ() {
+		return btnGeneralXYZ;
+	}
+
+	public Combo getCmbSoluteHistoryType() {
+		return cmbSoluteHistoryType;
+	}
+
+	public Button getBtnSolventXYZ() {
+		return btnSolventXYZ;
+	}
+
+	public Button getBtnGeneral() {
+		return btnGeneral;
+	}
+
+	public Spinner getSpnGeneralSteps() {
+		return spnGeneralSteps;
+	}
+
+	public Button getBtnSoluteXYZ() {
+		return btnSoluteXYZ;
 	}
 }

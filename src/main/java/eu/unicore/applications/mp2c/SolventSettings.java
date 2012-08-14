@@ -32,10 +32,6 @@
 package eu.unicore.applications.mp2c;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -43,10 +39,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-
-import eu.unicore.applications.mp2c.converters.DoubleToStringConverter;
-import eu.unicore.applications.mp2c.converters.StringToDoubleConverter;
-import eu.unicore.applications.mp2c.model.Solvent;
 
 /**
  * @author bjoernh
@@ -58,7 +50,6 @@ public class SolventSettings extends Composite {
 	private DataBindingContext m_bindingContext;
 	private Text txtPartmass;
 	private Text txtFreepath;
-	private Solvent solvent;
 	private Spinner spnParticlesPerCell;
 	private Spinner spnNrParticles;
 	private Spinner rotAngle;
@@ -68,12 +59,9 @@ public class SolventSettings extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public SolventSettings(Composite parent, int style,
- Solvent solvent2) {
+	public SolventSettings(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
-
-		this.solvent = solvent2;
 
 		Label lblParticlesPerCollision = new Label(this, SWT.NONE);
 		lblParticlesPerCollision.setText("Particles per collision cell");
@@ -116,51 +104,6 @@ public class SolventSettings extends Composite {
 	}
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
-		//
-		IObservableValue observeSelectionSpnParticlesPerCellObserveWidget = WidgetProperties
-				.selection().observe(spnParticlesPerCell);
-		IObservableValue partsPerCellSolventObserveValue = PojoProperties
-				.value("partsPerCell").observe(solvent);
-		bindingContext.bindValue(
-				observeSelectionSpnParticlesPerCellObserveWidget,
-				partsPerCellSolventObserveValue, null, null);
-		//
-		IObservableValue observeSelectionSpnNrParticlesObserveWidget = WidgetProperties
-				.selection().observe(spnNrParticles);
-		IObservableValue particlesSolventObserveValue = PojoProperties.value(
-				"particles").observe(solvent);
-		bindingContext.bindValue(observeSelectionSpnNrParticlesObserveWidget,
-				particlesSolventObserveValue, null, null);
-		//
-		IObservableValue observeTextTxtPartmassObserveWidget = WidgetProperties
-				.text(SWT.Modify).observe(txtPartmass);
-		IObservableValue massSolventObserveValue = PojoProperties.value("mass")
-				.observe(solvent);
-		UpdateValueStrategy strategy = new UpdateValueStrategy();
-		strategy.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_1 = new UpdateValueStrategy();
-		strategy_1.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextTxtPartmassObserveWidget,
-				massSolventObserveValue, strategy, strategy_1);
-		//
-		IObservableValue observeTextTxtFreepathObserveWidget = WidgetProperties
-				.text(SWT.Modify).observe(txtFreepath);
-		IObservableValue lambdaSolventObserveValue = PojoProperties.value(
-				"lambda").observe(solvent);
-		UpdateValueStrategy strategy_2 = new UpdateValueStrategy();
-		strategy_2.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_3 = new UpdateValueStrategy();
-		strategy_3.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextTxtFreepathObserveWidget,
-				lambdaSolventObserveValue, strategy_2, strategy_3);
-		//
-		IObservableValue observeSelectionRotAngleObserveWidget = WidgetProperties
-				.selection().observe(rotAngle);
-		IObservableValue alphaSolventObserveValue = PojoProperties.value(
-				"alpha").observe(solvent);
-		bindingContext.bindValue(observeSelectionRotAngleObserveWidget,
-				alphaSolventObserveValue, null, null);
-		//
 		return bindingContext;
 	}
 }

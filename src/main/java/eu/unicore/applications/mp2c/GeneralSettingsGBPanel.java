@@ -31,13 +31,16 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
+import java.util.Arrays;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
-import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
-
-import eu.unicore.applications.mp2c.model.Control;
+import com.intel.gpe.gridbeans.plugins.DataSetException;
+import com.intel.gpe.gridbeans.plugins.TranslationException;
+import com.intel.gpe.gridbeans.plugins.translators.DoubleValueTranslator;
+import com.intel.gpe.gridbeans.plugins.validators.DoubleValueValidator;
 
 /**
  * @author bjoernh
@@ -45,24 +48,138 @@ import eu.unicore.applications.mp2c.model.Control;
  *         23.03.2012 11:52:35
  * 
  */
-public class GeneralSettingsGBPanel extends SWTGridBeanPanel {
+public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 
-	private Control generalConfig;
+	private GeneralSettings generalSettings;
 
 	/**
 	 * @param client
 	 * @param name
 	 */
-	public GeneralSettingsGBPanel(Client client, String name, Control control) {
+	public GeneralSettingsGBPanel(Client client, String name) {
 		super(client, name);
-		this.generalConfig = control;
 	}
 
 	/**
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new GeneralSettings(parent, SWT.NONE, generalConfig);
+		try {
+			generalSettings = new GeneralSettings(parent, SWT.NONE);
+			linkCheckButton(MP2CGridBeanParameters.CTRL_SIM_SOLUTE,
+					generalSettings.getBtnSolute());
+			generalSettings
+					.getBtnSolute()
+					.setSelection(
+					(Boolean) getValue(MP2CGridBeanParameters.CTRL_SIM_SOLUTE));
+			linkSpinBox(MP2CGridBeanParameters.CTRL_TIMESTEPS,
+					generalSettings.getNrTimeStepsSpinner());
+			linkCheckButton(MP2CGridBeanParameters.CTRL_SIM_SOLVENT,
+					generalSettings.getBtnSolvent());
+			linkSpinBox(MP2CGridBeanParameters.CTRL_TEMPERATURE,
+					generalSettings.getTemperature());
+			linkCheckButton(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE,
+					generalSettings.getBtnExternalForce());
+			linkSpinBox(MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL,
+					generalSettings.getCollisionSteps());
+
+			// BOX RATIO X
+			linkTextField(MP2CGridBeanParameters.CTRL_BOX_RATIO_X,
+					generalSettings.getBrX());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_BOX_RATIO_X,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_BOX_RATIO_X,
+					new DoubleValueValidator());
+			// BOX RATIO Y
+			linkTextField(MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
+					generalSettings.getBrY());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
+					new DoubleValueValidator());
+			// BOX RATIO Z
+			linkTextField(MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
+					generalSettings.getBrZ());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
+					new DoubleValueValidator());
+
+			linkComboBox(MP2CGridBeanParameters.CTRL_BC_X,
+					generalSettings.getBcX());
+			linkComboBox(MP2CGridBeanParameters.CTRL_BC_Y,
+					generalSettings.getBcY());
+			linkComboBox(MP2CGridBeanParameters.CTRL_BC_Z,
+					generalSettings.getBcZ());
+
+			try {
+				setPossibleValues(MP2CGridBeanParameters.CTRL_BC_X,
+						Arrays.asList(generalSettings.getBcX().getItems()));
+				setPossibleValues(MP2CGridBeanParameters.CTRL_BC_Y,
+						Arrays.asList(generalSettings.getBcX().getItems()));
+				setPossibleValues(MP2CGridBeanParameters.CTRL_BC_Z,
+						Arrays.asList(generalSettings.getBcX().getItems()));
+			} catch (TranslationException e) {
+				// TODO react appropriately
+				e.printStackTrace();
+			}
+
+			// EXT FORCE X
+			linkTextField(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
+					generalSettings.getExtForceX());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
+					new DoubleValueValidator());
+			// EXT FORCE Y
+			linkTextField(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
+					generalSettings.getExtForceY());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
+					new DoubleValueValidator());
+			// EXT FORCE Z
+			linkTextField(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
+					generalSettings.getExtForceZ());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
+					new DoubleValueValidator());
+			// SHEAR RATE X
+			linkTextField(MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
+					generalSettings.getShearRateX());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
+					new DoubleValueValidator());
+			// SHEAR RATE Y
+			linkTextField(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
+					generalSettings.getShearRateY());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
+					new DoubleValueValidator());
+			// SHEAR RATE Z
+			linkTextField(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
+					generalSettings.getShearRateZ());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
+					new DoubleValueValidator());
+
+			linkCheckButton(MP2CGridBeanParameters.CTRL_RESTART_SOLUTE,
+					generalSettings.getBtnRestartSolute());
+			linkCheckButton(MP2CGridBeanParameters.CTRL_RESTART_SOLVENT,
+					generalSettings.getBtnRestartSolvent());
+
+			linkSpinBox(MP2CGridBeanParameters.CTRL_RANDOM_SEED,
+					generalSettings.getSpinnerRandomSeed());
+
+		} catch (DataSetException e) {
+			throw new RuntimeException(e);
+		} catch (TranslationException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

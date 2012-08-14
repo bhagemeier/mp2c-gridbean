@@ -20,10 +20,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
-import eu.unicore.applications.mp2c.converters.DoubleToStringConverter;
-import eu.unicore.applications.mp2c.converters.StringToDoubleConverter;
-import eu.unicore.applications.mp2c.model.Control;
-
 public class GeneralSettings extends Composite {
 	private DataBindingContext m_bindingContext;
 	private Text extForceX;
@@ -35,7 +31,6 @@ public class GeneralSettings extends Composite {
 	private Text brX;
 	private Text brY;
 	private Text brZ;
-	private Control generalConfig;
 	private Spinner spinnerRandomSeed;
 	private Combo bcX;
 	private Combo bcY;
@@ -56,12 +51,9 @@ public class GeneralSettings extends Composite {
 	 * @param style
 	 * @param generalConfig2
 	 */
-	public GeneralSettings(Composite parent, int style,
- Control generalConfig2) {
+	public GeneralSettings(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
-		
-		this.generalConfig = generalConfig2;
 		
 		Group grpGeneral = new Group(this, SWT.NONE);
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
@@ -88,6 +80,7 @@ public class GeneralSettings extends Composite {
 		lblTemperature.setText("Temperature");
 		
 		temperature = new Spinner(grpGeneral, SWT.BORDER);
+		temperature.setMaximum(1000);
 		GridData gd_temperature = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_temperature.widthHint = 73;
 		temperature.setLayoutData(gd_temperature);
@@ -196,7 +189,8 @@ public class GeneralSettings extends Composite {
 		spinnerRandomSeed = new Spinner(grpOther, SWT.BORDER);
 		spinnerRandomSeed.setMaximum(Integer.MAX_VALUE);
 		spinnerRandomSeed.setMinimum(-2147483648);
-		spinnerRandomSeed.setSelection(generalConfig.getRandomSeed());
+		// gridbean model
+		// spinnerRandomSeed.setSelection(generalConfig.getRandomSeed());
 		
 		Button btnRandomize = new Button(grpOther, SWT.NONE);
 		btnRandomize.addSelectionListener(new SelectionAdapter() {
@@ -217,14 +211,14 @@ public class GeneralSettings extends Composite {
 		new Label(grpOther, SWT.NONE);
 		new Label(grpOther, SWT.NONE);
 		
-		Button btnPrintconfig = new Button(this, SWT.NONE);
-		btnPrintconfig.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				System.out.println(generalConfig.toString());
-			}
-		});
-		btnPrintconfig.setText("PrintConfig");
+		// Button btnPrintconfig = new Button(this, SWT.NONE);
+		// btnPrintconfig.addSelectionListener(new SelectionAdapter() {
+		// @Override
+		// public void widgetSelected(SelectionEvent e) {
+		// System.out.println(generalConfig.toString());
+		// }
+		// });
+		// btnPrintconfig.setText("PrintConfig");
 		m_bindingContext = initDataBindings();
 
 	}
@@ -263,175 +257,90 @@ public class GeneralSettings extends Composite {
 				enabledExtForceZObserveValue, null, new UpdateValueStrategy(
 						UpdateValueStrategy.POLICY_NEVER));
 		//
-		IObservableValue observeSelectionBtnSoluteObserveWidget = WidgetProperties
-				.selection().observe(btnSolute);
-		IObservableValue simulateSoluteGeneralConfigObserveValue = PojoProperties
-				.value("simulateSolute").observe(generalConfig);
-		bindingContext.bindValue(observeSelectionBtnSoluteObserveWidget,
-				simulateSoluteGeneralConfigObserveValue, null, null);
-		//
-		IObservableValue observeSelectionNrTimeStepsSpinnerObserveWidget = WidgetProperties
-				.selection().observe(nrTimeStepsSpinner);
-		IObservableValue timeStepsGeneralConfigObserveValue = PojoProperties
-				.value("timeSteps").observe(generalConfig);
-		bindingContext.bindValue(
-				observeSelectionNrTimeStepsSpinnerObserveWidget,
-				timeStepsGeneralConfigObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnSolventObserveWidget = WidgetProperties
-				.selection().observe(btnSolvent);
-		IObservableValue simulateSolventGeneralConfigObserveValue = PojoProperties
-				.value("simulateSolvent").observe(generalConfig);
-		bindingContext.bindValue(observeSelectionBtnSolventObserveWidget,
-				simulateSolventGeneralConfigObserveValue, null, null);
-		//
-		IObservableValue observeSelectionTemperatureObserveWidget = WidgetProperties
-				.selection().observe(temperature);
-		IObservableValue temperatureGeneralConfigObserveValue = PojoProperties
-				.value("temperature").observe(generalConfig);
-		bindingContext.bindValue(observeSelectionTemperatureObserveWidget,
-				temperatureGeneralConfigObserveValue, null, null);
-		//
-		IObservableValue observeSelectionCollisionStepsObserveWidget = WidgetProperties
-				.selection().observe(collisionSteps);
-		IObservableValue collisionStepsGeneralConfigObserveValue = PojoProperties
-				.value("collisionSteps").observe(generalConfig);
-		bindingContext.bindValue(observeSelectionCollisionStepsObserveWidget,
-				collisionStepsGeneralConfigObserveValue, null, null);
-		//
-		IObservableValue observeTextBrXObserveWidget = WidgetProperties.text(
-				SWT.Modify).observe(brX);
-		IObservableValue boxRatioXGeneralConfigObserveValue = PojoProperties
-				.value("boxRatioX").observe(generalConfig);
-		UpdateValueStrategy strategy = new UpdateValueStrategy();
-		strategy.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_1 = new UpdateValueStrategy();
-		strategy_1.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextBrXObserveWidget,
-				boxRatioXGeneralConfigObserveValue, strategy, strategy_1);
-		//
-		IObservableValue observeTextBrYObserveWidget = WidgetProperties.text(
-				SWT.Modify).observe(brY);
-		IObservableValue boxRatioYGeneralConfigObserveValue = PojoProperties
-				.value("boxRatioY").observe(generalConfig);
-		UpdateValueStrategy strategy_2 = new UpdateValueStrategy();
-		strategy_2.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_3 = new UpdateValueStrategy();
-		strategy_3.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextBrYObserveWidget,
-				boxRatioYGeneralConfigObserveValue, strategy_2, strategy_3);
-		//
-		IObservableValue observeTextBrZObserveWidget = WidgetProperties.text(
-				SWT.Modify).observe(brZ);
-		IObservableValue boxRatioZGeneralConfigObserveValue = PojoProperties
-				.value("boxRatioZ").observe(generalConfig);
-		UpdateValueStrategy strategy_4 = new UpdateValueStrategy();
-		strategy_4.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_5 = new UpdateValueStrategy();
-		strategy_5.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextBrZObserveWidget,
-				boxRatioZGeneralConfigObserveValue, strategy_4, strategy_5);
-		//
-		IObservableValue observeSelectionBcXObserveWidget = WidgetProperties
-				.selection().observe(bcX);
-		IObservableValue bcXGeneralConfigObserveValue = PojoProperties.value(
-				"bcX").observe(generalConfig);
-		bindingContext.bindValue(observeSelectionBcXObserveWidget,
-				bcXGeneralConfigObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBcYObserveWidget = WidgetProperties
-				.selection().observe(bcY);
-		IObservableValue bcYGeneralConfigObserveValue = PojoProperties.value(
-				"bcY").observe(generalConfig);
-		bindingContext.bindValue(observeSelectionBcYObserveWidget,
-				bcYGeneralConfigObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBcZObserveWidget = WidgetProperties
-				.selection().observe(bcZ);
-		IObservableValue bcZGeneralConfigObserveValue = PojoProperties.value(
-				"bcZ").observe(generalConfig);
-		bindingContext.bindValue(observeSelectionBcZObserveWidget,
-				bcZGeneralConfigObserveValue, null, null);
-		//
-		IObservableValue observeTextExtForceXObserveWidget = WidgetProperties
-				.text(SWT.Modify).observe(extForceX);
-		IObservableValue externalForceXGeneralConfigObserveValue = PojoProperties
-				.value("externalForceX").observe(generalConfig);
-		UpdateValueStrategy strategy_6 = new UpdateValueStrategy();
-		strategy_6.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_7 = new UpdateValueStrategy();
-		strategy_7.setConverter(new DoubleToStringConverter());
-		bindingContext
-				.bindValue(observeTextExtForceXObserveWidget,
-						externalForceXGeneralConfigObserveValue, strategy_6,
-						strategy_7);
-		//
-		IObservableValue observeTextExtForceYObserveWidget = WidgetProperties
-				.text(SWT.Modify).observe(extForceY);
-		IObservableValue externalForceYGeneralConfigObserveValue = PojoProperties
-				.value("externalForceY").observe(generalConfig);
-		UpdateValueStrategy strategy_8 = new UpdateValueStrategy();
-		strategy_8.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_9 = new UpdateValueStrategy();
-		strategy_9.setConverter(new DoubleToStringConverter());
-		bindingContext
-				.bindValue(observeTextExtForceYObserveWidget,
-						externalForceYGeneralConfigObserveValue, strategy_8,
-						strategy_9);
-		//
-		IObservableValue observeTextExtForceZObserveWidget = WidgetProperties
-				.text(SWT.Modify).observe(extForceZ);
-		IObservableValue externalForceZGeneralConfigObserveValue = PojoProperties
-				.value("externalForceZ").observe(generalConfig);
-		UpdateValueStrategy strategy_10 = new UpdateValueStrategy();
-		strategy_10.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_11 = new UpdateValueStrategy();
-		strategy_11.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextExtForceZObserveWidget,
-				externalForceZGeneralConfigObserveValue, strategy_10,
-				strategy_11);
-		//
-		IObservableValue observeTextShearRateXObserveWidget = WidgetProperties
-				.text(SWT.Modify).observe(shearRateX);
-		IObservableValue shearRateXGeneralConfigObserveValue = PojoProperties
-				.value("shearRateX").observe(generalConfig);
-		UpdateValueStrategy strategy_12 = new UpdateValueStrategy();
-		strategy_12.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_13 = new UpdateValueStrategy();
-		strategy_13.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextShearRateXObserveWidget,
-				shearRateXGeneralConfigObserveValue, strategy_12, strategy_13);
-		//
-		IObservableValue observeTextShearRateYObserveWidget = WidgetProperties
-				.text(SWT.Modify).observe(shearRateY);
-		IObservableValue shearRateYGeneralConfigObserveValue = PojoProperties
-				.value("shearRateY").observe(generalConfig);
-		UpdateValueStrategy strategy_14 = new UpdateValueStrategy();
-		strategy_14.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_15 = new UpdateValueStrategy();
-		strategy_15.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextShearRateYObserveWidget,
-				shearRateYGeneralConfigObserveValue, strategy_14, strategy_15);
-		//
-		IObservableValue observeTextShearRateZObserveWidget = WidgetProperties
-				.text(SWT.Modify).observe(shearRateZ);
-		IObservableValue shearRateZGeneralConfigObserveValue = PojoProperties
-				.value("shearRateZ").observe(generalConfig);
-		UpdateValueStrategy strategy_16 = new UpdateValueStrategy();
-		strategy_16.setConverter(new StringToDoubleConverter());
-		UpdateValueStrategy strategy_17 = new UpdateValueStrategy();
-		strategy_17.setConverter(new DoubleToStringConverter());
-		bindingContext.bindValue(observeTextShearRateZObserveWidget,
-				shearRateZGeneralConfigObserveValue, strategy_16, strategy_17);
-		//
-		IObservableValue observeSelectionSpinnerRandomSeedObserveWidget = WidgetProperties
-				.selection().observe(spinnerRandomSeed);
-		IObservableValue randomSeedGeneralConfigObserveValue = PojoProperties
-				.value("randomSeed").observe(generalConfig);
-		bindingContext.bindValue(
-				observeSelectionSpinnerRandomSeedObserveWidget,
-				randomSeedGeneralConfigObserveValue, null, null);
-		//
 		return bindingContext;
+	}
+
+	public Button getBtnSolute() {
+		return btnSolute;
+	}
+
+	public Spinner getCollisionSteps() {
+		return collisionSteps;
+	}
+
+	public Spinner getNrTimeStepsSpinner() {
+		return nrTimeStepsSpinner;
+	}
+
+	public Button getBtnSolvent() {
+		return btnSolvent;
+	}
+
+	public Spinner getTemperature() {
+		return temperature;
+	}
+
+	public Button getBtnExternalForce() {
+		return btnExternalForce;
+	}
+
+	public Text getShearRateY() {
+		return shearRateY;
+	}
+
+	public Combo getBcY() {
+		return bcY;
+	}
+
+	public Text getExtForceX() {
+		return extForceX;
+	}
+
+	public Combo getBcX() {
+		return bcX;
+	}
+
+	public Text getBrZ() {
+		return brZ;
+	}
+
+	public Text getShearRateX() {
+		return shearRateX;
+	}
+
+	public Text getBrX() {
+		return brX;
+	}
+
+	public Text getExtForceZ() {
+		return extForceZ;
+	}
+
+	public Text getExtForceY() {
+		return extForceY;
+	}
+
+	public Text getShearRateZ() {
+		return shearRateZ;
+	}
+
+	public Text getBrY() {
+		return brY;
+	}
+
+	public Combo getBcZ() {
+		return bcZ;
+	}
+
+	public Spinner getSpinnerRandomSeed() {
+		return spinnerRandomSeed;
+	}
+
+	public Button getBtnRestartSolute() {
+		return btnRestartSolute;
+	}
+
+	public Button getBtnRestartSolvent() {
+		return btnRestartSolvent;
 	}
 }
