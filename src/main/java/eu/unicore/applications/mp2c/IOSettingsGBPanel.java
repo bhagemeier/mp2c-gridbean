@@ -31,10 +31,13 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
+import com.intel.gpe.gridbeans.plugins.DataSetException;
+import com.intel.gpe.gridbeans.plugins.translators.StringValueTranslator;
 
 /**
  * @author bjoernh
@@ -61,22 +64,30 @@ public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	public void createControl(Composite parent) {
 		IOSettings io = new IOSettings(parent, SWT.NONE);
 
+		try {
 		// standard io
 		// std out
 		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_OUT,
 				io.getBtnGeneral());
+
 		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS,
 				io.getSpnGeneralSteps());
+
+
 		// solute
 		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_SOLUTES,
 				io.getBtnSolute());
+
 		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS,
 				io.getSpnSoluteSteps());
+
 		// solvent
 		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_SOLVENT,
 				io.getBtnSolvent());
+
 		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS,
 				io.getSpnSolventSteps());
+
 
 		// restart information
 		// solute
@@ -84,13 +95,19 @@ public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 				io.getBtnRestartSolute());
 		linkComboBox(MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
 				io.getCmbRestartSoluteType());
+			setValueTranslator(MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
+					new StringValueTranslator());
 		linkSpinBox(MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS,
 				io.getSpnRestartSoluteSteps());
+
 		// solvent
 		linkCheckButton(MP2CGridBeanParameters.IO_RESTART_SOLVENT,
 				io.getBtnRestartSolute());
 		linkComboBox(MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
 				io.getCmbRestartSoluteType());
+			setValueTranslator(MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
+					new StringValueTranslator());
+
 		linkSpinBox(MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS,
 				io.getSpnRestartSoluteSteps());
 
@@ -100,6 +117,9 @@ public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 				io.getBtnSoluteHistory());
 		linkComboBox(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
 				io.getCmbSoluteHistoryType());
+			setValueTranslator(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
+					new StringValueTranslator());
+
 		linkSpinBox(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS,
 				io.getSpnSoluteHistorySteps());
 
@@ -108,6 +128,9 @@ public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 				io.getBtnSolventHistory());
 		linkComboBox(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
 				io.getCmbSolventHistoryType());
+			setValueTranslator(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
+					new StringValueTranslator());
+
 		linkSpinBox(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS,
 				io.getSpnSolventHistorySteps());
 
@@ -117,18 +140,26 @@ public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 				io.getBtnGeneral());
 		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS,
 				io.getSpnGeneralXYZSteps());
+
 		// solute
 		linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SOLUTE,
 				io.getBtnSoluteXYZ());
 		linkComboBox(MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
 				io.getCmbSoluteXYZType());
+			setValueTranslator(MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
+					new StringValueTranslator());
+
 		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS,
 				io.getSpnSoluteXYZSteps());
+
 		// solvent
 		linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SOLVENT,
 				io.getBtnSolventXYZ());
 		linkComboBox(MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
 				io.getCmbSolventXYZType());
+			setValueTranslator(MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
+					new StringValueTranslator());
+
 		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS,
 				io.getSpnSolventXYZSteps());
 
@@ -137,6 +168,11 @@ public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 				io.getBtnEndtoendDistances());
 		linkSpinBox(MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS,
 				io.getSpnUserOutputSteps());
+
+		} catch (DataSetException e) {
+			// TODO Deal with it.
+			e.printStackTrace();
+		}
 
 	}
 

@@ -107,4 +107,8 @@ public class ParallelExecutionSettings extends Composite {
 		//
 		return bindingContext;
 	}
+
+	public Spinner getParDimSpinner() {
+		return parDimSpinner;
+	}
 }

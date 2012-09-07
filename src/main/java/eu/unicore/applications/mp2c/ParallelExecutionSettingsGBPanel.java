@@ -35,6 +35,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
+import com.intel.gpe.gridbeans.plugins.DataSetException;
 
 /**
  * @author bjoernh
@@ -44,6 +45,8 @@ import com.intel.gpe.clients.api.Client;
  */
 public class ParallelExecutionSettingsGBPanel extends MP2CSWTGridBeanPanel {
 
+
+	private ParallelExecutionSettings parEx;
 
 	/**
 	 * @param client
@@ -59,8 +62,14 @@ public class ParallelExecutionSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new ParallelExecutionSettings(parent, SWT.NONE);
+		parEx = new ParallelExecutionSettings(parent, SWT.NONE);
 
+		try {
+			linkSpinBox(MP2CGridBeanParameters.PARALLEL,
+					parEx.getParDimSpinner());
+		} catch (DataSetException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

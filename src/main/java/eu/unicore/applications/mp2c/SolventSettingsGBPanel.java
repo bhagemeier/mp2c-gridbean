@@ -35,6 +35,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
+import com.intel.gpe.gridbeans.plugins.DataSetException;
+import com.intel.gpe.gridbeans.plugins.translators.DoubleValueTranslator;
 
 /**
  * @author bjoernh
@@ -44,6 +46,8 @@ import com.intel.gpe.clients.api.Client;
  */
 public class SolventSettingsGBPanel extends MP2CSWTGridBeanPanel {
 
+
+	private SolventSettings solventSettings;
 
 	/**
 	 * @param client
@@ -59,8 +63,31 @@ public class SolventSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new SolventSettings(parent, SWT.NONE);
+		solventSettings = new SolventSettings(parent, SWT.NONE);
 
+		try {
+		linkSpinBox(MP2CGridBeanParameters.SOLVENT_PPC,
+				solventSettings.getSpnParticlesPerCell());
+
+		linkSpinBox(MP2CGridBeanParameters.SOLVENT_PARTICLES,
+				solventSettings.getSpnNrParticles());
+
+		linkTextField(MP2CGridBeanParameters.SOLVENT_MASS,
+				solventSettings.getTxtPartmass());
+		setValueTranslator(MP2CGridBeanParameters.SOLVENT_MASS,
+				new DoubleValueTranslator());
+
+			linkTextField(MP2CGridBeanParameters.SOLVENT_LAMBDA,
+					solventSettings.getTxtFreepath());
+			setValueTranslator(MP2CGridBeanParameters.SOLVENT_LAMBDA,
+					new DoubleValueTranslator());
+
+			linkSpinBox(MP2CGridBeanParameters.SOLVENT_ALPHA,
+					solventSettings.getRotAngle());
+
+		} catch (DataSetException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

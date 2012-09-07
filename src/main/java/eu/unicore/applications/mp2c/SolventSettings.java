@@ -106,4 +106,24 @@ public class SolventSettings extends Composite {
 		DataBindingContext bindingContext = new DataBindingContext();
 		return bindingContext;
 	}
+
+	public Spinner getSpnParticlesPerCell() {
+		return spnParticlesPerCell;
+	}
+
+	public Spinner getSpnNrParticles() {
+		return spnNrParticles;
+	}
+
+	public Text getTxtPartmass() {
+		return txtPartmass;
+	}
+
+	public Text getTxtFreepath() {
+		return txtFreepath;
+	}
+
+	public Spinner getRotAngle() {
+		return rotAngle;
+	}
 }

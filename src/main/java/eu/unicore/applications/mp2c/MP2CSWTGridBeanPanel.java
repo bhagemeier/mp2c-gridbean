@@ -33,11 +33,15 @@ package eu.unicore.applications.mp2c;
 
 import javax.xml.namespace.QName;
 
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Spinner;
 
 import com.intel.gpe.clients.api.Client;
+import com.intel.gpe.gridbeans.plugins.DataSetException;
 import com.intel.gpe.gridbeans.plugins.IDataControl;
 import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
+import com.intel.gpe.gridbeans.plugins.translators.BooleanToStringValueTranslator;
+import com.intel.gpe.gridbeans.plugins.translators.IntegerValueTranslator;
 import com.intel.gpe.util.defaults.preferences.INode;
 
 /**
@@ -66,14 +70,36 @@ public abstract class MP2CSWTGridBeanPanel extends SWTGridBeanPanel {
 	}
 
 	/**
+	 * And set appropriate IntegarValueTranslator
+	 * 
 	 * @param _key
 	 * @param _spinner
+	 * @throws DataSetException
 	 */
-	protected void linkSpinBox(QName _key, Spinner _spinner) {
+	protected void linkSpinBox(QName _key, Spinner _spinner)
+			throws DataSetException {
 		IDataControl control = new SWTSpinBoxControl(getClient(), _key,
 				_spinner);
 		linkDataControl(_key, control);
+
+		setValueTranslator(_key, new IntegerValueTranslator());
+	}
+
+	/**
+	 * And set the value translator automatically
+	 * 
+	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel#linkCheckButton(javax.xml.namespace.QName,
+	 *      org.eclipse.swt.widgets.Button)
+	 */
+	@Override
+	public void linkCheckButton(QName key, Button checkBox) {
 	
+		super.linkCheckButton(key, checkBox);
+		try {
+			setValueTranslator(key, new BooleanToStringValueTranslator());
+		} catch (DataSetException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

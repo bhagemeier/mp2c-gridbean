@@ -40,6 +40,7 @@ import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.gridbeans.plugins.DataSetException;
 import com.intel.gpe.gridbeans.plugins.TranslationException;
 import com.intel.gpe.gridbeans.plugins.translators.DoubleValueTranslator;
+import com.intel.gpe.gridbeans.plugins.translators.StringValueTranslator;
 import com.intel.gpe.gridbeans.plugins.validators.DoubleValueValidator;
 
 /**
@@ -66,20 +67,28 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	public void createControl(Composite parent) {
 		try {
 			generalSettings = new GeneralSettings(parent, SWT.NONE);
+			
+			// Simulate Solute
 			linkCheckButton(MP2CGridBeanParameters.CTRL_SIM_SOLUTE,
 					generalSettings.getBtnSolute());
-			generalSettings
-					.getBtnSolute()
-					.setSelection(
-					(Boolean) getValue(MP2CGridBeanParameters.CTRL_SIM_SOLUTE));
+
+			// Timesteps
 			linkSpinBox(MP2CGridBeanParameters.CTRL_TIMESTEPS,
 					generalSettings.getNrTimeStepsSpinner());
+			
+			// Simulate solvent
 			linkCheckButton(MP2CGridBeanParameters.CTRL_SIM_SOLVENT,
 					generalSettings.getBtnSolvent());
+
+			// Temperature
 			linkSpinBox(MP2CGridBeanParameters.CTRL_TEMPERATURE,
 					generalSettings.getTemperature());
+
+			// External force
 			linkCheckButton(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE,
 					generalSettings.getBtnExternalForce());
+
+			// Collision steps
 			linkSpinBox(MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL,
 					generalSettings.getCollisionSteps());
 
@@ -90,6 +99,7 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 					new DoubleValueTranslator());
 			setValueValidator(MP2CGridBeanParameters.CTRL_BOX_RATIO_X,
 					new DoubleValueValidator());
+
 			// BOX RATIO Y
 			linkTextField(MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
 					generalSettings.getBrY());
@@ -97,6 +107,7 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 					new DoubleValueTranslator());
 			setValueValidator(MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
 					new DoubleValueValidator());
+
 			// BOX RATIO Z
 			linkTextField(MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
 					generalSettings.getBrZ());
@@ -105,24 +116,36 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 			setValueValidator(MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
 					new DoubleValueValidator());
 
+			// Boundary Condidtion X
 			linkComboBox(MP2CGridBeanParameters.CTRL_BC_X,
 					generalSettings.getBcX());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_BC_X,
+					new StringValueTranslator());
+
+			// Boundary Condidtion X
 			linkComboBox(MP2CGridBeanParameters.CTRL_BC_Y,
 					generalSettings.getBcY());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_BC_Y,
+					new StringValueTranslator());
+
+			// Boundary Condidtion X
 			linkComboBox(MP2CGridBeanParameters.CTRL_BC_Z,
 					generalSettings.getBcZ());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_BC_Z,
+					new StringValueTranslator());
 
 			try {
 				setPossibleValues(MP2CGridBeanParameters.CTRL_BC_X,
 						Arrays.asList(generalSettings.getBcX().getItems()));
 				setPossibleValues(MP2CGridBeanParameters.CTRL_BC_Y,
-						Arrays.asList(generalSettings.getBcX().getItems()));
+						Arrays.asList(generalSettings.getBcY().getItems()));
 				setPossibleValues(MP2CGridBeanParameters.CTRL_BC_Z,
-						Arrays.asList(generalSettings.getBcX().getItems()));
+						Arrays.asList(generalSettings.getBcZ().getItems()));
 			} catch (TranslationException e) {
 				// TODO react appropriately
 				e.printStackTrace();
 			}
+
 
 			// EXT FORCE X
 			linkTextField(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
@@ -131,6 +154,7 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 					new DoubleValueTranslator());
 			setValueValidator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
 					new DoubleValueValidator());
+
 			// EXT FORCE Y
 			linkTextField(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
 					generalSettings.getExtForceY());
@@ -138,6 +162,7 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 					new DoubleValueTranslator());
 			setValueValidator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
 					new DoubleValueValidator());
+
 			// EXT FORCE Z
 			linkTextField(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
 					generalSettings.getExtForceZ());
@@ -145,6 +170,7 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 					new DoubleValueTranslator());
 			setValueValidator(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
 					new DoubleValueValidator());
+
 			// SHEAR RATE X
 			linkTextField(MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
 					generalSettings.getShearRateX());
@@ -152,6 +178,7 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 					new DoubleValueTranslator());
 			setValueValidator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
 					new DoubleValueValidator());
+
 			// SHEAR RATE Y
 			linkTextField(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
 					generalSettings.getShearRateY());
@@ -159,6 +186,7 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 					new DoubleValueTranslator());
 			setValueValidator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
 					new DoubleValueValidator());
+
 			// SHEAR RATE Z
 			linkTextField(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
 					generalSettings.getShearRateZ());
@@ -167,17 +195,19 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 			setValueValidator(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
 					new DoubleValueValidator());
 
+			// Restart solute
 			linkCheckButton(MP2CGridBeanParameters.CTRL_RESTART_SOLUTE,
 					generalSettings.getBtnRestartSolute());
+
+			// Restart solvent
 			linkCheckButton(MP2CGridBeanParameters.CTRL_RESTART_SOLVENT,
 					generalSettings.getBtnRestartSolvent());
 
+			// Random seed
 			linkSpinBox(MP2CGridBeanParameters.CTRL_RANDOM_SEED,
 					generalSettings.getSpinnerRandomSeed());
 
 		} catch (DataSetException e) {
-			throw new RuntimeException(e);
-		} catch (TranslationException e) {
 			throw new RuntimeException(e);
 		}
 	}
