@@ -35,8 +35,8 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Spinner;
 
 import com.intel.gpe.clients.api.Client;
@@ -52,10 +52,10 @@ import com.intel.gpe.gridbeans.plugins.swt.controls.SWTDataControl;
  *
  */
 public class SWTSpinBoxControl extends SWTDataControl implements
-		SelectionListener {
+ ModifyListener {
 
 	private final Spinner spinner;
-	private int value;
+	private String value;
 
 	/**
 	 * @param client
@@ -65,8 +65,8 @@ public class SWTSpinBoxControl extends SWTDataControl implements
 	public SWTSpinBoxControl(Client client, QName _key, Spinner _spinner) {
 		super(client, _key, _spinner);
 		this.spinner = _spinner;
-		this.value = spinner.getSelection();
-		_spinner.addSelectionListener(this);
+		this.value = Integer.toString(spinner.getSelection());
+		_spinner.addModifyListener(this);
 		listenTo = true;
 	}
 
@@ -77,10 +77,13 @@ public class SWTSpinBoxControl extends SWTDataControl implements
 	@Override
 	public void setValue(Object value) throws TranslationException,
 			UnsupportedProtocolException, DataSetException {
-		this.value = (Integer) translateTo(value);
-		if (!spinner.isDisposed())
-			spinner.setSelection(this.value);
-
+		listenTo = false;
+		this.value = (String) translateTo(value);
+		if (!spinner.isDisposed()) {
+			String text = this.value == null ? "0" : this.value;
+			spinner.setSelection(Integer.parseInt(text));
+		}
+		listenTo = true;
 	}
 
 	/**
@@ -102,20 +105,15 @@ public class SWTSpinBoxControl extends SWTDataControl implements
 	}
 
 	/**
-	 * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+	 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
 	 */
 	@Override
-	public void widgetSelected(SelectionEvent e) {
-		value = spinner.getSelection();
-		fireValueChange();
-	}
-
-	/**
-	 * @see org.eclipse.swt.events.SelectionListener#widgetDefaultSelected(org.eclipse.swt.events.SelectionEvent)
-	 */
-	@Override
-	public void widgetDefaultSelected(SelectionEvent e) {
-		value = spinner.getSelection();
+	public void modifyText(ModifyEvent arg0) {
+		if (!listenTo)
+			return;
+		if (arg0.getSource() == spinner) {
+			value = Integer.toString(spinner.getSelection());
+		}
 		fireValueChange();
 	}
 
