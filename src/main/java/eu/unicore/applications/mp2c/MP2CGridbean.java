@@ -1,13 +1,7 @@
 package eu.unicore.applications.mp2c;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
+import java.net.URL;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import javax.xml.namespace.QName;
@@ -16,24 +10,18 @@ import com.intel.gpe.clients.api.Job;
 import com.intel.gpe.clients.api.jsdl.gpe.GPEJob;
 import com.intel.gpe.gridbeans.AbstractGridBean;
 import com.intel.gpe.gridbeans.GridBeanException;
-import com.intel.gpe.gridbeans.parameters.IGridBeanParameter;
 import com.intel.gpe.gridbeans.parameters.IGridBeanParameterValue;
-import com.intel.gpe.gridbeans.parameters.InputFileParameterValue;
 import com.intel.gpe.gridbeans.parameters.processing.ParameterUtils;
 
 public class MP2CGridbean extends AbstractGridBean {
 
 	// final MP2CGridBeanParameter mp2cParam;
 
-	private final Map<QName, String> QNAME_2_FILENAME = new HashMap<QName, String>();
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8649345969975447226L;
-
-	private static final String NEWLINE = System.getProperty("line.separator");
-	private static final String END_SECTION = "**end**" + NEWLINE + NEWLINE;
 
 	/**
 	 * BEWARE: MP2CGridBeanParameter and the input files have a mutual
@@ -41,52 +29,10 @@ public class MP2CGridbean extends AbstractGridBean {
 	 * configuration should not be used.
 	 */
 	public MP2CGridbean() {
-		// JAXBContextProvider.addPackage(getClass().getPackage());
-
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.CONTROL_FILE_QNAME,
-				MP2CGridBeanParameters.CONTROL_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
-				MP2CGridBeanParameters.SOLUTE_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
-				MP2CGridBeanParameters.SOLVENT_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.QUENCH_FILE_QNAME,
-				MP2CGridBeanParameters.QUENCH_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.IO_FILE_QNAME,
-				MP2CGridBeanParameters.IO_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.PARALLEL_FILE_QNAME,
-				MP2CGridBeanParameters.PARALLEL_FILE_NAME);
-
-		List<IGridBeanParameter> inputFiles = ParameterUtils
-				.createFileParameters(new QName[] {
-						MP2CGridBeanParameters.CONTROL_FILE_QNAME,
-						MP2CGridBeanParameters.IO_FILE_QNAME,
-						MP2CGridBeanParameters.QUENCH_FILE_QNAME,
-						MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
-						MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
-						MP2CGridBeanParameters.PARALLEL_FILE_QNAME }, true);
-
 		addControlParameters();
-
-		for (IGridBeanParameter iGridBeanParameter : inputFiles) {
-			addInputParameter(iGridBeanParameter);
-//			set(iGridBeanParameter.getName(), new InputFileParameterValue(
-			// QNAME_2_FILENAME.get(iGridBeanParameter.getName())));
-		}
-
-		// set local filename for each of the configuration files
-		for (QName qn : QNAME_2_FILENAME.keySet()) {
-			InputFileParameterValue ifpv;
-			try {
-				ifpv = new InputFileParameterValue(File.createTempFile(
-						QNAME_2_FILENAME.get(qn) + "_", null).getAbsolutePath());
-				ifpv.getTarget().setRelativePath(QNAME_2_FILENAME.get(qn));
-				set(qn, ifpv);
-			} catch (IOException e) {
-				// must not happen, but swallowing is no solution
-				// throw new GridBeanException(e);
-				e.printStackTrace();
-			}
-		}
+		addSolventParameters();
+		addIoParameters();
+		addParallelParameters();
 
 		new DefaultRealm();
 
@@ -95,76 +41,214 @@ public class MP2CGridbean extends AbstractGridBean {
 	/**
 	 * 
 	 */
-	private void addControlParameters() {
-		// IGridBeanParameter gbp = new GridBeanParameter(
-		// MP2CGridBeanParameters.CTRL_RANDOM_SEED,
-		// GridBeanParameterType.ENVIRONMENT_VARIABLE, true);
-		// addInputParameter(gbp);
-		// set(MP2CGridBeanParameters.CTRL_RANDOM_SEED, new Random().nextInt());
-		
-		QName[] controlParameters = new QName[] {
-				MP2CGridBeanParameters.CTRL_BC_X,
-				MP2CGridBeanParameters.CTRL_BC_Y,
-				MP2CGridBeanParameters.CTRL_BC_Z,
-				MP2CGridBeanParameters.CTRL_BOX_RATIO_X,
-				MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
-				MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
-				MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL,
-				MP2CGridBeanParameters.CTRL_COUPLING,
-				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE,
-				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
-				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
-				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
-				MP2CGridBeanParameters.CTRL_LANGEVIN,
-				MP2CGridBeanParameters.CTRL_LANGEVIN_GAMMA,
-				MP2CGridBeanParameters.CTRL_RANDOM_SEED,
-				MP2CGridBeanParameters.CTRL_RESTART_SOLUTE,
-				MP2CGridBeanParameters.CTRL_RESTART_SOLVENT,
-				MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
-				MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
-				MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
-				MP2CGridBeanParameters.CTRL_SIM_SOLUTE,
-				MP2CGridBeanParameters.CTRL_SIM_SOLVENT,
-				MP2CGridBeanParameters.CTRL_STRICT_SCALING_STEPS,
-				MP2CGridBeanParameters.CTRL_TEMPERATURE,
-				MP2CGridBeanParameters.CTRL_TIMESTEPS };
-		
-		List<IGridBeanParameterValue> paramValues = ParameterUtils
-				.createEnvParameterValues(controlParameters, new String[] {
-				// boundary conditions x/y/z
-				"PBC", "PBC", "PBC",
-				// box ratios x y z
-				"1", "1", "1",
-				// timesteps, coupling (?)
-				"5000", "0",
-				// external force active/x/y/z
-				"true", "0", "0", "0",
-				// langevin
-				"0", "0",
-				// random seed
-				Integer.toString(new Random().nextInt()),
-				// restart solute/solvent
-				"false", "false",
-				// shear rates x y z
-				"0", "0", "0",
-				// simulate solute
-				"true",
-				// simulate solvent
-				"true",
-				// strict scaling steps
-				"10000",
-				// temperature
-				"273",
-				// timesteps
-				"5000" });
+	private void addParallelParameters() {
+		QName[] parallelParameters = new QName[] { MP2CGridBeanParameters.PARALLEL };
 
+		List<IGridBeanParameterValue> parParamValues = ParameterUtils
+				.createEnvParameterValues(
+				parallelParameters, new String[] { "3" });
+
+		addInputParameter(ParameterUtils
+				.createEnvParameters(parallelParameters).get(0));
+		set(MP2CGridBeanParameters.PARALLEL, parParamValues.get(0));
+	}
+
+	/**
+	 * 
+	 */
+	private void addIoParameters() {
+		QName[] ioParameters = new QName[] {
+				MP2CGridBeanParameters.IO_HISTORY_SOLUTE,
+				MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS,
+				MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
+				MP2CGridBeanParameters.IO_HISTORY_SOLVENT,
+				MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS,
+				MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
+				MP2CGridBeanParameters.IO_RESTART_SOLUTE,
+				MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS,
+				MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
+				MP2CGridBeanParameters.IO_RESTART_SOLVENT,
+				MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS,
+				MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
+				MP2CGridBeanParameters.IO_STANDARD_OUT,
+				MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS,
+				MP2CGridBeanParameters.IO_STANDARD_SOLUTES,
+				MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS,
+				MP2CGridBeanParameters.IO_STANDARD_SOLVENT,
+				MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS,
+				MP2CGridBeanParameters.IO_USER_OUTPUT,
+				MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS,
+				MP2CGridBeanParameters.IO_XYZ_SOLUTE,
+				MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS,
+				MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
+				MP2CGridBeanParameters.IO_XYZ_SOLVENT,
+				MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS,
+				MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
+				MP2CGridBeanParameters.IO_XYZ_SYSTEM,
+				MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS };
+		
+		String[] ioInitValues = new String[] {
+//				MP2CGridBeanParameters.IO_HISTORY_SOLUTE,
+				"true",
+//				MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS,
+				"100",
+//				MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
+				"binary",
+//				MP2CGridBeanParameters.IO_HISTORY_SOLVENT,
+				"true",
+//				MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS,
+				"100",
+//				MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
+				"binary",
+//				MP2CGridBeanParameters.IO_RESTART_SOLUTE,
+				"false",
+//				MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS,
+				"100",
+//				MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
+				"binary",
+//				MP2CGridBeanParameters.IO_RESTART_SOLVENT,
+				"false",
+//				MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS,
+				"100",
+//				MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
+				"binary",
+//				MP2CGridBeanParameters.IO_STANDARD_OUT,
+				"true",
+//				MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS,
+				"50",
+//				MP2CGridBeanParameters.IO_STANDARD_SOLUTES,
+				"true",
+//				MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS,
+				"50",
+//				MP2CGridBeanParameters.IO_STANDARD_SOLVENT,
+				"true",
+//				MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS,
+				"50",
+//				MP2CGridBeanParameters.IO_USER_OUTPUT,
+				"false",
+//				MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS,
+				"100",
+//				MP2CGridBeanParameters.IO_XYZ_SOLUTE,
+				"false",
+//				MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS,
+				"100",
+//				MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
+				"binary",
+//				MP2CGridBeanParameters.IO_XYZ_SOLVENT,
+				"false",
+//				MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS,
+				"100",
+//				MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
+				"binary",
+//				MP2CGridBeanParameters.IO_XYZ_SYSTEM,
+				"false",
+//				MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS
+				"100" };
+		
+		List<IGridBeanParameterValue> ioInitParamValues = ParameterUtils.createEnvParameterValues(ioParameters, ioInitValues);
+		
+		getInputParameters().addAll(ParameterUtils.createEnvParameters(ioParameters));
+		for (int i = 0; i < ioInitValues.length; i++) {
+			set(ioParameters[i], ioInitParamValues.get(i));
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void addSolventParameters() {
+		QName[] solventParameters = new QName[] {
+				MP2CGridBeanParameters.SOLVENT_ALPHA,
+				MP2CGridBeanParameters.SOLVENT_LAMBDA,
+				MP2CGridBeanParameters.SOLVENT_MASS,
+				MP2CGridBeanParameters.SOLVENT_PARTICLES,
+				MP2CGridBeanParameters.SOLVENT_PPC
+		};
+		
+		List<IGridBeanParameterValue> slvParmValues = ParameterUtils.createEnvParameterValues(solventParameters, new String[] {
+						// alpha
+				"0",
+						// lambda
+				"0",
+						// mass
+				"1",
+						// particles
+				"1000",
+						// particles per cell
+						"50" });
+		
+		getInputParameters().addAll(
+				ParameterUtils.createEnvParameters(solventParameters));
+		for (int i = 0; i < solventParameters.length; i++) {
+			set(solventParameters[i], slvParmValues.get(i));
+		}
+	}
+
+	private void addControlParameters() {
+               
+               QName[] controlParameters = new QName[] {
+                               MP2CGridBeanParameters.CTRL_BC_X,
+                               MP2CGridBeanParameters.CTRL_BC_Y,
+                               MP2CGridBeanParameters.CTRL_BC_Z,
+                               MP2CGridBeanParameters.CTRL_BOX_RATIO_X,
+                               MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
+                               MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
+                               MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL,
+                               MP2CGridBeanParameters.CTRL_COUPLING,
+                               MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE,
+                               MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
+                               MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
+                               MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
+                               MP2CGridBeanParameters.CTRL_LANGEVIN,
+                               MP2CGridBeanParameters.CTRL_LANGEVIN_GAMMA,
+                               MP2CGridBeanParameters.CTRL_RANDOM_SEED,
+                               MP2CGridBeanParameters.CTRL_RESTART_SOLUTE,
+                               MP2CGridBeanParameters.CTRL_RESTART_SOLVENT,
+                               MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
+                               MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
+                               MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
+                               MP2CGridBeanParameters.CTRL_SIM_SOLUTE,
+                               MP2CGridBeanParameters.CTRL_SIM_SOLVENT,
+                               MP2CGridBeanParameters.CTRL_STRICT_SCALING_STEPS,
+                               MP2CGridBeanParameters.CTRL_TEMPERATURE,
+                               MP2CGridBeanParameters.CTRL_TIMESTEPS };
+               
+               List<IGridBeanParameterValue> paramValues = ParameterUtils
+                               .createEnvParameterValues(controlParameters, new String[] {
+                               // boundary conditions x/y/z
+                               "PBC", "PBC", "PBC",
+                               // box ratios x y z
+						"1", "1", "1",
+						// timesteps, coupling (?)
+                               "5000", "0",
+                               // external force active/x/y/z
+                               "true", "0", "0", "0",
+                               // langevin
+                               "0", "0",
+                               // random seed
+                               Integer.toString(new Random().nextInt()),
+                               // restart solute/solvent
+                               "false", "false",
+                               // shear rates x y z
+                               "0", "0", "0",
+                               // simulate solute
+                               "true",
+                               // simulate solvent
+                               "true",
+                               // strict scaling steps
+                               "10000",
+                               // temperature
+                               "273",
+                               // timesteps
+                               "5000" });
 		getInputParameters().addAll(
 				ParameterUtils.createEnvParameters(controlParameters));
 
-		for (int i = 0; i < controlParameters.length; i++) {
-			set(controlParameters[i], paramValues.get(i));
-		}
+               for (int i = 0; i < controlParameters.length; i++) {
+                       set(controlParameters[i], paramValues.get(i));
+               }
 	}
+
 
 	/**
 	 * @see com.intel.gpe.gridbeans.AbstractGridBean#setupJobDefinition(com.intel.gpe.clients.api.Job)
@@ -180,311 +264,16 @@ public class MP2CGridbean extends AbstractGridBean {
 
 		}
 
-		try {
-			writeControlFile();
-			writeIoFile();
-		} catch (FileNotFoundException e) {
-			throw new GridBeanException(e);
-		} catch (IOException e) {
-			throw new GridBeanException(e);
-		}
-
 	}
 
 	/**
-	 * 
-	 */
-	private void writeIoFile() {
-
-	}
-
-	/**
-	 * @throws IOException
-	 * 
-	 */
-	private void writeControlFile() throws IOException {
-		OutputStream os = new FileOutputStream(
-				((InputFileParameterValue) get(MP2CGridBeanParameters.CONTROL_FILE_QNAME))
-						.getSource().getInternalString());
-
-		writeCtrlSolute(os);
-		writeCtrlSolvent(os);
-		writeCtrlTimeSteps(os);
-		writeCtrlTemperature(os);
-		writeCtrlBoxRatio(os);
-		writeCtrlBoundaries(os);
-		writeCtrlShearRate(os);
-		writeCtrlCollisionSteps(os);
-		writeCtrlExternalForce(os);
-		writeCtrlRestart(os);
-		writeCtrlRandomSeed(os);
-		writeCtrlLangevin(os);
-		// The two following methods are stubs
-		// writeCtrlThermostat(os);
-		// writeCtrlMaxScal(os);
-
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlSolute(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("**solute**      solutes are simulated").append(NEWLINE);
-		sb.append(".").append(get(MP2CGridBeanParameters.CTRL_SIM_SOLUTE))
-				.append(".").append(NEWLINE).append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlSolvent(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("**solvent**      solvent is simulated").append(NEWLINE);
-		sb.append(".").append(get(MP2CGridBeanParameters.CTRL_SIM_SOLVENT))
-				.append(".").append(NEWLINE).append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlTimeSteps(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("**nsteps**   number of time steps").append(NEWLINE);
-		sb.append(get(MP2CGridBeanParameters.CTRL_TIMESTEPS)).append(NEWLINE)
-				.append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlTemperature(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("**temperature**  temperature in kT").append(NEWLINE);
-		sb.append(get(MP2CGridBeanParameters.CTRL_TEMPERATURE)).append(NEWLINE)
-				.append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlBoxRatio(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("**box-ratio**    ratio of box-lengths").append(NEWLINE);
-		sb.append(get(MP2CGridBeanParameters.CTRL_BOX_RATIO_X)).append(" ");
-		sb.append(get(MP2CGridBeanParameters.CTRL_BOX_RATIO_Y)).append(" ");
-		sb.append(get(MP2CGridBeanParameters.CTRL_BOX_RATIO_Z)).append(NEWLINE)
-				.append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlBoundaries(OutputStream _os) throws IOException {
-		// TODO Generate correct mapping from human readable Strings to
-		// application Strings
-		StringBuilder sb = new StringBuilder();
-		sb.append("**boundary**     boundary conditions").append(NEWLINE);
-		sb.append(get(MP2CGridBeanParameters.CTRL_BC_X)).append(" ");
-		sb.append(get(MP2CGridBeanParameters.CTRL_BC_Y)).append(" ");
-		sb.append(get(MP2CGridBeanParameters.CTRL_BC_Z)).append(NEWLINE)
-				.append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlShearRate(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("**shear-rate**").append(NEWLINE);
-		sb.append(get(MP2CGridBeanParameters.CTRL_SHEAR_RATE_X)).append(" ");
-		sb.append(get(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y)).append(" ");
-		sb.append(get(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z))
-				.append(NEWLINE).append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlCollisionSteps(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("**coll-step**    interval for collision steps").append(
-				NEWLINE);
-		sb.append(get(MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL)).append(
-				NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlExternalForce(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		Boolean extforceObj = (Boolean) get(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE);
-		boolean extforce = false;
-		if (extforceObj != null) {
-			extforce = true;
-		}
-		if (!extforce) {
-			sb.append("*Off*ext-force**     external force").append(NEWLINE);
-		} else {
-			sb.append("**ext-force**     external force").append(NEWLINE);
-		}
-		sb.append(get(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X))
-				.append(" ")
-				.append(get(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y))
-				.append(" ")
-				.append(get(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z))
-				.append(NEWLINE)
-				.append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param os
-	 * @throws IOException
-	 */
-	private void writeCtrlRestart(OutputStream os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append(
-				"**restart**      switches to start from restart configurations")
-				.append(NEWLINE);
-		os.write(sb.toString().getBytes());
-		writeRestartSolute(os);
-		writeRestartSolvent(os);
-
-		sb = new StringBuilder();
-		sb.append(END_SECTION);
-		os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param os
-	 * @throws IOException
-	 */
-	private void writeRestartSolute(OutputStream os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("++solute++").append(NEWLINE);
-		sb.append(".").append(get(MP2CGridBeanParameters.CTRL_RESTART_SOLUTE))
-				.append(".");
-		sb.append(" ");
-		sb.append(".").append(get(MP2CGridBeanParameters.CTRL_RESTART_SOLUTE))
-				.append(".").append(NEWLINE);
-
-		os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param os
-	 * @throws IOException
-	 */
-	private void writeRestartSolvent(OutputStream os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("++solvent++").append(NEWLINE);
-		sb.append(".").append(get(MP2CGridBeanParameters.CTRL_RESTART_SOLVENT))
-				.append(".");
-		sb.append(" ");
-		sb.append(".").append(get(MP2CGridBeanParameters.CTRL_RESTART_SOLVENT))
-				.append(".").append(NEWLINE);
-
-		os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlRandomSeed(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("**random-seed**").append(NEWLINE);
-		sb.append(get(MP2CGridBeanParameters.CTRL_RANDOM_SEED)).append(NEWLINE)
-				.append(NEWLINE);
-
-		_os.write(sb.toString().getBytes());
-
-	}
-
-	/**
-	 * @param _os
-	 * @throws IOException
-	 */
-	private void writeCtrlLangevin(OutputStream _os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("*Off*langevin**    perform langevin dynamics").append(
-				NEWLINE);
-		sb.append("++gamma++").append(NEWLINE);
-		sb.append("1.0").append(NEWLINE);
-		sb.append(END_SECTION);
-
-		_os.write(sb.toString().getBytes());
-
-	}
-
-	/**
-	 * @param os
-	 * @throws IOException
-	 */
-	private void writeCtrlThermostat(OutputStream os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(
-				"*Off*thermostat** at present only Berendsen weak-coupling version")
-				.append(NEWLINE);
-		sb.append("++coupl++     coupling constant").append(NEWLINE);
-		sb.append("1000").append(NEWLINE);
-		sb.append(END_SECTION);
-
-		os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @param os
-	 * @throws IOException
-	 */
-	private void writeCtrlMaxScal(OutputStream os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("++max-scal++     max. number of steps for strict scaling")
-				.append(NEWLINE);
-		sb.append("10000").append(NEWLINE);
-		sb.append(END_SECTION);
-
-		os.write(sb.toString().getBytes());
-	}
-
-	/**
-	 * @see com.intel.gpe.gridbeans.AbstractGridBean#parseJobDefinition(com.intel.gpe.clients.api.Job)
+	 * @see com.intel.gpe.gridbeans.AbstractGridBean#getIconURL()
 	 */
 	@Override
-	public void parseJobDefinition(Job job) throws GridBeanException {
-		super.parseJobDefinition(job);
+	public URL getIconURL() {
+		return getClass().getResource("mp2c.gif");
 	}
+
 
 	/**
 	 * @see com.intel.gpe.gridbeans.IGridBean#getName()

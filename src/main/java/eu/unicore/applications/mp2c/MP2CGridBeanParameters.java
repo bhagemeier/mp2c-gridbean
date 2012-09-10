@@ -127,7 +127,7 @@ public class MP2CGridBeanParameters {
 	static final QName IO_STANDARD_SOLVENT = new QName(
 			"http://www.unicore.eu/applications/mp2c", "standard_solvent");
 	static final QName IO_STANDARD_SOLVENT_STEPS = new QName(
-			"http://www.unicore.eu/applications/mp2c", "");
+			"http://www.unicore.eu/applications/mp2c", "standard_solvent_steps");
 	static final QName IO_RESTART_SOLUTE = new QName(
 			"http://www.unicore.eu/applications/mp2c", "restart_solute");
 	static final QName IO_RESTART_SOLUTES_TYPE = new QName(
