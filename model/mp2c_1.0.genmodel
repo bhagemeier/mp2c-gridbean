@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/mp2c-gridbean-model/src"
+    modelPluginID="mp2c-gridbean-model" modelName="Mp2c_1" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>mp2c_1.0.ecore</foreignModel>
+  <genPackages prefix="Mp2c_1_0" disposableProviderFactory="true" ecorePackage="mp2c_1.0.ecore#/">
+    <genDataTypes ecoreDataType="mp2c_1.0.ecore#//EOutputStream"/>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//Control">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/simulateSolute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/simulateSolvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/timeSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/temperature"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/boxRatios"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/boundaryConditions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/shearRates"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/collisionStepsInterval"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/externalForces"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/restartSolute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/restartSolvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/randomSeed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/langevin"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/langevinGamma"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/coupling"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Control/strictScalingSteps"/>
+      <genOperations ecoreOperation="mp2c_1.0.ecore#//Control/write">
+        <genParameters ecoreParameter="mp2c_1.0.ecore#//Control/write/_os"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//IO">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/standard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/standardSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/standardSolutes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/standardSolutesSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/standardSolvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/standardSolventSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/restartSolute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/restartSoluteSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/restartSoluteType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/restartSolvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/restartSolventSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/restartSolventType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/historySolute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/historySoluteSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/historySoluteType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/historySolvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/historySolventSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/historySolventType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/xyzSystem"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/xyzSystemSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/xyzSolute"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/xyzSoluteType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/xyzSoluteSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/xyzSolvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/xyzSolventSteps"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/xyzSolventType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/userOutput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//IO/userOutputSteps"/>
+      <genOperations ecoreOperation="mp2c_1.0.ecore#//IO/write">
+        <genParameters ecoreParameter="mp2c_1.0.ecore#//IO/write/_os"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//Solute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solute/molecules"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solute/partsPerMolecule"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solute/atoms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solute/bonds"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mp2c_1.0.ecore#//Solute/species"/>
+      <genOperations ecoreOperation="mp2c_1.0.ecore#//Solute/write">
+        <genParameters ecoreParameter="mp2c_1.0.ecore#//Solute/write/_os"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//Solvent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solvent/particlesPerCell"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solvent/particles"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solvent/mass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solvent/lambda"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Solvent/alpha"/>
+      <genOperations ecoreOperation="mp2c_1.0.ecore#//Solvent/write">
+        <genParameters ecoreParameter="mp2c_1.0.ecore#//Solvent/write/_os"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//Quench">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxInitDimX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxInitDimY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxInitDimZ"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxTgtDimX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxTgtDimY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxTgtDimZ"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxDecrX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxDecrY"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Quench/boxDecrZ"/>
+      <genOperations ecoreOperation="mp2c_1.0.ecore#//Quench/write">
+        <genParameters ecoreParameter="mp2c_1.0.ecore#//Quench/write/_os"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//MolecularSpecies">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mp2c_1.0.ecore#//MolecularSpecies/atoms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mp2c_1.0.ecore#//MolecularSpecies/bonds"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//MolecularSpecies/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//MolecularSpecies/sites"/>
+    </genClasses>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//Atom">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Atom/charge"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Atom/mass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Atom/toRange"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Atom/fromRange"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Atom/symbol"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Atom/identifier"/>
+    </genClasses>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//Bond">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Bond/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Bond/number"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Bond/fromRange"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Bond/toRange"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Bond/k"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute mp2c_1.0.ecore#//Bond/r"/>
+    </genClasses>
+    <genClasses ecoreClass="mp2c_1.0.ecore#//MP2CConfig">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mp2c_1.0.ecore#//MP2CConfig/control"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mp2c_1.0.ecore#//MP2CConfig/io"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mp2c_1.0.ecore#//MP2CConfig/solvent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mp2c_1.0.ecore#//MP2CConfig/quench"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference mp2c_1.0.ecore#//MP2CConfig/solute"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
