@@ -31,16 +31,20 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.clients.api.async.IProgressListener;
+import com.intel.gpe.gridbeans.parameters.IGridBeanParameterValue;
 import com.intel.gpe.gridbeans.parameters.InputFileParameterValue;
 import com.intel.gpe.gridbeans.plugins.DataSetException;
 import com.intel.gpe.gridbeans.plugins.swt.SWTGridBeanPlugin;
 import com.intel.gpe.util.defaults.preferences.INode;
+
+import eu.unicore.applications.mp2c.model.Solute;
 
 /**
  * @author bjoernh
@@ -66,6 +70,56 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		addInputPanel(new IOSettingsGBPanel(client, "I/O"));
 		addInputPanel(new ParallelExecutionSettingsGBPanel(client,
 				"Parallel Execution"));
+		
+		String projectTmpDir = client.getFileFactory().getTemporaryDirName();
+        File prTmp = new File(projectTmpDir);
+		
+        final InputFileParameterValue controlFileIn = new InputFileParameterValue(
+                new File(prTmp, MP2CGridBeanParameters.CONTROL_FILE_NAME)
+                        .getAbsolutePath());
+        controlFileIn.getTarget().setRelativePath(
+                MP2CGridBeanParameters.CONTROL_FILE_NAME);
+        getGridBeanModel().set(MP2CGridBeanParameters.CONTROL_FILE_QNAME,
+                controlFileIn);
+        
+        final InputFileParameterValue soluteFileIn = new InputFileParameterValue(
+                new File(prTmp, MP2CGridBeanParameters.SOLUTE_FILE_NAME)
+                        .getAbsolutePath());
+        soluteFileIn.getTarget().setRelativePath(
+                MP2CGridBeanParameters.SOLUTE_FILE_NAME);
+        getGridBeanModel().set(MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
+                soluteFileIn);
+
+        final InputFileParameterValue solventFileIn = new InputFileParameterValue(
+                new File(prTmp, MP2CGridBeanParameters.SOLVENT_FILE_NAME)
+                        .getAbsolutePath());
+        solventFileIn.getTarget().setRelativePath(
+                MP2CGridBeanParameters.SOLVENT_FILE_NAME);
+        getGridBeanModel().set(MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
+                solventFileIn);
+
+        final InputFileParameterValue quenchFileIn = new InputFileParameterValue(
+                new File(prTmp, MP2CGridBeanParameters.QUENCH_FILE_NAME)
+                        .getAbsolutePath());
+        quenchFileIn.getTarget().setRelativePath(
+                MP2CGridBeanParameters.QUENCH_FILE_NAME);
+        getGridBeanModel().set(MP2CGridBeanParameters.QUENCH_FILE_QNAME,
+                quenchFileIn);
+
+        final InputFileParameterValue ioFileIn = new InputFileParameterValue(
+                new File(prTmp, MP2CGridBeanParameters.IO_FILE_NAME)
+                        .getAbsolutePath());
+        ioFileIn.getTarget().setRelativePath(
+                MP2CGridBeanParameters.IO_FILE_NAME);
+        getGridBeanModel().set(MP2CGridBeanParameters.IO_FILE_QNAME, ioFileIn);
+
+        final InputFileParameterValue parallelFileIn = new InputFileParameterValue(
+                new File(prTmp, MP2CGridBeanParameters.PARALLEL_FILE_NAME)
+                        .getAbsolutePath());
+        parallelFileIn.getTarget().setRelativePath(
+                MP2CGridBeanParameters.PARALLEL_FILE_NAME);
+        getGridBeanModel().set(MP2CGridBeanParameters.PARALLEL_FILE_QNAME,
+                parallelFileIn);
 	}
 
 	/**
