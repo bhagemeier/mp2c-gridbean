@@ -67,11 +67,20 @@ public class SolventSettings extends Composite {
 		lblParticlesPerCollision.setText("Particles per collision cell");
 
 		spnParticlesPerCell = new Spinner(this, SWT.BORDER);
+        spnParticlesPerCell.setMaximum(1000);
+        spnParticlesPerCell.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+                false, false, 1, 1));
 
 		Label lblNumberOfParticles = new Label(this, SWT.NONE);
 		lblNumberOfParticles.setText("Number of particles");
 
 		spnNrParticles = new Spinner(this, SWT.BORDER);
+        spnNrParticles.setMaximum(Integer.MAX_VALUE);
+        spnNrParticles.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+                false, 1, 1));
+        spnNrParticles.setMinimum(1);
+        spnNrParticles.setSelection(1000);
+        spnNrParticles.setPageIncrement(1000);
 
 		Label lblMassOfParticles = new Label(this, SWT.NONE);
 		lblMassOfParticles.setText("Mass of particles");
@@ -93,7 +102,9 @@ public class SolventSettings extends Composite {
 		lblRotationAngle.setText(" Rotation angle");
 
 		rotAngle = new Spinner(this, SWT.BORDER);
-		rotAngle.setMaximum(360);
+        rotAngle.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
+                1, 1));
+        rotAngle.setMaximum(359);
 		m_bindingContext = initDataBindings();
 
 	}
