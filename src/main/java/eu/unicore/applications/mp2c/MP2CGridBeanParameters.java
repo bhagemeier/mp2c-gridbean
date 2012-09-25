@@ -208,4 +208,21 @@ public class MP2CGridBeanParameters {
 	// The parallel file
 	static final QName PARALLEL = new QName(
 			"http://www.unicore.eu/applications/mp2c", "parallel");
+
+	// Solutes
+	public static final QName SOLUTE_USUAL_LJP = new QName(
+			"http://www.unicore.eu/applications/mp2c", "usual_ljp");
+	public static final QName SOLUTE_SHIFTED_LJP = new QName(
+			"http://www.unicore.eu/applications/mp2c", "shifted_ljp");
+	public static final QName SOLUTE_RADIUS_SHIFTED_LJP = new QName(
+			"http://www.unicore.eu/applications/mp2c", "radius_shifted_ljp");
+	public static final QName SOLUTE_RADIUS_SHIFTED_SHIFTED_FORCE_LJP = new QName(
+			"http://www.unicore.eu/applications/mp2c",
+			"radius_shifted_shifted_force_ljp");
+	public static final QName SOLUTE_SHIFTED_FORCE_LJP = new QName(
+			"http://www.unicore.eu/applications/mp2c", "shifted_force_ljp");
+	public static final QName SOLUTE_RADIUS_SHIFTED_LJP_SHIFTED = new QName(
+			"http://www.unicore.eu/applications/mp2c",
+			"radius_shifted_ljp_shifted");
+
 }

@@ -31,11 +31,47 @@ public class MP2CGridbean extends AbstractGridBean {
 	public MP2CGridbean() {
 		addControlParameters();
 		addSolventParameters();
+		addSoluteParameters();
 		addIoParameters();
 		addParallelParameters();
 
 		new DefaultRealm();
 
+	}
+
+	/**
+	 * 
+	 */
+	private void addSoluteParameters() {
+		QName[] soluteParameters = new QName[] {
+				MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_LJP,
+				MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_LJP_SHIFTED,
+				MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_SHIFTED_FORCE_LJP,
+				MP2CGridBeanParameters.SOLUTE_SHIFTED_FORCE_LJP,
+				MP2CGridBeanParameters.SOLUTE_SHIFTED_LJP,
+				MP2CGridBeanParameters.SOLUTE_USUAL_LJP };
+
+		List<IGridBeanParameterValue> soluteParamValues = ParameterUtils
+				.createEnvParameterValues(soluteParameters, new String[] {
+						// MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_LJP
+						"false",
+						// MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_LJP_SHIFTED
+						"false",
+						// MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_SHIFTED_FORCE_LJP
+						"false",
+						// MP2CGridBeanParameters.SOLUTE_SHIFTED_FORCE_LJP
+						"false",
+						// MP2CGridBeanParameters.SOLUTE_SHIFTED_LJP
+						"false",
+						// MP2CGridBeanParameters.SOLUTE_USUAL_LJP
+						"false"
+				});
+
+		getInputParameters().addAll(
+				ParameterUtils.createEnvParameters(soluteParameters));
+		for (int i = 0; i < soluteParameters.length; i++) {
+			set(soluteParameters[i], soluteParamValues.get(i));
+		}
 	}
 
 	/**

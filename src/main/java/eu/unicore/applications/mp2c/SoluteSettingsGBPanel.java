@@ -35,37 +35,51 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
-import com.intel.gpe.gridbeans.plugins.swt.panels.SWTGridBeanPanel;
 
 import eu.unicore.applications.mp2c.model.Solute;
 
 /**
  * @author bjoernh
- *
- * 26.03.2012 15:11:20
- *
+ * 
+ *         26.03.2012 15:11:20
+ * 
  */
-public class SoluteSettingsGBPanel extends SWTGridBeanPanel {
+public class SoluteSettingsGBPanel extends MP2CSWTGridBeanPanel {
 
 	private Solute solute;
+	private SoluteSettings soluteSettings;
 
 	/**
 	 * @param client
 	 * @param name
-	 * @param solute2
+	 * @param solute
 	 */
-	public SoluteSettingsGBPanel(Client client, String name,
- Solute solute2) {
+	public SoluteSettingsGBPanel(Client client, String name, Solute solute) {
 		super(client, name);
 
-		this.solute = solute2;
+		this.solute = solute;
 	}
 
 	/**
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new SoluteSettings(parent, SWT.NONE, solute);
+		soluteSettings = new SoluteSettings(parent, SWT.NONE, solute);
+
+		linkCheckButton(MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_LJP,
+				soluteSettings.getBtnRadiusShiftedLjp());
+		linkCheckButton(
+				MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_SHIFTED_FORCE_LJP,
+				soluteSettings.getBtnRadiusShiftedLjShiftedForce());
+		linkCheckButton(MP2CGridBeanParameters.SOLUTE_SHIFTED_FORCE_LJP,
+				soluteSettings.getBtnLjShiftedForce());
+		linkCheckButton(MP2CGridBeanParameters.SOLUTE_SHIFTED_LJP,
+				soluteSettings.getBtnShiftedLjp());
+		linkCheckButton(
+				MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_LJP_SHIFTED,
+				soluteSettings.getBtnRadiusShiftedLjShifted());
+		linkCheckButton(MP2CGridBeanParameters.SOLUTE_USUAL_LJP,
+				soluteSettings.getBtnUsualLjp());
 
 	}
 

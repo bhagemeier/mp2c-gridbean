@@ -68,6 +68,8 @@ public class SoluteSettings extends Composite {
 	private Button btnRadiusShiftedLjp;
 	private Button btnRadiusShiftedLjShifted;
 	private Button btnRadiusShiftedLjShiftedForce;
+	private Group group;
+	private Group grpVanderwaalsPotentials;
 
 	/**
 	 * Create the composite.
@@ -78,21 +80,24 @@ public class SoluteSettings extends Composite {
 	 */
 	public SoluteSettings(Composite parent, int style, Solute solute2) {
 		super(parent, style);
-		setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(2, false));
 
 		this.solute = solute2;
 
 		Group grpMolecularSpecies = new Group(this, SWT.NONE);
 		grpMolecularSpecies.setText("Molecular Species");
+		grpMolecularSpecies.setLayout(new GridLayout(1, false));
 		GridData gd_grpMolecularSpecies = new GridData(SWT.FILL, SWT.FILL,
-				true, true, 2,
- 3);
+				true, true, 1, 2);
 		gd_grpMolecularSpecies.widthHint = 419;
 		gd_grpMolecularSpecies.heightHint = 214;
 		grpMolecularSpecies.setLayoutData(gd_grpMolecularSpecies);
 
 		final TabFolder tabFolder = new TabFolder(grpMolecularSpecies, SWT.NONE);
-		tabFolder.setBounds(10, 22, 640, 640);
+		GridData gd_tabFolder = new GridData(SWT.FILL, SWT.FILL, true, true,
+				1, 1);
+		// gd_tabFolder.widthHint = 221;
+		tabFolder.setLayoutData(gd_tabFolder);
 
 		Button btnAddSpecies = new Button(this, SWT.NONE);
 		btnAddSpecies.addSelectionListener(new SelectionAdapter() {
@@ -106,6 +111,8 @@ public class SoluteSettings extends Composite {
 				MolecularSpeciesTab molSpecTab = new MolecularSpeciesTab(
 						tabFolder, SWT.FILL, species);
 				ti.setControl(molSpecTab);
+				molSpecTab.setEnabled(true);
+				molSpecTab.setSize(300, 300);
 			}
 		});
 		btnAddSpecies.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
@@ -130,36 +137,41 @@ public class SoluteSettings extends Composite {
 		btnRemoveSpecies.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
 				false, false, 1, 1));
 		btnRemoveSpecies.setText("Remove species");
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
 
-		Label lblVanderwaalsPotentials = new Label(this, SWT.NONE);
-		lblVanderwaalsPotentials.setText("Van-der-Waals Potentials");
-		new Label(this, SWT.NONE);
-		new Label(this, SWT.NONE);
+		group = new Group(this, SWT.NONE);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+		group.setLayout(new GridLayout(1, false));
 
-		btnShiftedLjp = new Button(this, SWT.CHECK);
+		grpVanderwaalsPotentials = new Group(group, SWT.NONE);
+		grpVanderwaalsPotentials.setText("Van-der-Waals Potentials");
+		grpVanderwaalsPotentials.setLayoutData(new GridData(SWT.FILL,
+				SWT.CENTER, true, true, 1, 1));
+		grpVanderwaalsPotentials.setLayout(new GridLayout(3, false));
+
+		btnShiftedLjp = new Button(grpVanderwaalsPotentials, SWT.CHECK);
 		btnShiftedLjp.setText("Shifted LJP");
-		new Label(this, SWT.NONE);
+		new Label(grpVanderwaalsPotentials, SWT.NONE);
 
-		btnUsualLjp = new Button(this, SWT.CHECK);
+		btnUsualLjp = new Button(grpVanderwaalsPotentials, SWT.CHECK);
 		btnUsualLjp.setText("Usual LJP");
 
-		btnRadiusShiftedLjp = new Button(this, SWT.CHECK);
+		btnRadiusShiftedLjp = new Button(grpVanderwaalsPotentials, SWT.CHECK);
 		btnRadiusShiftedLjp.setText("Radius Shifted LJP");
-		new Label(this, SWT.NONE);
+		new Label(grpVanderwaalsPotentials, SWT.NONE);
 
-		btnLjShiftedForce = new Button(this, SWT.CHECK);
+		btnLjShiftedForce = new Button(grpVanderwaalsPotentials, SWT.CHECK);
 		btnLjShiftedForce.setText("LJ Shifted Force");
 
-		btnRadiusShiftedLjShiftedForce = new Button(this, SWT.CHECK);
+		btnRadiusShiftedLjShiftedForce = new Button(grpVanderwaalsPotentials,
+				SWT.CHECK);
 		btnRadiusShiftedLjShiftedForce
 				.setText("Radius Shifted LJ Shifted Force");
-		new Label(this, SWT.NONE);
+		new Label(grpVanderwaalsPotentials, SWT.NONE);
 
-		btnRadiusShiftedLjShifted = new Button(this, SWT.CHECK);
+		btnRadiusShiftedLjShifted = new Button(grpVanderwaalsPotentials,
+				SWT.CHECK);
+		btnRadiusShiftedLjShifted.setLayoutData(new GridData(SWT.FILL,
+				SWT.FILL, false, false, 1, 1));
 		btnRadiusShiftedLjShifted.setText("Radius Shifted LJ Shifted");
 		m_bindingContext = initDataBindings();
 
@@ -219,5 +231,29 @@ public class SoluteSettings extends Composite {
 				radiusShiftedLjpShiftedForceSoluteObserveValue, null, null);
 		//
 		return bindingContext;
+	}
+
+	public Button getBtnUsualLjp() {
+		return btnUsualLjp;
+	}
+
+	public Button getBtnShiftedLjp() {
+		return btnShiftedLjp;
+	}
+
+	public Button getBtnRadiusShiftedLjp() {
+		return btnRadiusShiftedLjp;
+	}
+
+	public Button getBtnRadiusShiftedLjShiftedForce() {
+		return btnRadiusShiftedLjShiftedForce;
+	}
+
+	public Button getBtnLjShiftedForce() {
+		return btnLjShiftedForce;
+	}
+
+	public Button getBtnRadiusShiftedLjShifted() {
+		return btnRadiusShiftedLjShifted;
 	}
 }
