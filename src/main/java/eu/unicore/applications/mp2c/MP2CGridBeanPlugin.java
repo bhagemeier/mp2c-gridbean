@@ -130,19 +130,157 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 			throws DataSetException {
 		super.saveDataToExternalSource(progress);
 		try {
-		writeControlFile();
+			writeControlFile();
 			saveSolventSettings();
-		// saveIoSettings();
-		writeParallelSettings();
-		// progress.beginTask("Writing MP2C configuration", 6);
+			saveIoSettings();
+			writeParallelSettings();
+			// progress.beginTask("Writing MP2C configuration", 6);
 		} catch (IOException e) {
 			// TODO handle exception
 			// DataSetException will not do.
 			e.printStackTrace();
 		}
-	
-		}
 
+	}
+
+	/**
+	 * 
+	 */
+	private void saveIoSettings() throws IOException {
+		OutputStream os = new FileOutputStream(
+				((InputFileParameterValue) getGridBeanModel().get(
+						MP2CGridBeanParameters.IO_FILE_QNAME)).getSource()
+						.getInternalString());
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("##################################################")
+				.append(NEWLINE).append("# I/O settings").append(NEWLINE)
+				.append("##################################################")
+				.append(NEWLINE).append(NEWLINE);
+
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_STANDARD_OUT))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // standard I/O for solutes
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_STANDARD_SOLUTES))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // standard I/O for solvent
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_STANDARD_SOLVENT))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // restart information for solute
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_RESTART_SOLUTE))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // restart information for solvent
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_RESTART_SOLVENT))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // history information for solute
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_HISTORY_SOLUTE))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // history information for solvent
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_HISTORY_SOLVENT))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // xyz file for whole system
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_XYZ_SYSTEM))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // xyz file for solute
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_XYZ_SOLUTE))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // xyz file for solvent
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_XYZ_SOLVENT))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        // user spec. output
+        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append('.')
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_USER_OUTPUT))
+                        .getDisplayedString()).append('.').append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS))
+                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+
+        os.write(sb.toString().getBytes());
+        os.close();
+	}
 
 	/**
 	 * 
@@ -153,7 +291,44 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 						MP2CGridBeanParameters.SOLVENT_FILE_QNAME)).getSource()
 						.getInternalString());
 
+		StringBuilder sb = new StringBuilder();
+		sb.append("##################################################")
+				.append(NEWLINE).append("# solvent settings").append(NEWLINE)
+				.append("##################################################")
+				.append(NEWLINE).append(NEWLINE);
 
+		sb.append("**part:cell**   average number of particles per cell")
+				.append(NEWLINE);
+		sb.append(((IGridBeanParameterValue) getGridBeanModel().get(MP2CGridBeanParameters.SOLVENT_PPC)).getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
+		
+		
+
+		sb.append("**particles**   number of solvent particles")
+				.append(NEWLINE);
+		sb.append(((IGridBeanParameterValue)
+				getGridBeanModel()
+						.get(MP2CGridBeanParameters.SOLVENT_PARTICLES)).getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
+
+		sb.append("**mass**   mass of solvent particles").append(NEWLINE);
+		sb.append(((IGridBeanParameterValue) getGridBeanModel().get(MP2CGridBeanParameters.SOLVENT_MASS)).getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
+
+		sb.append("**lambda**   collision length").append(NEWLINE);
+		sb.append(((IGridBeanParameterValue) getGridBeanModel().get(MP2CGridBeanParameters.SOLVENT_LAMBDA)).getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
+
+		sb.append("**alpha**   scattering angle").append(NEWLINE);
+		sb.append(((IGridBeanParameterValue) getGridBeanModel().get(MP2CGridBeanParameters.SOLVENT_ALPHA)).getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
+
+		sb.append("********").append(NEWLINE);
+		sb.append("**exit**").append(NEWLINE);
+		sb.append("********").append(NEWLINE);
+
+		os.write(sb.toString().getBytes());
+		os.close();
 	}
 
 	/**
@@ -163,13 +338,15 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	private void writeParallelSettings() throws IOException {
 		OutputStream os = new FileOutputStream(
 				((InputFileParameterValue) getGridBeanModel().get(
-						MP2CGridBeanParameters.IO_FILE_QNAME)).getSource()
+                        MP2CGridBeanParameters.PARALLEL_FILE_QNAME))
+                        .getSource()
 						.getInternalString());
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append(getGridBeanModel().get(MP2CGridBeanParameters.PARALLEL));
-		sb.append("     # dimension of parallel subdivision");
 
+		StringBuilder sb = new StringBuilder();
+		sb.append(((IGridBeanParameterValue)getGridBeanModel().get(MP2CGridBeanParameters.PARALLEL)).getDisplayedString());
+		sb.append("     # dimension of parallel subdivision").append(NEWLINE);
+
+		os.write(sb.toString().getBytes());
 		os.close();
 	}
 
@@ -210,9 +387,10 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		StringBuilder sb = new StringBuilder();
 		sb.append("**solute**      solutes are simulated").append(NEWLINE);
 		sb.append(".")
-				.append(getGridBeanModel().get(
+				.append(((IGridBeanParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_SIM_SOLUTE))
-				.append(".").append(NEWLINE).append(NEWLINE);
+						.getDisplayedString()).append(".")
+				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 
@@ -226,9 +404,10 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		StringBuilder sb = new StringBuilder();
 		sb.append("**solvent**      solvent is simulated").append(NEWLINE);
 		sb.append(".")
-				.append(getGridBeanModel().get(
+				.append(((IGridBeanParameterValue)getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_SIM_SOLVENT))
-				.append(".").append(NEWLINE).append(NEWLINE);
+						.getDisplayedString()).append(".")
+				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 	}
@@ -240,9 +419,11 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	private void writeCtrlTimeSteps(OutputStream _os) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("**nsteps**   number of time steps").append(NEWLINE);
-		sb.append(getGridBeanModel().get(MP2CGridBeanParameters.CTRL_TIMESTEPS))
-				.append(NEWLINE)
-				.append(NEWLINE);
+		sb.append(
+				((IGridBeanParameterValue) getGridBeanModel().get(
+						MP2CGridBeanParameters.CTRL_TIMESTEPS))
+						.getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 	}
@@ -255,9 +436,10 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		StringBuilder sb = new StringBuilder();
 		sb.append("**temperature**  temperature in kT").append(NEWLINE);
 		sb.append(
-				getGridBeanModel().get(MP2CGridBeanParameters.CTRL_TEMPERATURE))
-				.append(NEWLINE)
-				.append(NEWLINE);
+				((IGridBeanParameterValue) getGridBeanModel().get(
+						MP2CGridBeanParameters.CTRL_TEMPERATURE))
+						.getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 	}
@@ -270,16 +452,17 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("**box-ratio**    ratio of box-lengths").append(NEWLINE);
-		sb.append(
-				getGridBeanModel().get(MP2CGridBeanParameters.CTRL_BOX_RATIO_X))
+		sb.append(((IGridBeanParameterValue)
+ getGridBeanModel().get(
+						MP2CGridBeanParameters.CTRL_BOX_RATIO_X))
+						.getDisplayedString())
 				.append(" ");
-		sb.append(
-				getGridBeanModel().get(MP2CGridBeanParameters.CTRL_BOX_RATIO_Y))
+		sb.append(((IGridBeanParameterValue)
+				getGridBeanModel().get(MP2CGridBeanParameters.CTRL_BOX_RATIO_Y)).getDisplayedString())
 				.append(" ");
-		sb.append(
-				getGridBeanModel().get(MP2CGridBeanParameters.CTRL_BOX_RATIO_Z))
-				.append(NEWLINE)
-				.append(NEWLINE);
+		sb.append(((IGridBeanParameterValue)
+				getGridBeanModel().get(MP2CGridBeanParameters.CTRL_BOX_RATIO_Z)).getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 	}
@@ -293,13 +476,18 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		// application Strings
 		StringBuilder sb = new StringBuilder();
 		sb.append("**boundary**     boundary conditions").append(NEWLINE);
-		sb.append(getGridBeanModel().get(MP2CGridBeanParameters.CTRL_BC_X))
+		sb.append(
+				((IGridBeanParameterValue) getGridBeanModel().get(
+						MP2CGridBeanParameters.CTRL_BC_X)).getDisplayedString())
 				.append(" ");
-		sb.append(getGridBeanModel().get(MP2CGridBeanParameters.CTRL_BC_Y))
+		sb.append(
+				((IGridBeanParameterValue) getGridBeanModel().get(
+						MP2CGridBeanParameters.CTRL_BC_Y)).getDisplayedString())
 				.append(" ");
-		sb.append(getGridBeanModel().get(MP2CGridBeanParameters.CTRL_BC_Z))
-				.append(NEWLINE)
-				.append(NEWLINE);
+		sb.append(
+				((IGridBeanParameterValue) getGridBeanModel().get(
+						MP2CGridBeanParameters.CTRL_BC_Z)).getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 	}
@@ -312,16 +500,25 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		StringBuilder sb = new StringBuilder();
 		sb.append("**shear-rate**").append(NEWLINE);
 		sb.append(
+				((IGridBeanParameterValue)
 				getGridBeanModel()
-						.get(MP2CGridBeanParameters.CTRL_SHEAR_RATE_X)).append(
+.get(
+						MP2CGridBeanParameters.CTRL_SHEAR_RATE_X))
+						.getDisplayedString()).append(
 				" ");
 		sb.append(
+				((IGridBeanParameterValue)
 				getGridBeanModel()
-						.get(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y)).append(
+.get(
+						MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y))
+						.getDisplayedString()).append(
 				" ");
 		sb.append(
+				((IGridBeanParameterValue)
 				getGridBeanModel()
-						.get(MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z))
+.get(
+						MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z))
+						.getDisplayedString())
 				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
@@ -336,10 +533,11 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		sb.append("**coll-step**    interval for collision steps").append(
 				NEWLINE);
 		sb.append(
+				((IGridBeanParameterValue)
 				getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL))
-				.append(
-				NEWLINE);
+						.getDisplayedString())
+				.append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 	}
@@ -350,27 +548,30 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	 */
 	private void writeCtrlExternalForce(OutputStream _os) throws IOException {
 		StringBuilder sb = new StringBuilder();
-		// TODO check whether this works, I actually expect a String from get()
-		Boolean extforceObj = (Boolean) getGridBeanModel().get(
-				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE);
-		boolean extforce = false;
-		if (extforceObj != null) {
-			extforce = true;
-		}
+
+		boolean extforce = Boolean
+				.parseBoolean(((IGridBeanParameterValue) getGridBeanModel()
+				.get(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE))
+						.getDisplayedString());
+
 		if (!extforce) {
 			sb.append("*Off*ext-force**     external force").append(NEWLINE);
 		} else {
 			sb.append("**ext-force**     external force").append(NEWLINE);
 		}
 		sb.append(
+				((IGridBeanParameterValue)
 				getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X))
+						.getDisplayedString())
 				.append(" ")
-				.append(getGridBeanModel().get(
+				.append(((IGridBeanParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y))
+						.getDisplayedString())
 				.append(" ")
-				.append(getGridBeanModel().get(
+				.append(((IGridBeanParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z))
+						.getDisplayedString())
 				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
@@ -402,13 +603,15 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		StringBuilder sb = new StringBuilder();
 		sb.append("++solute++").append(NEWLINE);
 		sb.append(".")
-				.append(getGridBeanModel().get(
+				.append(((IGridBeanParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_RESTART_SOLUTE))
+						.getDisplayedString())
 				.append(".");
 		sb.append(" ");
 		sb.append(".")
-				.append(getGridBeanModel().get(
+				.append(((IGridBeanParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_RESTART_SOLUTE))
+						.getDisplayedString())
 				.append(".").append(NEWLINE);
 
 		os.write(sb.toString().getBytes());
@@ -422,13 +625,15 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		StringBuilder sb = new StringBuilder();
 		sb.append("++solvent++").append(NEWLINE);
 		sb.append(".")
-				.append(getGridBeanModel().get(
+				.append(((IGridBeanParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_RESTART_SOLVENT))
+						.getDisplayedString())
 				.append(".");
 		sb.append(" ");
 		sb.append(".")
-				.append(getGridBeanModel().get(
+				.append(((IGridBeanParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_RESTART_SOLVENT))
+						.getDisplayedString())
 				.append(".").append(NEWLINE);
 
 		os.write(sb.toString().getBytes());
@@ -442,9 +647,10 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		StringBuilder sb = new StringBuilder();
 		sb.append("**random-seed**").append(NEWLINE);
 		sb.append(
-				getGridBeanModel().get(MP2CGridBeanParameters.CTRL_RANDOM_SEED))
-				.append(NEWLINE)
-				.append(NEWLINE);
+				((IGridBeanParameterValue) getGridBeanModel().get(
+						MP2CGridBeanParameters.CTRL_RANDOM_SEED))
+						.getDisplayedString())
+				.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 
@@ -459,7 +665,10 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		sb.append("*Off*langevin**    perform langevin dynamics").append(
 				NEWLINE);
 		sb.append("++gamma++").append(NEWLINE);
-		sb.append("1.0").append(NEWLINE);
+		sb.append(
+				((IGridBeanParameterValue) getGridBeanModel().get(
+						MP2CGridBeanParameters.CTRL_LANGEVIN_GAMMA))
+						.getDisplayedString()).append(NEWLINE);
 		sb.append(END_SECTION);
 
 		_os.write(sb.toString().getBytes());
@@ -470,32 +679,37 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	 * @param os
 	 * @throws IOException
 	 */
-	private void writeCtrlThermostat(OutputStream os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(
-				"*Off*thermostat** at present only Berendsen weak-coupling version")
-				.append(NEWLINE);
-		sb.append("++coupl++     coupling constant").append(NEWLINE);
-		sb.append("1000").append(NEWLINE);
-		sb.append(END_SECTION);
-
-		os.write(sb.toString().getBytes());
-	}
+	// private void writeCtrlThermostat(OutputStream os) throws IOException {
+	// StringBuilder sb = new StringBuilder();
+	//
+	// sb.append(
+	// "*Off*thermostat** at present only Berendsen weak-coupling version")
+	// .append(NEWLINE);
+	// sb.append("++coupl++     coupling constant").append(NEWLINE);
+	// sb.append(
+	// ((IGridBeanParameterValue) getGridBeanModel().get(
+	// MP2CGridBeanParameters.CTRL_THERMOSTAT))
+	// .getDisplayedString()).append(NEWLINE);
+	// sb.append(END_SECTION);
+	//
+	// os.write(sb.toString().getBytes());
+	// }
 
 	/**
 	 * @param os
 	 * @throws IOException
 	 */
-	private void writeCtrlMaxScal(OutputStream os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("++max-scal++     max. number of steps for strict scaling")
-				.append(NEWLINE);
-		sb.append("10000").append(NEWLINE);
-		sb.append(END_SECTION);
-
-		os.write(sb.toString().getBytes());
-	}
-
+	// private void writeCtrlMaxScal(OutputStream os) throws IOException {
+	// StringBuilder sb = new StringBuilder();
+	// sb.append("++max-scal++     max. number of steps for strict scaling")
+	// .append(NEWLINE);
+	// sb.append(
+	// ((IGridBeanParameterValue) getGridBeanModel().get(
+	// MP2CGridBeanParameters.CTRL_MAX_SCAL))
+	// .getDisplayedString()).append(NEWLINE);
+	// sb.append(END_SECTION);
+	//
+	// os.write(sb.toString().getBytes());
+	// }
 
 }
