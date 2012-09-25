@@ -1,7 +1,9 @@
 package eu.unicore.applications.mp2c;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.xml.namespace.QName;
@@ -10,13 +12,14 @@ import com.intel.gpe.clients.api.Job;
 import com.intel.gpe.clients.api.jsdl.gpe.GPEJob;
 import com.intel.gpe.gridbeans.AbstractGridBean;
 import com.intel.gpe.gridbeans.GridBeanException;
+import com.intel.gpe.gridbeans.parameters.IGridBeanParameter;
 import com.intel.gpe.gridbeans.parameters.IGridBeanParameterValue;
+import com.intel.gpe.gridbeans.parameters.InputFileParameterValue;
 import com.intel.gpe.gridbeans.parameters.processing.ParameterUtils;
 
 public class MP2CGridbean extends AbstractGridBean {
 
-	// final MP2CGridBeanParameter mp2cParam;
-
+	private final Map<QName, String> QNAME_2_FILENAME = new HashMap<QName, String>();
 
 	/**
 	 * 
@@ -29,6 +32,43 @@ public class MP2CGridbean extends AbstractGridBean {
 	 * configuration should not be used.
 	 */
 	public MP2CGridbean() {
+		
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.CONTROL_FILE_QNAME,
+				MP2CGridBeanParameters.CONTROL_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
+				MP2CGridBeanParameters.SOLUTE_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
+				MP2CGridBeanParameters.SOLVENT_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.QUENCH_FILE_QNAME,
+				MP2CGridBeanParameters.QUENCH_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.IO_FILE_QNAME,
+				MP2CGridBeanParameters.IO_FILE_NAME);
+		QNAME_2_FILENAME.put(MP2CGridBeanParameters.PARALLEL_FILE_QNAME,
+				MP2CGridBeanParameters.PARALLEL_FILE_NAME);
+
+		List<IGridBeanParameter> inputFiles = ParameterUtils
+				.createFileParameters(new QName[] {
+						MP2CGridBeanParameters.CONTROL_FILE_QNAME,
+						MP2CGridBeanParameters.IO_FILE_QNAME,
+						MP2CGridBeanParameters.QUENCH_FILE_QNAME,
+						MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
+						MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
+						MP2CGridBeanParameters.PARALLEL_FILE_QNAME }, true);
+
+		for (IGridBeanParameter iGridBeanParameter : inputFiles) {
+			addInputParameter(iGridBeanParameter);
+		}
+		
+
+		// set local filename for each of the configuration files
+		for (QName qn : QNAME_2_FILENAME.keySet()) {
+			InputFileParameterValue ifpv;
+            ifpv = new InputFileParameterValue();
+            set(qn, ifpv);
+
+		}
+
+				
 		addControlParameters();
 		addSolventParameters();
 		addSoluteParameters();
