@@ -285,9 +285,11 @@ public class MP2CGridbean extends AbstractGridBean {
                                MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
                                MP2CGridBeanParameters.CTRL_SIM_SOLUTE,
                                MP2CGridBeanParameters.CTRL_SIM_SOLVENT,
-                               MP2CGridBeanParameters.CTRL_STRICT_SCALING_STEPS,
+                               MP2CGridBeanParameters.CTRL_MAX_SCAL,
                                MP2CGridBeanParameters.CTRL_TEMPERATURE,
-                               MP2CGridBeanParameters.CTRL_TIMESTEPS };
+                MP2CGridBeanParameters.CTRL_TIMESTEPS,
+                MP2CGridBeanParameters.CTRL_THERMOSTAT,
+                MP2CGridBeanParameters.CTRL_THERMOSTAT_COUPL };
                
                List<IGridBeanParameterValue> paramValues = ParameterUtils
                                .createEnvParameterValues(controlParameters, new String[] {
@@ -311,12 +313,16 @@ public class MP2CGridbean extends AbstractGridBean {
                                "true",
                                // simulate solvent
                                "true",
-                               // strict scaling steps
+                        // strict scaling steps/max_scal
                                "10000",
                                // temperature
-                               "273",
+                        "1.0",
                                // timesteps
-                               "5000" });
+                        "5000",
+                        // thermostat
+                        "false",
+                        // thermostat coupling
+                        "10000" });
 		getInputParameters().addAll(
 				ParameterUtils.createEnvParameters(controlParameters));
 

@@ -85,8 +85,7 @@ public class MP2CGridBeanParameters {
     static final QName CTRL_LANGEVIN = new QName(NS, "langevin");
     static final QName CTRL_LANGEVIN_GAMMA = new QName(NS, "langevin_gamma");
     static final QName CTRL_COUPLING = new QName(NS, "coupling");
-    static final QName CTRL_STRICT_SCALING_STEPS = new QName(NS,
-            "strict_scaling_steps");
+    static final QName CTRL_MAX_SCAL = new QName(NS, "max_scal");
 
     // The IO file
     static final QName IO_STANDARD_OUT = new QName(NS, "standard_out");
@@ -161,5 +160,7 @@ public class MP2CGridBeanParameters {
             "shifted_force_ljp");
     public static final QName SOLUTE_RADIUS_SHIFTED_LJP_SHIFTED = new QName(NS,
             "radius_shifted_ljp_shifted");
+    public static final QName CTRL_THERMOSTAT = new QName(NS, "thermostat");
+    public static QName CTRL_THERMOSTAT_COUPL;
 
 }

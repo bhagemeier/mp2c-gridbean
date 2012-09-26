@@ -36,15 +36,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.xml.namespace.QName;
+
 import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.clients.api.async.IProgressListener;
+import com.intel.gpe.gridbeans.parameters.FileParameterValue;
 import com.intel.gpe.gridbeans.parameters.IGridBeanParameterValue;
 import com.intel.gpe.gridbeans.parameters.InputFileParameterValue;
 import com.intel.gpe.gridbeans.plugins.DataSetException;
 import com.intel.gpe.gridbeans.plugins.swt.SWTGridBeanPlugin;
 import com.intel.gpe.util.defaults.preferences.INode;
-
-import eu.unicore.applications.mp2c.model.Solute;
 
 /**
  * @author bjoernh
@@ -372,9 +373,8 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		writeCtrlRestart(os);
 		writeCtrlRandomSeed(os);
 		writeCtrlLangevin(os);
-		// The two following methods are stubs
-		// writeCtrlThermostat(os);
-		// writeCtrlMaxScal(os);
+        writeCtrlThermostat(os);
+        writeCtrlMaxScal(os);
 		os.close();
 
 	}
@@ -679,37 +679,37 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	 * @param os
 	 * @throws IOException
 	 */
-	// private void writeCtrlThermostat(OutputStream os) throws IOException {
-	// StringBuilder sb = new StringBuilder();
-	//
-	// sb.append(
-	// "*Off*thermostat** at present only Berendsen weak-coupling version")
-	// .append(NEWLINE);
-	// sb.append("++coupl++     coupling constant").append(NEWLINE);
-	// sb.append(
-	// ((IGridBeanParameterValue) getGridBeanModel().get(
-	// MP2CGridBeanParameters.CTRL_THERMOSTAT))
-	// .getDisplayedString()).append(NEWLINE);
-	// sb.append(END_SECTION);
-	//
-	// os.write(sb.toString().getBytes());
-	// }
+    private void writeCtrlThermostat(OutputStream os) throws IOException {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(
+                "*Off*thermostat** at present only Berendsen weak-coupling version")
+                .append(NEWLINE);
+        sb.append("++coupl++     coupling constant").append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.CTRL_THERMOSTAT))
+                        .getDisplayedString()).append(NEWLINE);
+        sb.append(END_SECTION);
+
+        os.write(sb.toString().getBytes());
+    }
 
 	/**
 	 * @param os
 	 * @throws IOException
 	 */
-	// private void writeCtrlMaxScal(OutputStream os) throws IOException {
-	// StringBuilder sb = new StringBuilder();
-	// sb.append("++max-scal++     max. number of steps for strict scaling")
-	// .append(NEWLINE);
-	// sb.append(
-	// ((IGridBeanParameterValue) getGridBeanModel().get(
-	// MP2CGridBeanParameters.CTRL_MAX_SCAL))
-	// .getDisplayedString()).append(NEWLINE);
-	// sb.append(END_SECTION);
-	//
-	// os.write(sb.toString().getBytes());
-	// }
+    private void writeCtrlMaxScal(OutputStream os) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("++max-scal++     max. number of steps for strict scaling")
+                .append(NEWLINE);
+        sb.append(
+                ((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.CTRL_MAX_SCAL))
+                        .getDisplayedString()).append(NEWLINE);
+        sb.append(END_SECTION);
+
+        os.write(sb.toString().getBytes());
+    }
 
 }
