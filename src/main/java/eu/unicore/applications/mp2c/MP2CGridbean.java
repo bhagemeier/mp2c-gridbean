@@ -240,9 +240,9 @@ public class MP2CGridbean extends AbstractGridBean {
 		
 		List<IGridBeanParameterValue> slvParmValues = ParameterUtils.createEnvParameterValues(solventParameters, new String[] {
 						// alpha
-				"0",
+                        "0",
 						// lambda
-				"0",
+                        "0.01",
 						// mass
 				"1",
 						// particles
@@ -293,11 +293,11 @@ public class MP2CGridbean extends AbstractGridBean {
                                // boundary conditions x/y/z
                                "PBC", "PBC", "PBC",
                                // box ratios x y z
-						"1", "1", "1",
+                        "1.0", "1.0", "6.0",
 						// timesteps, coupling (?)
                                "5000", "0",
                                // external force active/x/y/z
-                               "true", "0", "0", "0",
+                        "false", "0.0", "0.0", "0.0",
                                // langevin
                                "0", "0",
                                // random seed
@@ -305,7 +305,7 @@ public class MP2CGridbean extends AbstractGridBean {
                                // restart solute/solvent
                                "false", "false",
                                // shear rates x y z
-                               "0", "0", "0",
+                        "0.0", "0.0", "0.01",
                                // simulate solute
                                "true",
                                // simulate solvent

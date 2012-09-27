@@ -86,7 +86,7 @@ public class SolventSettings extends Composite {
 		lblMassOfParticles.setText("Mass of particles");
 
 		txtPartmass = new Text(this, SWT.BORDER);
-		txtPartmass.setText("partMass");
+        txtPartmass.setText("1");
 		txtPartmass.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 
@@ -94,7 +94,7 @@ public class SolventSettings extends Composite {
 		lblFreePathOf.setText("Free path of a particle");
 
 		txtFreepath = new Text(this, SWT.BORDER);
-		txtFreepath.setText("freePath");
+        txtFreepath.setText("0.01");
 		txtFreepath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 
