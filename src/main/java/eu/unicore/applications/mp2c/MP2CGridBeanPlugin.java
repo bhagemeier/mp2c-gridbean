@@ -99,8 +99,10 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
      */
     private void setInputFileIfUnset(File _prTmp, QName _fileQname,
             String _fileName) {
-        if (((FileParameterValue) getGridBeanModel().get(_fileQname))
-                .getSource().getInternalString() == null) {
+        if ((((FileParameterValue) getGridBeanModel().get(_fileQname))
+                .getSource().getInternalString() == null)
+                || (((FileParameterValue) getGridBeanModel().get(_fileQname))
+                        .getSource().getInternalString().isEmpty())) {
             final InputFileParameterValue controlFileIn = new InputFileParameterValue(
                     new File(_prTmp, _fileName).getAbsolutePath());
             controlFileIn.getTarget().setRelativePath(_fileName);
@@ -403,6 +405,8 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		writeCtrlLangevin(os);
         writeCtrlThermostat(os);
         writeCtrlMaxScal(os);
+
+        os.write("**exit**".getBytes());
 		os.close();
 
 	}
