@@ -39,8 +39,6 @@ public class MP2CGridbean extends AbstractGridBean {
 				MP2CGridBeanParameters.SOLUTE_FILE_NAME);
 		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
 				MP2CGridBeanParameters.SOLVENT_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.QUENCH_FILE_QNAME,
-				MP2CGridBeanParameters.QUENCH_FILE_NAME);
 		QNAME_2_FILENAME.put(MP2CGridBeanParameters.IO_FILE_QNAME,
 				MP2CGridBeanParameters.IO_FILE_NAME);
 		QNAME_2_FILENAME.put(MP2CGridBeanParameters.PARALLEL_FILE_QNAME,
@@ -50,7 +48,6 @@ public class MP2CGridbean extends AbstractGridBean {
 				.createFileParameters(new QName[] {
 						MP2CGridBeanParameters.CONTROL_FILE_QNAME,
 						MP2CGridBeanParameters.IO_FILE_QNAME,
-						MP2CGridBeanParameters.QUENCH_FILE_QNAME,
 						MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
 						MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
 						MP2CGridBeanParameters.PARALLEL_FILE_QNAME }, true);

@@ -52,8 +52,6 @@ public class MP2CGridBeanParameters {
     static final String SOLUTE_FILE_NAME = "mp2c_slt.inp";
     static final QName SOLVENT_FILE_QNAME = new QName(NS, "solventFile");
     static final String SOLVENT_FILE_NAME = "mp2c_slv.inp";
-    static final QName QUENCH_FILE_QNAME = new QName(NS, "quenchFile");
-    static final String QUENCH_FILE_NAME = "mp2c_quench.inp";
     static final QName IO_FILE_QNAME = new QName(NS, "ioFile");
     static final String IO_FILE_NAME = "mp2c_io.inp";
     static final QName PARALLEL_FILE_QNAME = new QName(NS, "quenchFile");

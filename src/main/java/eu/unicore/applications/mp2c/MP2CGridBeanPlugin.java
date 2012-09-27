@@ -85,9 +85,6 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
         setInputFileIfUnset(prTmp, MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
                 MP2CGridBeanParameters.SOLVENT_FILE_NAME);
 
-        setInputFileIfUnset(prTmp, MP2CGridBeanParameters.QUENCH_FILE_QNAME,
-                MP2CGridBeanParameters.QUENCH_FILE_NAME);
-
         setInputFileIfUnset(prTmp, MP2CGridBeanParameters.IO_FILE_QNAME,
                 MP2CGridBeanParameters.IO_FILE_NAME);
 
