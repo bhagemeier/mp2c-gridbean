@@ -161,6 +161,7 @@ public class MP2CGridBeanParameters {
     public static final QName SOLUTE_RADIUS_SHIFTED_LJP_SHIFTED = new QName(NS,
             "radius_shifted_ljp_shifted");
     public static final QName CTRL_THERMOSTAT = new QName(NS, "thermostat");
-    public static QName CTRL_THERMOSTAT_COUPL;
+    public static QName CTRL_THERMOSTAT_COUPL = new QName(NS,
+            "thermostat_coupling");
 
 }
