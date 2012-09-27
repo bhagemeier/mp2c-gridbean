@@ -35,7 +35,6 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -49,8 +48,6 @@ import org.eclipse.swt.widgets.Spinner;
  */
 public class ParallelExecutionSettings extends Composite {
 	private DataBindingContext m_bindingContext;
-
-	private Button btndimensionalCut;
 	private Spinner parDimSpinner;
 
 	/**
@@ -70,30 +67,17 @@ public class ParallelExecutionSettings extends Composite {
 				true, true, 1, 1));
 		grpDimensionOfParallel.setText("Dimension of parallel subdivision");
 		grpDimensionOfParallel.setLayout(new GridLayout(3, false));
-
-		btndimensionalCut = new Button(grpDimensionOfParallel, SWT.RADIO);
-		btndimensionalCut.setEnabled(false);
-		btndimensionalCut.setText("1-dimensional cut");
-		new Label(grpDimensionOfParallel, SWT.NONE);
 		new Label(grpDimensionOfParallel, SWT.NONE);
 
-		Button btndimensionalCut_1 = new Button(grpDimensionOfParallel,
-				SWT.RADIO);
-		btndimensionalCut_1.setEnabled(false);
-		btndimensionalCut_1.setText("2-dimensional cut");
-		new Label(grpDimensionOfParallel, SWT.NONE);
+        Label lblNumberOfDimiensions = new Label(grpDimensionOfParallel,
+                SWT.NONE);
+        lblNumberOfDimiensions.setText("Number of dimiensions");
 
 		parDimSpinner = new Spinner(grpDimensionOfParallel, SWT.BORDER);
 		parDimSpinner.setPageIncrement(1);
 		parDimSpinner.setMaximum(3);
 		parDimSpinner.setMinimum(1);
-
-		Button btndimensionalCut_2 = new Button(grpDimensionOfParallel,
-				SWT.RADIO);
-		btndimensionalCut_2.setEnabled(false);
-		btndimensionalCut_2.setText("3-dimensional cut");
-		new Label(grpDimensionOfParallel, SWT.NONE);
-		new Label(grpDimensionOfParallel, SWT.NONE);
+        parDimSpinner.setSelection(3);
 		m_bindingContext = initDataBindings();
 
 	}
