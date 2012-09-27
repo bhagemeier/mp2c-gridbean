@@ -75,53 +75,41 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		String projectTmpDir = client.getFileFactory().getTemporaryDirName();
         File prTmp = new File(projectTmpDir);
 		
-        final InputFileParameterValue controlFileIn = new InputFileParameterValue(
-                new File(prTmp, MP2CGridBeanParameters.CONTROL_FILE_NAME)
-                        .getAbsolutePath());
-        controlFileIn.getTarget().setRelativePath(
+
+        setInputFileIfUnset(prTmp, MP2CGridBeanParameters.CONTROL_FILE_QNAME,
                 MP2CGridBeanParameters.CONTROL_FILE_NAME);
-        getGridBeanModel().set(MP2CGridBeanParameters.CONTROL_FILE_QNAME,
-                controlFileIn);
         
-        final InputFileParameterValue soluteFileIn = new InputFileParameterValue(
-                new File(prTmp, MP2CGridBeanParameters.SOLUTE_FILE_NAME)
-                        .getAbsolutePath());
-        soluteFileIn.getTarget().setRelativePath(
-                MP2CGridBeanParameters.SOLUTE_FILE_NAME);
-        getGridBeanModel().set(MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
-                soluteFileIn);
+        // setInputFileIfUnset(prTmp, MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
+        // MP2CGridBeanParameters.SOLUTE_FILE_NAME);
 
-        final InputFileParameterValue solventFileIn = new InputFileParameterValue(
-                new File(prTmp, MP2CGridBeanParameters.SOLVENT_FILE_NAME)
-                        .getAbsolutePath());
-        solventFileIn.getTarget().setRelativePath(
+        setInputFileIfUnset(prTmp, MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
                 MP2CGridBeanParameters.SOLVENT_FILE_NAME);
-        getGridBeanModel().set(MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
-                solventFileIn);
 
-        final InputFileParameterValue quenchFileIn = new InputFileParameterValue(
-                new File(prTmp, MP2CGridBeanParameters.QUENCH_FILE_NAME)
-                        .getAbsolutePath());
-        quenchFileIn.getTarget().setRelativePath(
+        setInputFileIfUnset(prTmp, MP2CGridBeanParameters.QUENCH_FILE_QNAME,
                 MP2CGridBeanParameters.QUENCH_FILE_NAME);
-        getGridBeanModel().set(MP2CGridBeanParameters.QUENCH_FILE_QNAME,
-                quenchFileIn);
 
-        final InputFileParameterValue ioFileIn = new InputFileParameterValue(
-                new File(prTmp, MP2CGridBeanParameters.IO_FILE_NAME)
-                        .getAbsolutePath());
-        ioFileIn.getTarget().setRelativePath(
+        setInputFileIfUnset(prTmp, MP2CGridBeanParameters.IO_FILE_QNAME,
                 MP2CGridBeanParameters.IO_FILE_NAME);
-        getGridBeanModel().set(MP2CGridBeanParameters.IO_FILE_QNAME, ioFileIn);
 
-        final InputFileParameterValue parallelFileIn = new InputFileParameterValue(
-                new File(prTmp, MP2CGridBeanParameters.PARALLEL_FILE_NAME)
-                        .getAbsolutePath());
-        parallelFileIn.getTarget().setRelativePath(
+        setInputFileIfUnset(prTmp, MP2CGridBeanParameters.PARALLEL_FILE_QNAME,
                 MP2CGridBeanParameters.PARALLEL_FILE_NAME);
-        getGridBeanModel().set(MP2CGridBeanParameters.PARALLEL_FILE_QNAME,
-                parallelFileIn);
 	}
+
+    /**
+     * @param _prTmp
+     * @param controlFileName
+     * @param controlFileQname
+     */
+    private void setInputFileIfUnset(File _prTmp, QName _fileQname,
+            String _fileName) {
+        if (((FileParameterValue) getGridBeanModel().get(_fileQname))
+                .getSource().getInternalString() == null) {
+            final InputFileParameterValue controlFileIn = new InputFileParameterValue(
+                    new File(_prTmp, _fileName).getAbsolutePath());
+            controlFileIn.getTarget().setRelativePath(_fileName);
+            getGridBeanModel().set(_fileQname, controlFileIn);
+        }
+    }
 
 	/**
 	 * @see com.intel.gpe.gridbeans.plugins.swt.SWTGridBeanPlugin#saveDataToExternalSource(com.intel.gpe.clients.api.async.IProgressListener)
@@ -149,7 +137,7 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	 */
 	private void saveIoSettings() throws IOException {
 		OutputStream os = new FileOutputStream(
-				((InputFileParameterValue) getGridBeanModel().get(
+                ((FileParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.IO_FILE_QNAME)).getSource()
 						.getInternalString());
 
@@ -163,121 +151,164 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_STANDARD_OUT))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append("         ")
+                .append("# l_std").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_std").append(NEWLINE).append(NEWLINE);
 
         // standard I/O for solutes
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# standard I/O for solutes").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_STANDARD_SOLUTES))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append("         ")
+                .append("# l_std_slt").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_std_slt").append(NEWLINE).append(NEWLINE);
 
         // standard I/O for solvent
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# standard I/O for solvent").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_STANDARD_SOLVENT))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append("         ")
+                .append("# l_std_slv").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_std_slv").append(NEWLINE).append(NEWLINE);
 
         // restart information for solute
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# restart information for solute").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_RESTART_SOLUTE))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append(" 1 ") // actually
+                                                                         // the
+                                                                         // type,
+                                                                         // but
+                                                                         // don'know
+                                                                         // type->number
+                                                                         // mapping
+                .append("         ")
+                .append("# l_res_slt, s_res_slt").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_res_slt").append(NEWLINE).append(NEWLINE);
 
         // restart information for solvent
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# restart information for solvent").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_RESTART_SOLVENT))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append(" 1 ") // actually
+                                                                         // the
+                                                                         // type,
+                                                                         // but
+                                                                         // don'know
+                                                                         // type->number
+                                                                         // mapping
+                .append("         ").append("# l_res_slv, s_res_slv")
+                .append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_res_slv").append(NEWLINE).append(NEWLINE);
 
         // history information for solute
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# history information for the solute").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_HISTORY_SOLUTE))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append(" 2 ") // actually
+                                                                         // the
+                                                                         // type,
+                                                                         // but
+                                                                         // don'know
+                                                                         // type->number
+                                                                         // mapping
+                .append("         ").append("# l_his_slt").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_his_slt").append(NEWLINE).append(NEWLINE);
 
         // history information for solvent
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# history information for solvent").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_HISTORY_SOLVENT))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append(" 2 ")
+                .append("         ").append("# l_his_slv").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_his_slv").append(NEWLINE).append(NEWLINE);
 
         // xyz file for whole system
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# xyz file for whole system").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_XYZ_SYSTEM))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append("         ")
+                .append("# l_xyz").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_xyz_slt").append(NEWLINE).append(NEWLINE);
 
         // xyz file for solute
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# xyz file for solute").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_XYZ_SOLUTE))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append("         ")
+                .append("# l_xyz_slt").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_xyz_slt").append(NEWLINE).append(NEWLINE);
 
         // xyz file for solvent
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# xyz file for solvent").append(NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_XYZ_SOLVENT))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append("         ")
+                .append("# l_xyz_slv").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_xyz_slv").append(NEWLINE).append(NEWLINE);
 
         // user spec. output
-        sb.append("# general standard I/O").append(NEWLINE);
+        sb.append("# user specific output -> end-to-end distances").append(
+                NEWLINE);
         sb.append('.')
                 .append(((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_USER_OUTPUT))
-                        .getDisplayedString()).append('.').append(NEWLINE);
+                        .getDisplayedString()).append('.').append("         ")
+                .append("# l_usr_1").append(NEWLINE);
         sb.append(
                 ((IGridBeanParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS))
-                        .getDisplayedString()).append(NEWLINE).append(NEWLINE);
+                        .getDisplayedString()).append("         ")
+                .append("# intv_usr_1").append(NEWLINE).append(NEWLINE);
 
         os.write(sb.toString().getBytes());
         os.close();
@@ -288,7 +319,7 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	 */
 	private void saveSolventSettings() throws IOException {
 		OutputStream os = new FileOutputStream(
-				((InputFileParameterValue) getGridBeanModel().get(
+                ((FileParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.SOLVENT_FILE_QNAME)).getSource()
 						.getInternalString());
 
@@ -338,7 +369,7 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	 */
 	private void writeParallelSettings() throws IOException {
 		OutputStream os = new FileOutputStream(
-				((InputFileParameterValue) getGridBeanModel().get(
+                ((FileParameterValue) getGridBeanModel().get(
                         MP2CGridBeanParameters.PARALLEL_FILE_QNAME))
                         .getSource()
 						.getInternalString());
@@ -357,7 +388,7 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 	 */
 	private void writeControlFile() throws IOException {
 		OutputStream os = new FileOutputStream(
-				((InputFileParameterValue) getGridBeanModel().get(
+                ((FileParameterValue) getGridBeanModel().get(
 						MP2CGridBeanParameters.CONTROL_FILE_QNAME)).getSource()
 						.getInternalString());
 
@@ -537,7 +568,7 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 				getGridBeanModel().get(
 						MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL))
 						.getDisplayedString())
-				.append(NEWLINE);
+.append(NEWLINE).append(NEWLINE);
 
 		_os.write(sb.toString().getBytes());
 	}
@@ -595,27 +626,26 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		os.write(sb.toString().getBytes());
 	}
 
-	/**
-	 * @param os
-	 * @throws IOException
-	 */
-	private void writeRestartSolute(OutputStream os) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		sb.append("++solute++").append(NEWLINE);
-		sb.append(".")
-				.append(((IGridBeanParameterValue) getGridBeanModel().get(
-						MP2CGridBeanParameters.CTRL_RESTART_SOLUTE))
-						.getDisplayedString())
-				.append(".");
-		sb.append(" ");
-		sb.append(".")
-				.append(((IGridBeanParameterValue) getGridBeanModel().get(
-						MP2CGridBeanParameters.CTRL_RESTART_SOLUTE))
-						.getDisplayedString())
-				.append(".").append(NEWLINE);
+    /**
+     * @param os
+     * @throws IOException
+     */
+    private void writeRestartSolute(OutputStream os) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("++solute++").append(NEWLINE);
+        sb.append(".")
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.CTRL_RESTART_SOLUTE))
+                        .getDisplayedString()).append(".");
+        sb.append(" ");
+        sb.append(".")
+                .append(((IGridBeanParameterValue) getGridBeanModel().get(
+                        MP2CGridBeanParameters.CTRL_RESTART_SOLUTE))
+                        .getDisplayedString()).append(".").append(NEWLINE)
+                .append(NEWLINE);
 
-		os.write(sb.toString().getBytes());
-	}
+        os.write(sb.toString().getBytes());
+    }
 
 	/**
 	 * @param os
