@@ -41,7 +41,7 @@ public class GeneralSettings extends Composite {
 	private Button btnSolvent;
 	private Button btnExternalForce;
 	private Spinner nrTimeStepsSpinner;
-	private Spinner temperature;
+    private Text temperature;
 	private Spinner collisionSteps;
 
 	/**
@@ -79,8 +79,7 @@ public class GeneralSettings extends Composite {
 		Label lblTemperature = new Label(grpGeneral, SWT.NONE);
 		lblTemperature.setText("Temperature");
 		
-		temperature = new Spinner(grpGeneral, SWT.BORDER);
-		temperature.setMaximum(1000);
+        temperature = new Text(grpGeneral, SWT.BORDER);
 		GridData gd_temperature = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_temperature.widthHint = 73;
 		temperature.setLayoutData(gd_temperature);
@@ -276,7 +275,7 @@ public class GeneralSettings extends Composite {
 		return btnSolvent;
 	}
 
-	public Spinner getTemperature() {
+    public Text getTemperature() {
 		return temperature;
 	}
 

@@ -81,8 +81,12 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 					generalSettings.getBtnSolvent());
 
 			// Temperature
-			linkSpinBox(MP2CGridBeanParameters.CTRL_TEMPERATURE,
+            linkTextField(MP2CGridBeanParameters.CTRL_TEMPERATURE,
 					generalSettings.getTemperature());
+            setValueTranslator(MP2CGridBeanParameters.CTRL_TEMPERATURE,
+                    new DoubleValueTranslator());
+            setValueValidator(MP2CGridBeanParameters.CTRL_TEMPERATURE,
+                    new DoubleValueValidator());
 
 			// External force
 			linkCheckButton(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE,
