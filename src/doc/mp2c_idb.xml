@@ -1,0 +1,13 @@
+<!-- The following application entry has to be inserted in the IDB of the 
+  server, where MP2C is installed. -->
+
+<idb:IDBApplication>
+  <idb:ApplicationName>MP2C</idb:ApplicationName>
+  <idb:ApplicationVersion>1.0.0</idb:ApplicationVersion>
+  <jsdl:POSIXApplication
+    xmlns:jsdl="http://schemas.ggf.org/jsdl/2005/11/jsdl-posix">
+    <jsdl:Executable>/path/to/mpc_SMP</jsdl:Executable>
+  </jsdl:POSIXApplication>
+  <idb:PreCommand>LD_LIBRARY_PATH=/vsgc/software/openmpi/lib ; export LD_LIBRARY_PATH</idb:PreCommand>
+</idb:IDBApplication>
+  
