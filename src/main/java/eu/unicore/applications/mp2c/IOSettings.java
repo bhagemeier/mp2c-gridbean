@@ -101,6 +101,8 @@ public class IOSettings extends Composite {
 		btnGeneral.setText("General");
 
 		spnGeneralSteps = new Spinner(grpStandardIo, SWT.BORDER);
+        spnGeneralSteps.setPageIncrement(100);
+        spnGeneralSteps.setMaximum(Integer.MAX_VALUE);
 		spnGeneralSteps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 
@@ -108,6 +110,8 @@ public class IOSettings extends Composite {
 		btnSolute.setText("Solute");
 
 		spnSoluteSteps = new Spinner(grpStandardIo, SWT.BORDER);
+        spnSoluteSteps.setPageIncrement(100);
+        spnSoluteSteps.setMaximum(Integer.MAX_VALUE);
 		spnSoluteSteps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 
@@ -115,6 +119,7 @@ public class IOSettings extends Composite {
 		btnSolvent.setText("Solvent");
 
 		spnSolventSteps = new Spinner(grpStandardIo, SWT.BORDER);
+        spnSolventSteps.setPageIncrement(100);
 		spnSolventSteps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 
@@ -136,6 +141,8 @@ public class IOSettings extends Composite {
 
 		spnRestartSoluteSteps = new Spinner(grpRestartInformation,
 				SWT.BORDER);
+        spnRestartSoluteSteps.setPageIncrement(100);
+        spnRestartSoluteSteps.setMaximum(Integer.MAX_VALUE);
 
 		btnRestartSolvent = new Button(grpRestartInformation, SWT.CHECK);
 		btnRestartSolvent.setText("Solvent");
@@ -149,6 +156,8 @@ public class IOSettings extends Composite {
 
 		spnRestartSolventSteps = new Spinner(grpRestartInformation,
 				SWT.BORDER);
+        spnRestartSolventSteps.setPageIncrement(100);
+        spnRestartSolventSteps.setMaximum(Integer.MAX_VALUE);
 
 		Group grpHistory = new Group(this, SWT.NONE);
 		grpHistory.setLayout(new GridLayout(4, false));
@@ -168,6 +177,8 @@ public class IOSettings extends Composite {
 		cmbSoluteHistoryType.select(0);
 
 		spnSoluteHistorySteps = new Spinner(grpHistory, SWT.BORDER);
+        spnSoluteHistorySteps.setPageIncrement(100);
+        spnSoluteHistorySteps.setMaximum(Integer.MAX_VALUE);
 		new Label(grpHistory, SWT.NONE);
 
 		btnSolventHistory = new Button(grpHistory, SWT.CHECK);
@@ -181,6 +192,8 @@ public class IOSettings extends Composite {
 		cmbSolventHistoryType.select(0);
 
 		spnSolventHistorySteps = new Spinner(grpHistory, SWT.BORDER);
+        spnSolventHistorySteps.setMaximum(Integer.MAX_VALUE);
+        spnSolventHistorySteps.setPageIncrement(100);
 
 		Group grpXyzFile = new Group(this, SWT.NONE);
 		grpXyzFile.setLayout(new GridLayout(5, false));
@@ -195,6 +208,8 @@ public class IOSettings extends Composite {
 		new Label(grpXyzFile, SWT.NONE);
 
 		spnGeneralXYZSteps = new Spinner(grpXyzFile, SWT.BORDER);
+        spnGeneralXYZSteps.setPageIncrement(100);
+        spnGeneralXYZSteps.setMaximum(Integer.MAX_VALUE);
 		new Label(grpXyzFile, SWT.NONE);
 		new Label(grpXyzFile, SWT.NONE);
 
@@ -209,6 +224,8 @@ public class IOSettings extends Composite {
 		cmbSoluteXYZType.select(0);
 
 		spnSoluteXYZSteps = new Spinner(grpXyzFile, SWT.BORDER);
+        spnSoluteXYZSteps.setPageIncrement(100);
+        spnSoluteXYZSteps.setMaximum(Integer.MAX_VALUE);
 		new Label(grpXyzFile, SWT.NONE);
 		new Label(grpXyzFile, SWT.NONE);
 
@@ -223,6 +240,8 @@ public class IOSettings extends Composite {
 		cmbSolventXYZType.select(0);
 
 		spnSolventXYZSteps = new Spinner(grpXyzFile, SWT.BORDER);
+        spnSolventXYZSteps.setPageIncrement(100);
+        spnSolventXYZSteps.setMaximum(Integer.MAX_VALUE);
 
 		Group grpUserSpecificOutput = new Group(this, SWT.NONE);
 		grpUserSpecificOutput.setLayout(new GridLayout(3, false));
@@ -242,6 +261,8 @@ public class IOSettings extends Composite {
 
 		spnUserOutputSteps = new Spinner(grpUserSpecificOutput,
 				SWT.BORDER);
+        spnUserOutputSteps.setMaximum(Integer.MAX_VALUE);
+        spnUserOutputSteps.setPageIncrement(100);
 		initDataBindings();
 
 	}

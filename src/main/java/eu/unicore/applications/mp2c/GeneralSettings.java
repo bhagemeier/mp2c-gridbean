@@ -71,7 +71,7 @@ public class GeneralSettings extends Composite {
 		GridData gd_nrTimeStepsSpinner = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_nrTimeStepsSpinner.widthHint = 48;
 		nrTimeStepsSpinner.setLayoutData(gd_nrTimeStepsSpinner);
-		nrTimeStepsSpinner.setMaximum(100000);
+        nrTimeStepsSpinner.setMaximum(Integer.MAX_VALUE);
 		
 		btnSolvent = new Button(grpGeneral, SWT.CHECK);
 		btnSolvent.setText("Solvent");
