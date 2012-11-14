@@ -1,0 +1,17 @@
+MP2C Application
+================
+
+The code in this repository is a UNICORE application (aka. GridBean)
+for the MP2C molecular dynamics code.
+
+Documentation
+-------------
+
+Documentation about the usage and installation of this application
+can be found in the UNICORE Wiki <<mp2c_app_doc>>.
+
+[bibliography]
+.References
+
+- [[[mp2c_app_doc]]] MP2C -
+  https://sourceforge.net/apps/mediawiki/unicore/index.php?title=MP2C
