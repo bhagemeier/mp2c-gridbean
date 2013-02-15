@@ -35,6 +35,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
+import com.intel.gpe.clients.api.async.IProgressListener;
+import com.intel.gpe.gridbeans.plugins.DataSetException;
 
 import eu.unicore.applications.mp2c.model.Solute;
 
@@ -82,6 +84,16 @@ public class SoluteSettingsGBPanel extends MP2CSWTGridBeanPanel {
 		linkCheckButton(MP2CGridBeanParameters.SOLUTE_USUAL_LJP,
 				soluteSettings.getBtnUsualLjp());
 
+	}
+
+	/**
+	 * @see com.intel.gpe.gridbeans.plugins.GenericGridBeanPanel#saveDataToExternalSource(com.intel.gpe.clients.api.async.IProgressListener)
+	 */
+	@Override
+	public void saveDataToExternalSource(IProgressListener progress)
+			throws DataSetException {
+		// TODO Auto-generated method stub
+		super.saveDataToExternalSource(progress);
 	}
 
 }
