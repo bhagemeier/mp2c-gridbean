@@ -39,12 +39,11 @@ import com.intel.gpe.gridbeans.plugins.DataSetException;
 
 /**
  * @author bjoernh
- *
- * 26.03.2012 15:11:20
- *
+ * 
+ *         26.03.2012 15:11:20
+ * 
  */
 public class ParallelExecutionSettingsGBPanel extends MP2CSWTGridBeanPanel {
-
 
 	private ParallelExecutionSettings parEx;
 

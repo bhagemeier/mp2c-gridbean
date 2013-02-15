@@ -76,18 +76,18 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 			// Timesteps
 			linkSpinBox(MP2CGridBeanParameters.CTRL_TIMESTEPS,
 					generalSettings.getNrTimeStepsSpinner());
-			
+
 			// Simulate solvent
 			linkCheckButton(MP2CGridBeanParameters.CTRL_SIM_SOLVENT,
 					generalSettings.getBtnSolvent());
 
 			// Temperature
-            linkTextField(MP2CGridBeanParameters.CTRL_TEMPERATURE,
+			linkTextField(MP2CGridBeanParameters.CTRL_TEMPERATURE,
 					generalSettings.getTemperature());
-            setValueTranslator(MP2CGridBeanParameters.CTRL_TEMPERATURE,
-                    new DoubleValueTranslator());
-            setValueValidator(MP2CGridBeanParameters.CTRL_TEMPERATURE,
-                    new DoubleValueValidator());
+			setValueTranslator(MP2CGridBeanParameters.CTRL_TEMPERATURE,
+					new DoubleValueTranslator());
+			setValueValidator(MP2CGridBeanParameters.CTRL_TEMPERATURE,
+					new DoubleValueValidator());
 
 			// External force
 			linkCheckButton(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE,
@@ -150,7 +150,6 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 				// TODO react appropriately
 				e.printStackTrace();
 			}
-
 
 			// EXT FORCE X
 			linkTextField(MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,

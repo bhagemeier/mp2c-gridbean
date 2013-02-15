@@ -88,8 +88,7 @@ public class MP2CGridbean extends AbstractGridBean {
 						// MP2CGridBeanParameters.SOLUTE_SHIFTED_LJP
 						"false",
 						// MP2CGridBeanParameters.SOLUTE_USUAL_LJP
-						"false"
-				});
+						"false" });
 
 		getInputParameters().addAll(
 				ParameterUtils.createEnvParameters(soluteParameters));
@@ -105,8 +104,8 @@ public class MP2CGridbean extends AbstractGridBean {
 		QName[] parallelParameters = new QName[] { MP2CGridBeanParameters.PARALLEL };
 
 		List<IGridBeanParameterValue> parParamValues = ParameterUtils
-				.createEnvParameterValues(
-				parallelParameters, new String[] { "3" });
+				.createEnvParameterValues(parallelParameters,
+						new String[] { "3" });
 
 		addInputParameter(ParameterUtils
 				.createEnvParameters(parallelParameters).get(0));
@@ -146,68 +145,70 @@ public class MP2CGridbean extends AbstractGridBean {
 				MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
 				MP2CGridBeanParameters.IO_XYZ_SYSTEM,
 				MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS };
-		
+
 		String[] ioInitValues = new String[] {
-//				MP2CGridBeanParameters.IO_HISTORY_SOLUTE,
+				// MP2CGridBeanParameters.IO_HISTORY_SOLUTE,
 				"true",
-//				MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS,
+				// MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS,
 				"100",
-//				MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
-				"binary",
-//				MP2CGridBeanParameters.IO_HISTORY_SOLVENT,
+				// MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
+				"1",
+				// MP2CGridBeanParameters.IO_HISTORY_SOLVENT,
 				"true",
-//				MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS,
+				// MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS,
 				"100",
-//				MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
-				"binary",
-//				MP2CGridBeanParameters.IO_RESTART_SOLUTE,
+				// MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
+				"1",
+				// MP2CGridBeanParameters.IO_RESTART_SOLUTE,
 				"false",
-//				MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS,
+				// MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS,
 				"100",
-//				MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
-				"binary",
-//				MP2CGridBeanParameters.IO_RESTART_SOLVENT,
+				// MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
+				"1",
+				// MP2CGridBeanParameters.IO_RESTART_SOLVENT,
 				"false",
-//				MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS,
+				// MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS,
 				"100",
-//				MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
-				"binary",
-//				MP2CGridBeanParameters.IO_STANDARD_OUT,
+				// MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
+				"1",
+				// MP2CGridBeanParameters.IO_STANDARD_OUT,
 				"true",
-//				MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS,
+				// MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS,
 				"50",
-//				MP2CGridBeanParameters.IO_STANDARD_SOLUTES,
+				// MP2CGridBeanParameters.IO_STANDARD_SOLUTES,
 				"true",
-//				MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS,
+				// MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS,
 				"50",
-//				MP2CGridBeanParameters.IO_STANDARD_SOLVENT,
+				// MP2CGridBeanParameters.IO_STANDARD_SOLVENT,
 				"true",
-//				MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS,
+				// MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS,
 				"50",
-//				MP2CGridBeanParameters.IO_USER_OUTPUT,
+				// MP2CGridBeanParameters.IO_USER_OUTPUT,
 				"false",
-//				MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS,
+				// MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS,
 				"100",
-//				MP2CGridBeanParameters.IO_XYZ_SOLUTE,
+				// MP2CGridBeanParameters.IO_XYZ_SOLUTE,
 				"false",
-//				MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS,
+				// MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS,
 				"100",
-//				MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
-				"binary",
-//				MP2CGridBeanParameters.IO_XYZ_SOLVENT,
+				// MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
+				"1",
+				// MP2CGridBeanParameters.IO_XYZ_SOLVENT,
 				"false",
-//				MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS,
+				// MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS,
 				"100",
-//				MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
-				"binary",
-//				MP2CGridBeanParameters.IO_XYZ_SYSTEM,
+				// MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
+				"1",
+				// MP2CGridBeanParameters.IO_XYZ_SYSTEM,
 				"false",
-//				MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS
+				// MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS
 				"100" };
-		
-		List<IGridBeanParameterValue> ioInitParamValues = ParameterUtils.createEnvParameterValues(ioParameters, ioInitValues);
-		
-		getInputParameters().addAll(ParameterUtils.createEnvParameters(ioParameters));
+
+		List<IGridBeanParameterValue> ioInitParamValues = ParameterUtils
+				.createEnvParameterValues(ioParameters, ioInitValues);
+
+		getInputParameters().addAll(
+				ParameterUtils.createEnvParameters(ioParameters));
 		for (int i = 0; i < ioInitValues.length; i++) {
 			set(ioParameters[i], ioInitParamValues.get(i));
 		}
@@ -222,21 +223,21 @@ public class MP2CGridbean extends AbstractGridBean {
 				MP2CGridBeanParameters.SOLVENT_LAMBDA,
 				MP2CGridBeanParameters.SOLVENT_MASS,
 				MP2CGridBeanParameters.SOLVENT_PARTICLES,
-				MP2CGridBeanParameters.SOLVENT_PPC
-		};
-		
-		List<IGridBeanParameterValue> slvParmValues = ParameterUtils.createEnvParameterValues(solventParameters, new String[] {
+				MP2CGridBeanParameters.SOLVENT_PPC };
+
+		List<IGridBeanParameterValue> slvParmValues = ParameterUtils
+				.createEnvParameterValues(solventParameters, new String[] {
 						// alpha
-                        "0",
+						"0",
 						// lambda
-                        "0.01",
+						"0.01",
 						// mass
-				"1",
+						"1",
 						// particles
-				"1000",
+						"1000",
 						// particles per cell
 						"50" });
-		
+
 		getInputParameters().addAll(
 				ParameterUtils.createEnvParameters(solventParameters));
 		for (int i = 0; i < solventParameters.length; i++) {
@@ -245,76 +246,75 @@ public class MP2CGridbean extends AbstractGridBean {
 	}
 
 	private void addControlParameters() {
-               
-               QName[] controlParameters = new QName[] {
-                               MP2CGridBeanParameters.CTRL_BC_X,
-                               MP2CGridBeanParameters.CTRL_BC_Y,
-                               MP2CGridBeanParameters.CTRL_BC_Z,
-                               MP2CGridBeanParameters.CTRL_BOX_RATIO_X,
-                               MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
-                               MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
-                               MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL,
-                               MP2CGridBeanParameters.CTRL_COUPLING,
-                               MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE,
-                               MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
-                               MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
-                               MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
-                               MP2CGridBeanParameters.CTRL_LANGEVIN,
-                               MP2CGridBeanParameters.CTRL_LANGEVIN_GAMMA,
-                               MP2CGridBeanParameters.CTRL_RANDOM_SEED,
-                               MP2CGridBeanParameters.CTRL_RESTART_SOLUTE,
-                               MP2CGridBeanParameters.CTRL_RESTART_SOLVENT,
-                               MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
-                               MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
-                               MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
-                               MP2CGridBeanParameters.CTRL_SIM_SOLUTE,
-                               MP2CGridBeanParameters.CTRL_SIM_SOLVENT,
-                               MP2CGridBeanParameters.CTRL_MAX_SCAL,
-                               MP2CGridBeanParameters.CTRL_TEMPERATURE,
-                MP2CGridBeanParameters.CTRL_TIMESTEPS,
-                MP2CGridBeanParameters.CTRL_THERMOSTAT,
-                MP2CGridBeanParameters.CTRL_THERMOSTAT_COUPL };
-               
-               List<IGridBeanParameterValue> paramValues = ParameterUtils
-                               .createEnvParameterValues(controlParameters, new String[] {
-                               // boundary conditions x/y/z
-                               "PBC", "PBC", "PBC",
-                               // box ratios x y z
-                        "1.0", "1.0", "6.0",
+
+		QName[] controlParameters = new QName[] {
+				MP2CGridBeanParameters.CTRL_BC_X,
+				MP2CGridBeanParameters.CTRL_BC_Y,
+				MP2CGridBeanParameters.CTRL_BC_Z,
+				MP2CGridBeanParameters.CTRL_BOX_RATIO_X,
+				MP2CGridBeanParameters.CTRL_BOX_RATIO_Y,
+				MP2CGridBeanParameters.CTRL_BOX_RATIO_Z,
+				MP2CGridBeanParameters.CTRL_COLL_STEPS_INTERVAL,
+				MP2CGridBeanParameters.CTRL_COUPLING,
+				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE,
+				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_X,
+				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Y,
+				MP2CGridBeanParameters.CTRL_EXTERNAL_FORCE_Z,
+				MP2CGridBeanParameters.CTRL_LANGEVIN,
+				MP2CGridBeanParameters.CTRL_LANGEVIN_GAMMA,
+				MP2CGridBeanParameters.CTRL_RANDOM_SEED,
+				MP2CGridBeanParameters.CTRL_RESTART_SOLUTE,
+				MP2CGridBeanParameters.CTRL_RESTART_SOLVENT,
+				MP2CGridBeanParameters.CTRL_SHEAR_RATE_X,
+				MP2CGridBeanParameters.CTRL_SHEAR_RATE_Y,
+				MP2CGridBeanParameters.CTRL_SHEAR_RATE_Z,
+				MP2CGridBeanParameters.CTRL_SIM_SOLUTE,
+				MP2CGridBeanParameters.CTRL_SIM_SOLVENT,
+				MP2CGridBeanParameters.CTRL_MAX_SCAL,
+				MP2CGridBeanParameters.CTRL_TEMPERATURE,
+				MP2CGridBeanParameters.CTRL_TIMESTEPS,
+				MP2CGridBeanParameters.CTRL_THERMOSTAT,
+				MP2CGridBeanParameters.CTRL_THERMOSTAT_COUPL };
+
+		List<IGridBeanParameterValue> paramValues = ParameterUtils
+				.createEnvParameterValues(controlParameters, new String[] {
+						// boundary conditions x/y/z
+						"PBC", "PBC", "PBC",
+						// box ratios x y z
+						"1.0", "1.0", "6.0",
 						// timesteps, coupling (?)
-                               "5000", "0",
-                               // external force active/x/y/z
-                        "false", "0.0", "0.0", "0.0",
-                               // langevin
-                               "0", "0",
-                               // random seed
-                               Integer.toString(new Random().nextInt()),
-                               // restart solute/solvent
-                               "false", "false",
-                               // shear rates x y z
-                        "0.0", "0.0", "0.01",
-                               // simulate solute
-                               "true",
-                               // simulate solvent
-                               "true",
-                        // strict scaling steps/max_scal
-                               "10000",
-                               // temperature
-                        "1.0",
-                               // timesteps
-                        "5000",
-                        // thermostat
-                        "false",
-                        // thermostat coupling
-                        "10000" });
+						"5000", "0",
+						// external force active/x/y/z
+						"false", "0.0", "0.0", "0.0",
+						// langevin
+						"0", "0",
+						// random seed
+						Integer.toString(new Random().nextInt()),
+						// restart solute/solvent
+						"false", "false",
+						// shear rates x y z
+						"0.0", "0.0", "0.01",
+						// simulate solute
+						"true",
+						// simulate solvent
+						"true",
+						// strict scaling steps/max_scal
+						"10000",
+						// temperature
+						"1.0",
+						// timesteps
+						"5000",
+						// thermostat
+						"false",
+						// thermostat coupling
+						"10000" });
 		getInputParameters().addAll(
 				ParameterUtils.createEnvParameters(controlParameters));
 
-               for (int i = 0; i < controlParameters.length; i++) {
-                       set(controlParameters[i], paramValues.get(i));
-               }
+		for (int i = 0; i < controlParameters.length; i++) {
+			set(controlParameters[i], paramValues.get(i));
+		}
 	}
-
 
 	/**
 	 * @see com.intel.gpe.gridbeans.AbstractGridBean#setupJobDefinition(com.intel.gpe.clients.api.Job)
@@ -339,7 +339,6 @@ public class MP2CGridbean extends AbstractGridBean {
 	public URL getIconURL() {
 		return getClass().getResource("mp2c.gif");
 	}
-
 
 	/**
 	 * @see com.intel.gpe.gridbeans.IGridBean#getName()

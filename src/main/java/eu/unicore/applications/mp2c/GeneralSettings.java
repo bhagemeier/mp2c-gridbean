@@ -41,7 +41,7 @@ public class GeneralSettings extends Composite {
 	private Button btnSolvent;
 	private Button btnExternalForce;
 	private Spinner nrTimeStepsSpinner;
-    private Text temperature;
+	private Text temperature;
 	private Spinner collisionSteps;
 
 	/**
@@ -54,49 +54,51 @@ public class GeneralSettings extends Composite {
 	public GeneralSettings(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
-		
+
 		Group grpGeneral = new Group(this, SWT.NONE);
 		grpGeneral.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
 		grpGeneral.setText("General");
 		grpGeneral.setLayout(new GridLayout(3, false));
-		
+
 		btnSolute = new Button(grpGeneral, SWT.CHECK);
 		btnSolute.setText("Solute");
-		
+
 		Label lblNrSteps = new Label(grpGeneral, SWT.NONE);
 		lblNrSteps.setText("Number of Timesteps");
-		
+
 		nrTimeStepsSpinner = new Spinner(grpGeneral, SWT.BORDER);
-		GridData gd_nrTimeStepsSpinner = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_nrTimeStepsSpinner = new GridData(SWT.FILL, SWT.CENTER,
+				false, false, 1, 1);
 		gd_nrTimeStepsSpinner.widthHint = 48;
 		nrTimeStepsSpinner.setLayoutData(gd_nrTimeStepsSpinner);
-        nrTimeStepsSpinner.setMaximum(Integer.MAX_VALUE);
-		
+		nrTimeStepsSpinner.setMaximum(Integer.MAX_VALUE);
+
 		btnSolvent = new Button(grpGeneral, SWT.CHECK);
 		btnSolvent.setText("Solvent");
-		
+
 		Label lblTemperature = new Label(grpGeneral, SWT.NONE);
 		lblTemperature.setText("Temperature");
-		
-        temperature = new Text(grpGeneral, SWT.BORDER);
-		GridData gd_temperature = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+
+		temperature = new Text(grpGeneral, SWT.BORDER);
+		GridData gd_temperature = new GridData(SWT.FILL, SWT.CENTER, false,
+				false, 1, 1);
 		gd_temperature.widthHint = 73;
 		temperature.setLayoutData(gd_temperature);
-		
+
 		btnExternalForce = new Button(grpGeneral, SWT.CHECK);
 
 		btnExternalForce.setText("External force");
-		
+
 		Label lblCollisionSteps = new Label(grpGeneral, SWT.NONE);
 		lblCollisionSteps.setText("Collision steps");
-		
+
 		collisionSteps = new Spinner(grpGeneral, SWT.BORDER);
 		GridData gd_collisionSteps = new GridData(SWT.FILL, SWT.CENTER, true,
 				true, 1, 1);
 		gd_collisionSteps.widthHint = 71;
 		collisionSteps.setLayoutData(gd_collisionSteps);
-		
+
 		Group grpDimensions = new Group(this, SWT.NONE);
 		grpDimensions.setLayout(new GridLayout(5, false));
 		grpDimensions.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
@@ -104,17 +106,17 @@ public class GeneralSettings extends Composite {
 		grpDimensions.setText("Dimensions");
 		new Label(grpDimensions, SWT.NONE);
 		new Label(grpDimensions, SWT.NONE);
-		
+
 		Label lblXaxis = new Label(grpDimensions, SWT.NONE);
 		lblXaxis.setText("X-Axis");
-		
+
 		Label lblYaxis = new Label(grpDimensions, SWT.NONE);
 		lblYaxis.setText("Y-Axis");
-		
+
 		Label lblZaxis = new Label(grpDimensions, SWT.NONE);
 		lblZaxis.setText("Z-Axis");
 		new Label(grpDimensions, SWT.NONE);
-		
+
 		Label lblBoxRatio = new Label(grpDimensions, SWT.NONE);
 		lblBoxRatio.setText("Box ratio");
 
@@ -127,70 +129,76 @@ public class GeneralSettings extends Composite {
 		brZ = new Text(grpDimensions, SWT.BORDER);
 		brZ.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false, 1, 1));
 		new Label(grpDimensions, SWT.NONE);
-		
+
 		Label lblBoundaryConditions = new Label(grpDimensions, SWT.NONE);
 		lblBoundaryConditions.setText("Boundary conditions");
-		
-		bcX = new Combo(grpDimensions, SWT.NONE);
-		bcX.setItems(new String[] {"Periodic", "Bounce-back", "Reflective", "Shear"});
+
+		bcX = new Combo(grpDimensions, SWT.READ_ONLY);
+		bcX.setItems(new String[] { "PBC", "BBC", "RBC", "SBC" });
 		bcX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		bcX.select(1);
-		
-		bcY = new Combo(grpDimensions, SWT.NONE);
-		bcY.setItems(new String[] {"Periodic", "Bounce-back", "Reflective", "Shear"});
+
+		bcY = new Combo(grpDimensions, SWT.READ_ONLY);
+		bcY.setItems(new String[] { "PBC", "BBC", "RBC", "SBC" });
 		bcY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		bcY.select(1);
-		
-		bcZ = new Combo(grpDimensions, SWT.NONE);
-		bcZ.setItems(new String[] {"Periodic", "Bounce-back", "Reflective", "Shear"});
+
+		bcZ = new Combo(grpDimensions, SWT.READ_ONLY);
+		bcZ.setItems(new String[] { "PBC", "BBC", "RBC", "SBC" });
 		bcZ.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		bcZ.select(1);
 		new Label(grpDimensions, SWT.NONE);
-		
+
 		Label lblExternalForce = new Label(grpDimensions, SWT.NONE);
 		lblExternalForce.setText("External force");
-		
+
 		extForceX = new Text(grpDimensions, SWT.BORDER);
-		extForceX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+		extForceX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+				1, 1));
+
 		extForceY = new Text(grpDimensions, SWT.BORDER);
-		extForceY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+		extForceY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+				1, 1));
+
 		extForceZ = new Text(grpDimensions, SWT.BORDER);
-		extForceZ.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		extForceZ.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+				1, 1));
 		new Label(grpDimensions, SWT.NONE);
-		
+
 		Label lblShearRate = new Label(grpDimensions, SWT.NONE);
 		lblShearRate.setText("Shear rate");
-		
+
 		shearRateX = new Text(grpDimensions, SWT.BORDER);
-		shearRateX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+		shearRateX.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
+
 		shearRateY = new Text(grpDimensions, SWT.BORDER);
-		shearRateY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+		shearRateY.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
+
 		shearRateZ = new Text(grpDimensions, SWT.BORDER);
-		shearRateZ.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+		shearRateZ.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
+
 		Group grpOther = new Group(this, SWT.NONE);
 		grpOther.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
 				1));
 		grpOther.setText("Other");
 		grpOther.setLayout(new GridLayout(5, false));
-		
+
 		btnRestartSolute = new Button(grpOther, SWT.CHECK);
 		btnRestartSolute.setText("Restart solute");
 		new Label(grpOther, SWT.NONE);
-		
+
 		Label lblRandomSeed = new Label(grpOther, SWT.NONE);
 		lblRandomSeed.setText("Random seed");
-		
+
 		spinnerRandomSeed = new Spinner(grpOther, SWT.BORDER);
 		spinnerRandomSeed.setMaximum(Integer.MAX_VALUE);
 		spinnerRandomSeed.setMinimum(-2147483648);
 		// gridbean model
 		// spinnerRandomSeed.setSelection(generalConfig.getRandomSeed());
-		
+
 		Button btnRandomize = new Button(grpOther, SWT.NONE);
 		btnRandomize.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -199,17 +207,18 @@ public class GeneralSettings extends Composite {
 			}
 		});
 		btnRandomize.setText("Randomize");
-		
+
 		btnRestartSolvent = new Button(grpOther, SWT.CHECK);
 		btnRestartSolvent.setText("Restart solvent");
 
 		Label fillLabel = new Label(grpOther, SWT.NONE);
 		fillLabel.setText("  ");
-		fillLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		fillLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+				1, 1));
 		new Label(grpOther, SWT.NONE);
 		new Label(grpOther, SWT.NONE);
 		new Label(grpOther, SWT.NONE);
-		
+
 		// Button btnPrintconfig = new Button(this, SWT.NONE);
 		// btnPrintconfig.addSelectionListener(new SelectionAdapter() {
 		// @Override
@@ -226,6 +235,7 @@ public class GeneralSettings extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
+
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
@@ -275,7 +285,7 @@ public class GeneralSettings extends Composite {
 		return btnSolvent;
 	}
 
-    public Text getTemperature() {
+	public Text getTemperature() {
 		return temperature;
 	}
 

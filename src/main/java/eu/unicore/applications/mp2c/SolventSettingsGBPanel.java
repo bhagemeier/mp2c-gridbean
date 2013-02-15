@@ -40,12 +40,11 @@ import com.intel.gpe.gridbeans.plugins.translators.DoubleValueTranslator;
 
 /**
  * @author bjoernh
- *
- * 26.03.2012 15:11:20
- *
+ * 
+ *         26.03.2012 15:11:20
+ * 
  */
 public class SolventSettingsGBPanel extends MP2CSWTGridBeanPanel {
-
 
 	private SolventSettings solventSettings;
 
@@ -67,16 +66,16 @@ public class SolventSettingsGBPanel extends MP2CSWTGridBeanPanel {
 		setComponent(solventSettings);
 
 		try {
-		linkSpinBox(MP2CGridBeanParameters.SOLVENT_PPC,
-				solventSettings.getSpnParticlesPerCell());
+			linkSpinBox(MP2CGridBeanParameters.SOLVENT_PPC,
+					solventSettings.getSpnParticlesPerCell());
 
-		linkSpinBox(MP2CGridBeanParameters.SOLVENT_PARTICLES,
-				solventSettings.getSpnNrParticles());
+			linkSpinBox(MP2CGridBeanParameters.SOLVENT_PARTICLES,
+					solventSettings.getSpnNrParticles());
 
-		linkTextField(MP2CGridBeanParameters.SOLVENT_MASS,
-				solventSettings.getTxtPartmass());
-		setValueTranslator(MP2CGridBeanParameters.SOLVENT_MASS,
-				new DoubleValueTranslator());
+			linkTextField(MP2CGridBeanParameters.SOLVENT_MASS,
+					solventSettings.getTxtPartmass());
+			setValueTranslator(MP2CGridBeanParameters.SOLVENT_MASS,
+					new DoubleValueTranslator());
 
 			linkTextField(MP2CGridBeanParameters.SOLVENT_LAMBDA,
 					solventSettings.getTxtFreepath());
