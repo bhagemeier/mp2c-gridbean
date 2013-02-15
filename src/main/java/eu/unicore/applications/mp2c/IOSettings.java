@@ -44,9 +44,9 @@ import org.eclipse.swt.widgets.Spinner;
 
 /**
  * @author bjoernh
- *
- * 26.03.2012 14:54:30
- *
+ * 
+ *         26.03.2012 14:54:30
+ * 
  */
 public class IOSettings extends Composite {
 
@@ -90,7 +90,6 @@ public class IOSettings extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 
-
 		Group grpStandardIo = new Group(this, SWT.NONE);
 		grpStandardIo.setLayout(new GridLayout(2, false));
 		grpStandardIo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
@@ -101,8 +100,8 @@ public class IOSettings extends Composite {
 		btnGeneral.setText("General");
 
 		spnGeneralSteps = new Spinner(grpStandardIo, SWT.BORDER);
-        spnGeneralSteps.setPageIncrement(100);
-        spnGeneralSteps.setMaximum(Integer.MAX_VALUE);
+		spnGeneralSteps.setPageIncrement(100);
+		spnGeneralSteps.setMaximum(Integer.MAX_VALUE);
 		spnGeneralSteps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 1, 1));
 
@@ -110,8 +109,8 @@ public class IOSettings extends Composite {
 		btnSolute.setText("Solute");
 
 		spnSoluteSteps = new Spinner(grpStandardIo, SWT.BORDER);
-        spnSoluteSteps.setPageIncrement(100);
-        spnSoluteSteps.setMaximum(Integer.MAX_VALUE);
+		spnSoluteSteps.setPageIncrement(100);
+		spnSoluteSteps.setMaximum(Integer.MAX_VALUE);
 		spnSoluteSteps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 
@@ -119,7 +118,7 @@ public class IOSettings extends Composite {
 		btnSolvent.setText("Solvent");
 
 		spnSolventSteps = new Spinner(grpStandardIo, SWT.BORDER);
-        spnSolventSteps.setPageIncrement(100);
+		spnSolventSteps.setPageIncrement(100);
 		spnSolventSteps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1));
 
@@ -132,32 +131,28 @@ public class IOSettings extends Composite {
 		btnRestartSolute = new Button(grpRestartInformation, SWT.CHECK);
 		btnRestartSolute.setText("Solute");
 
-		cmbRestartSoluteType = new Combo(grpRestartInformation, SWT.NONE);
-		cmbRestartSoluteType.setItems(new String[] { "Binary", "ASCII", "SION", "MPI", "5",
-				"6" });
-		cmbRestartSoluteType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1,
-				1));
+		cmbRestartSoluteType = new Combo(grpRestartInformation, SWT.READ_ONLY);
+		cmbRestartSoluteType.setItems(new String[] {});
+		cmbRestartSoluteType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				true, false, 1, 1));
 		cmbRestartSoluteType.select(0);
 
-		spnRestartSoluteSteps = new Spinner(grpRestartInformation,
-				SWT.BORDER);
-        spnRestartSoluteSteps.setPageIncrement(100);
-        spnRestartSoluteSteps.setMaximum(Integer.MAX_VALUE);
+		spnRestartSoluteSteps = new Spinner(grpRestartInformation, SWT.BORDER);
+		spnRestartSoluteSteps.setPageIncrement(100);
+		spnRestartSoluteSteps.setMaximum(Integer.MAX_VALUE);
 
 		btnRestartSolvent = new Button(grpRestartInformation, SWT.CHECK);
 		btnRestartSolvent.setText("Solvent");
 
-		cmbRestartSolventType = new Combo(grpRestartInformation, SWT.NONE);
-		cmbRestartSolventType.setItems(new String[] { "Binary", "ASCII", "SION", "MPI", "5",
-				"6" });
-		cmbRestartSolventType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-				1, 1));
+		cmbRestartSolventType = new Combo(grpRestartInformation, SWT.READ_ONLY);
+		cmbRestartSolventType.setItems(new String[] {});
+		cmbRestartSolventType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				true, false, 1, 1));
 		cmbRestartSolventType.select(0);
 
-		spnRestartSolventSteps = new Spinner(grpRestartInformation,
-				SWT.BORDER);
-        spnRestartSolventSteps.setPageIncrement(100);
-        spnRestartSolventSteps.setMaximum(Integer.MAX_VALUE);
+		spnRestartSolventSteps = new Spinner(grpRestartInformation, SWT.BORDER);
+		spnRestartSolventSteps.setPageIncrement(100);
+		spnRestartSolventSteps.setMaximum(Integer.MAX_VALUE);
 
 		Group grpHistory = new Group(this, SWT.NONE);
 		grpHistory.setLayout(new GridLayout(4, false));
@@ -169,31 +164,29 @@ public class IOSettings extends Composite {
 		btnSoluteHistory = new Button(grpHistory, SWT.CHECK);
 		btnSoluteHistory.setText("Solute");
 
-		cmbSoluteHistoryType = new Combo(grpHistory, SWT.NONE);
-		cmbSoluteHistoryType.setItems(new String[] { "Binary", "ASCII", "SION", "MPI", "5",
-				"6" });
-		cmbSoluteHistoryType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-				1, 1));
+		cmbSoluteHistoryType = new Combo(grpHistory, SWT.READ_ONLY);
+		cmbSoluteHistoryType.setItems(new String[] {});
+		cmbSoluteHistoryType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				true, false, 1, 1));
 		cmbSoluteHistoryType.select(0);
 
 		spnSoluteHistorySteps = new Spinner(grpHistory, SWT.BORDER);
-        spnSoluteHistorySteps.setPageIncrement(100);
-        spnSoluteHistorySteps.setMaximum(Integer.MAX_VALUE);
+		spnSoluteHistorySteps.setPageIncrement(100);
+		spnSoluteHistorySteps.setMaximum(Integer.MAX_VALUE);
 		new Label(grpHistory, SWT.NONE);
 
 		btnSolventHistory = new Button(grpHistory, SWT.CHECK);
 		btnSolventHistory.setText("Solvent");
 
-		cmbSolventHistoryType = new Combo(grpHistory, SWT.NONE);
-		cmbSolventHistoryType.setItems(new String[] { "Binary", "ASCII", "SION", "MPI", "5",
-				"6" });
-		cmbSolventHistoryType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-				1, 1));
+		cmbSolventHistoryType = new Combo(grpHistory, SWT.READ_ONLY);
+		cmbSolventHistoryType.setItems(new String[] {});
+		cmbSolventHistoryType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				true, false, 1, 1));
 		cmbSolventHistoryType.select(0);
 
 		spnSolventHistorySteps = new Spinner(grpHistory, SWT.BORDER);
-        spnSolventHistorySteps.setMaximum(Integer.MAX_VALUE);
-        spnSolventHistorySteps.setPageIncrement(100);
+		spnSolventHistorySteps.setMaximum(Integer.MAX_VALUE);
+		spnSolventHistorySteps.setPageIncrement(100);
 
 		Group grpXyzFile = new Group(this, SWT.NONE);
 		grpXyzFile.setLayout(new GridLayout(5, false));
@@ -208,40 +201,38 @@ public class IOSettings extends Composite {
 		new Label(grpXyzFile, SWT.NONE);
 
 		spnGeneralXYZSteps = new Spinner(grpXyzFile, SWT.BORDER);
-        spnGeneralXYZSteps.setPageIncrement(100);
-        spnGeneralXYZSteps.setMaximum(Integer.MAX_VALUE);
+		spnGeneralXYZSteps.setPageIncrement(100);
+		spnGeneralXYZSteps.setMaximum(Integer.MAX_VALUE);
 		new Label(grpXyzFile, SWT.NONE);
 		new Label(grpXyzFile, SWT.NONE);
 
 		btnSoluteXYZ = new Button(grpXyzFile, SWT.CHECK);
 		btnSoluteXYZ.setText("Solute");
 
-		cmbSoluteXYZType = new Combo(grpXyzFile, SWT.NONE);
-		cmbSoluteXYZType.setItems(new String[] { "Binary", "ASCII", "SION", "MPI", "5",
-				"6" });
-		cmbSoluteXYZType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-				1, 1));
+		cmbSoluteXYZType = new Combo(grpXyzFile, SWT.READ_ONLY);
+		cmbSoluteXYZType.setItems(new String[] {});
+		cmbSoluteXYZType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+				false, 1, 1));
 		cmbSoluteXYZType.select(0);
 
 		spnSoluteXYZSteps = new Spinner(grpXyzFile, SWT.BORDER);
-        spnSoluteXYZSteps.setPageIncrement(100);
-        spnSoluteXYZSteps.setMaximum(Integer.MAX_VALUE);
+		spnSoluteXYZSteps.setPageIncrement(100);
+		spnSoluteXYZSteps.setMaximum(Integer.MAX_VALUE);
 		new Label(grpXyzFile, SWT.NONE);
 		new Label(grpXyzFile, SWT.NONE);
 
 		btnSolventXYZ = new Button(grpXyzFile, SWT.CHECK);
 		btnSolventXYZ.setText("Solvent");
 
-		cmbSolventXYZType = new Combo(grpXyzFile, SWT.NONE);
-		cmbSolventXYZType.setItems(new String[] { "Binary", "ASCII", "SION", "MPI", "5",
-				"6" });
-		cmbSolventXYZType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-				1, 1));
+		cmbSolventXYZType = new Combo(grpXyzFile, SWT.READ_ONLY);
+		cmbSolventXYZType.setItems(new String[] {});
+		cmbSolventXYZType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
+				true, false, 1, 1));
 		cmbSolventXYZType.select(0);
 
 		spnSolventXYZSteps = new Spinner(grpXyzFile, SWT.BORDER);
-        spnSolventXYZSteps.setPageIncrement(100);
-        spnSolventXYZSteps.setMaximum(Integer.MAX_VALUE);
+		spnSolventXYZSteps.setPageIncrement(100);
+		spnSolventXYZSteps.setMaximum(Integer.MAX_VALUE);
 
 		Group grpUserSpecificOutput = new Group(this, SWT.NONE);
 		grpUserSpecificOutput.setLayout(new GridLayout(3, false));
@@ -250,8 +241,7 @@ public class IOSettings extends Composite {
 		grpUserSpecificOutput.setText("User Specific Output");
 		new Label(grpUserSpecificOutput, SWT.NONE);
 
-		btnEndtoendDistances = new Button(grpUserSpecificOutput,
-				SWT.CHECK);
+		btnEndtoendDistances = new Button(grpUserSpecificOutput, SWT.CHECK);
 		btnEndtoendDistances.setText("End-to-end distances");
 		new Label(grpUserSpecificOutput, SWT.NONE);
 		new Label(grpUserSpecificOutput, SWT.NONE);
@@ -259,10 +249,9 @@ public class IOSettings extends Composite {
 		Label lblUserSpecificOutput = new Label(grpUserSpecificOutput, SWT.NONE);
 		lblUserSpecificOutput.setText("User specific output interval");
 
-		spnUserOutputSteps = new Spinner(grpUserSpecificOutput,
-				SWT.BORDER);
-        spnUserOutputSteps.setMaximum(Integer.MAX_VALUE);
-        spnUserOutputSteps.setPageIncrement(100);
+		spnUserOutputSteps = new Spinner(grpUserSpecificOutput, SWT.BORDER);
+		spnUserOutputSteps.setMaximum(Integer.MAX_VALUE);
+		spnUserOutputSteps.setPageIncrement(100);
 		initDataBindings();
 
 	}
@@ -271,6 +260,7 @@ public class IOSettings extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
+
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//

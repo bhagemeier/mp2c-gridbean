@@ -31,22 +31,22 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
+import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.gridbeans.plugins.DataSetException;
-import com.intel.gpe.gridbeans.plugins.translators.StringValueTranslator;
+import com.intel.gpe.gridbeans.plugins.TranslationException;
 
 /**
  * @author bjoernh
- *
- * 26.03.2012 15:11:20
- *
+ * 
+ *         26.03.2012 15:11:20
+ * 
  */
 public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
-
 
 	/**
 	 * @param client
@@ -66,115 +66,123 @@ public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 		setComponent(io);
 
 		try {
-		// standard io
-		// std out
-		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_OUT,
-				io.getBtnGeneral());
+			// standard io
+			// std out
+			linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_OUT,
+					io.getBtnGeneral());
 
-		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS,
-				io.getSpnGeneralSteps());
+			linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_OUT_STEPS,
+					io.getSpnGeneralSteps());
 
+			// solute
+			linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_SOLUTES,
+					io.getBtnSolute());
 
-		// solute
-		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_SOLUTES,
-				io.getBtnSolute());
+			linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS,
+					io.getSpnSoluteSteps());
 
-		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_SOLUTES_STEPS,
-				io.getSpnSoluteSteps());
+			// solvent
+			linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_SOLVENT,
+					io.getBtnSolvent());
 
-		// solvent
-		linkCheckButton(MP2CGridBeanParameters.IO_STANDARD_SOLVENT,
-				io.getBtnSolvent());
+			linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS,
+					io.getSpnSolventSteps());
 
-		linkSpinBox(MP2CGridBeanParameters.IO_STANDARD_SOLVENT_STEPS,
-				io.getSpnSolventSteps());
-
-
-		// restart information
-		// solute
-		linkCheckButton(MP2CGridBeanParameters.IO_RESTART_SOLUTE,
-				io.getBtnRestartSolute());
-		linkComboBox(MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
-				io.getCmbRestartSoluteType());
+			// restart information
+			// solute
+			linkCheckButton(MP2CGridBeanParameters.IO_RESTART_SOLUTE,
+					io.getBtnRestartSolute());
+			linkComboBox(MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
+					io.getCmbRestartSoluteType());
+			setPossibleValues(MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
+					Arrays.asList(IOTypeTranslator.getUserRepresentations()));
 			setValueTranslator(MP2CGridBeanParameters.IO_RESTART_SOLUTES_TYPE,
-					new StringValueTranslator());
-		linkSpinBox(MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS,
-				io.getSpnRestartSoluteSteps());
+					new IOTypeTranslator());
 
-		// solvent
-		linkCheckButton(MP2CGridBeanParameters.IO_RESTART_SOLVENT,
-				io.getBtnRestartSolute());
-		linkComboBox(MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
-				io.getCmbRestartSoluteType());
+			linkSpinBox(MP2CGridBeanParameters.IO_RESTART_SOLUTE_STEPS,
+					io.getSpnRestartSoluteSteps());
+
+			// solvent
+			linkCheckButton(MP2CGridBeanParameters.IO_RESTART_SOLVENT,
+					io.getBtnRestartSolvent());
+			linkComboBox(MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
+					io.getCmbRestartSolventType());
+			setPossibleValues(MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
+					Arrays.asList(IOTypeTranslator.getUserRepresentations()));
 			setValueTranslator(MP2CGridBeanParameters.IO_RESTART_SOLVENT_TYPE,
-					new StringValueTranslator());
+					new IOTypeTranslator());
+			linkSpinBox(MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS,
+					io.getSpnRestartSolventSteps());
 
-		linkSpinBox(MP2CGridBeanParameters.IO_RESTART_SOLVENT_STEPS,
-				io.getSpnRestartSoluteSteps());
-
-		// history
-		// solute
-		linkCheckButton(MP2CGridBeanParameters.IO_HISTORY_SOLUTE,
-				io.getBtnSoluteHistory());
-		linkComboBox(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
-				io.getCmbSoluteHistoryType());
+			// history
+			// solute
+			linkCheckButton(MP2CGridBeanParameters.IO_HISTORY_SOLUTE,
+					io.getBtnSoluteHistory());
+			linkComboBox(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
+					io.getCmbSoluteHistoryType());
+			setPossibleValues(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
+					Arrays.asList(IOTypeTranslator.getUserRepresentations()));
 			setValueTranslator(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_TYPE,
-					new StringValueTranslator());
+					new IOTypeTranslator());
+			linkSpinBox(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS,
+					io.getSpnSoluteHistorySteps());
 
-		linkSpinBox(MP2CGridBeanParameters.IO_HISTORY_SOLUTE_STEPS,
-				io.getSpnSoluteHistorySteps());
-
-		// solvent
-		linkCheckButton(MP2CGridBeanParameters.IO_HISTORY_SOLVENT,
-				io.getBtnSolventHistory());
-		linkComboBox(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
-				io.getCmbSolventHistoryType());
+			// solvent
+			linkCheckButton(MP2CGridBeanParameters.IO_HISTORY_SOLVENT,
+					io.getBtnSolventHistory());
+			linkComboBox(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
+					io.getCmbSolventHistoryType());
+			setPossibleValues(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
+					Arrays.asList(IOTypeTranslator.getUserRepresentations()));
 			setValueTranslator(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_TYPE,
-					new StringValueTranslator());
+					new IOTypeTranslator());
+			linkSpinBox(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS,
+					io.getSpnSolventHistorySteps());
 
-		linkSpinBox(MP2CGridBeanParameters.IO_HISTORY_SOLVENT_STEPS,
-				io.getSpnSolventHistorySteps());
+			// XYZ
+			// general
+			linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SYSTEM,
+					io.getBtnGeneral());
+			linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS,
+					io.getSpnGeneralXYZSteps());
 
-		// XYZ
-		// general
-		linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SYSTEM,
-				io.getBtnGeneral());
-		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SYSTEM_STEPS,
-				io.getSpnGeneralXYZSteps());
-
-		// solute
-		linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SOLUTE,
-				io.getBtnSoluteXYZ());
-		linkComboBox(MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
-				io.getCmbSoluteXYZType());
+			// solute
+			linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SOLUTE,
+					io.getBtnSoluteXYZ());
+			linkComboBox(MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
+					io.getCmbSoluteXYZType());
+			setPossibleValues(MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
+					Arrays.asList(IOTypeTranslator.getUserRepresentations()));
 			setValueTranslator(MP2CGridBeanParameters.IO_XYZ_SOLUTE_TYPE,
-					new StringValueTranslator());
+					new IOTypeTranslator());
+			linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS,
+					io.getSpnSoluteXYZSteps());
 
-		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SOLUTE_STEPS,
-				io.getSpnSoluteXYZSteps());
-
-		// solvent
-		linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SOLVENT,
-				io.getBtnSolventXYZ());
-		linkComboBox(MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
-				io.getCmbSolventXYZType());
+			// solvent
+			linkCheckButton(MP2CGridBeanParameters.IO_XYZ_SOLVENT,
+					io.getBtnSolventXYZ());
+			linkComboBox(MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
+					io.getCmbSolventXYZType());
+			setPossibleValues(MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
+					Arrays.asList(IOTypeTranslator.getUserRepresentations()));
 			setValueTranslator(MP2CGridBeanParameters.IO_XYZ_SOLVENT_TYPE,
-					new StringValueTranslator());
+					new IOTypeTranslator());
+			linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS,
+					io.getSpnSolventXYZSteps());
 
-		linkSpinBox(MP2CGridBeanParameters.IO_XYZ_SOLVENT_STEPS,
-				io.getSpnSolventXYZSteps());
-
-		// user specific output
-		linkCheckButton(MP2CGridBeanParameters.IO_USER_OUTPUT,
-				io.getBtnEndtoendDistances());
-		linkSpinBox(MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS,
-				io.getSpnUserOutputSteps());
+			// user specific output
+			linkCheckButton(MP2CGridBeanParameters.IO_USER_OUTPUT,
+					io.getBtnEndtoendDistances());
+			linkSpinBox(MP2CGridBeanParameters.IO_USER_OUTPUT_STEPS,
+					io.getSpnUserOutputSteps());
 
 		} catch (DataSetException e) {
 			// TODO Deal with it.
 			e.printStackTrace();
+		} catch (TranslationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
-
 }
