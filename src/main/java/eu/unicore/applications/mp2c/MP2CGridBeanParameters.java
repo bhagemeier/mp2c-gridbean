@@ -46,16 +46,8 @@ public class MP2CGridBeanParameters {
 
 	static final String NS = "http://www.unicore.eu/applications/mp2c";
 
-    static final QName CONTROL_FILE_QNAME = new QName(NS, "controlFile");
-    static final String CONTROL_FILE_NAME = "mp2c_ctrl.inp";
-    static final QName SOLUTE_FILE_QNAME = new QName(NS, "soluteFile");
-    static final String SOLUTE_FILE_NAME = "mp2c_slt.inp";
-    static final QName SOLVENT_FILE_QNAME = new QName(NS, "solventFile");
-    static final String SOLVENT_FILE_NAME = "mp2c_slv.inp";
-    static final QName IO_FILE_QNAME = new QName(NS, "ioFile");
-    static final String IO_FILE_NAME = "mp2c_io.inp";
-    static final QName PARALLEL_FILE_QNAME = new QName(NS, "quenchFile");
-    static final String PARALLEL_FILE_NAME = "mp2c_par.inp";
+	static final QName SOLUTE_FILE_QNAME = new QName(NS, "soluteFile");
+	static final String SOLUTE_FILE_NAME = "mp2c_slt.inp";
 
 	// The Control file
 	static final QName CTRL_SIM_SOLUTE = new QName(NS, "simulateSolute");

@@ -149,8 +149,51 @@ function writeSolventFile() {
 ## Everything related to the IO file            ##
 ##################################################
 function writeIoFile() {
- # TODO: this has changed and I'm waiting for Rene's input
-    true
+    echo "# I/O settings" >> ${IO_FILE}
+
+    echo "# general standard I/O" >> ${IO_FILE}
+    echo "."${standard_out}".    # l_std" >> ${IO_FILE}
+    echo ${standard_out_steps}"     # intv_std" >> ${IO_FILE}
+
+    echo "# standard I/O for solutes" >> ${IO_FILE}
+    echo "."${standard_solutes}".    # l_std_slt" >> ${IO_FILE}
+    echo ${standard_solutes_steps}"     # intv_std_slt" >> ${IO_FILE}
+
+    echo "# standard I/O for solvent" >> ${IO_FILE}
+    echo "."${standard_solvent}".    # l_std_slv" >> ${IO_FILE}
+    echo ${standard_solvent_steps}"     # intv_std_slv" >> ${IO_FILE}
+
+    echo "# restart information for solute" >> ${IO_FILE}
+    echo "."${write_restart_solute}". "${restart_solute_type}"   # l_res_slt, s_res_slt" >> ${IO_FILE}
+    echo ${restart_solute_steps}"     # intv_res_slt" >> ${IO_FILE}
+
+    echo "# restart information for solvent" >> ${IO_FILE}
+    echo "."${write_restart_solvent}". "${restart_solvent_type}"   #  l_res_slv, s_res_slv" >> ${IO_FILE}
+    echo ${restart_solvent_steps}"     # intv_res_slv" >> ${IO_FILE}
+
+    echo "# history information for solute" >> ${IO_FILE}
+    echo "."${history_solute}". "${history_solute_type}"   # l_his_slt" >> ${IO_FILE}
+    echo ${history_solute_steps}"     # intv_his_slt" >> ${IO_FILE}
+
+    echo "# history information for solvent" >> ${IO_FILE}
+    echo "."${history_solvent}". "${history_solvent_type}"   # l_his_slv" >> ${IO_FILE}
+    echo ${history_solvent_steps}"     # intv_his_slv" >> ${IO_FILE}
+
+    echo "# xyz file for the whole system" >> ${IO_FILE}
+    echo "."${xyz_system}".    # l_xyz" >> ${IO_FILE}
+    echo ${xyz_system_steps}"     # intv_xyz" >> ${IO_FILE}
+
+    echo "# xyz file for solute" >> ${IO_FILE}
+    echo "."${xyz_solute}". "${xyz_solute_type}"   # l_xyz_slt" >> ${IO_FILE}
+    echo ${xyz_solute_steps}"     # intv_xyz_slt" >> ${IO_FILE}
+
+    echo "# xyz file for solvent" >> ${IO_FILE}
+    echo "."${xyz_solvent}". "${xyz_solvent_type}"   # l_xyz_slv" >> ${IO_FILE}
+    echo ${xyz_solvent_steps}"     # intv_xyz_slv" >> ${IO_FILE}
+
+    echo "# user specific output" >> ${IO_FILE}
+    echo "."${user_output}".    # l_usr_1" >> ${IO_FILE}
+    echo ${standard_out_steps}"     # intv_usr_1" >> ${IO_FILE}
 }
 
 ##################################################

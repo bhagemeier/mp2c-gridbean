@@ -32,40 +32,27 @@ public class MP2CGridbean extends AbstractGridBean {
 	 * configuration should not be used.
 	 */
 	public MP2CGridbean() {
-		
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.CONTROL_FILE_QNAME,
-				MP2CGridBeanParameters.CONTROL_FILE_NAME);
+
 		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
 				MP2CGridBeanParameters.SOLUTE_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
-				MP2CGridBeanParameters.SOLVENT_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.IO_FILE_QNAME,
-				MP2CGridBeanParameters.IO_FILE_NAME);
-		QNAME_2_FILENAME.put(MP2CGridBeanParameters.PARALLEL_FILE_QNAME,
-				MP2CGridBeanParameters.PARALLEL_FILE_NAME);
 
 		List<IGridBeanParameter> inputFiles = ParameterUtils
-				.createFileParameters(new QName[] {
-						MP2CGridBeanParameters.CONTROL_FILE_QNAME,
-						MP2CGridBeanParameters.IO_FILE_QNAME,
-						MP2CGridBeanParameters.SOLUTE_FILE_QNAME,
-						MP2CGridBeanParameters.SOLVENT_FILE_QNAME,
-						MP2CGridBeanParameters.PARALLEL_FILE_QNAME }, true);
+				.createFileParameters(
+						new QName[] { MP2CGridBeanParameters.SOLUTE_FILE_QNAME },
+						true);
 
 		for (IGridBeanParameter iGridBeanParameter : inputFiles) {
 			addInputParameter(iGridBeanParameter);
 		}
-		
 
 		// set local filename for each of the configuration files
 		for (QName qn : QNAME_2_FILENAME.keySet()) {
 			InputFileParameterValue ifpv;
-            ifpv = new InputFileParameterValue();
-            set(qn, ifpv);
+			ifpv = new InputFileParameterValue();
+			set(qn, ifpv);
 
 		}
 
-				
 		addControlParameters();
 		addSolventParameters();
 		addSoluteParameters();
