@@ -63,6 +63,7 @@ public class ParallelExecutionSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	 */
 	public void createControl(Composite parent) {
 		parEx = new ParallelExecutionSettings(parent, SWT.NONE);
+		setComponent(parEx);
 
 		try {
 			linkSpinBox(MP2CGridBeanParameters.PARALLEL,

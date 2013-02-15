@@ -65,6 +65,7 @@ public class SoluteSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	 */
 	public void createControl(Composite parent) {
 		soluteSettings = new SoluteSettings(parent, SWT.NONE, solute);
+		setComponent(soluteSettings);
 
 		linkCheckButton(MP2CGridBeanParameters.SOLUTE_RADIUS_SHIFTED_LJP,
 				soluteSettings.getBtnRadiusShiftedLjp());

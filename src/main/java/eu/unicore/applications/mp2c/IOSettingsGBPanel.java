@@ -63,6 +63,7 @@ public class IOSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	 */
 	public void createControl(Composite parent) {
 		IOSettings io = new IOSettings(parent, SWT.NONE);
+		setComponent(io);
 
 		try {
 		// standard io

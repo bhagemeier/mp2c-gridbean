@@ -64,6 +64,7 @@ public class SolventSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	 */
 	public void createControl(Composite parent) {
 		solventSettings = new SolventSettings(parent, SWT.NONE);
+		setComponent(solventSettings);
 
 		try {
 		linkSpinBox(MP2CGridBeanParameters.SOLVENT_PPC,

@@ -67,7 +67,8 @@ public class GeneralSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	public void createControl(Composite parent) {
 		try {
 			generalSettings = new GeneralSettings(parent, SWT.NONE);
-			
+			setComponent(generalSettings);
+
 			// Simulate Solute
 			linkCheckButton(MP2CGridBeanParameters.CTRL_SIM_SOLUTE,
 					generalSettings.getBtnSolute());
