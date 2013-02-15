@@ -129,6 +129,7 @@ function writeThermostatConfig() {
 	echo >> ${CTRL_FILE}
 	echo '++max-scal++         max. number of steps for strict scaling' >> ${CTRL_FILE}
 	echo ${max_scal} >> ${CTRL_FILE}
+	echo '**end**' >> ${CTRL_FILE}
     fi
 }
 
