@@ -31,11 +31,14 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /**
  * @author bjoernh
- *
- * 30.03.2012 14:58:07
- *
+ * 
+ *         30.03.2012 14:58:07
+ * 
  */
 public class Atom implements Cloneable {
 	private String identifier;
@@ -44,6 +47,54 @@ public class Atom implements Cloneable {
 	private int toRange;
 	private double mass;
 	private double charge;
+
+	private final PropertyChangeSupport propertyChangeSupport;
+
+	public void addPropertyChangeListener(String _propertyName,
+			PropertyChangeListener _listener) {
+		propertyChangeSupport.addPropertyChangeListener(_propertyName,
+				_listener);
+	}
+
+	public void addPropertyChangeListener(PropertyChangeListener _listener) {
+		propertyChangeSupport.addPropertyChangeListener(_listener);
+	}
+
+	public void removePropertyChangeListener(String _propertyName,
+			PropertyChangeListener _listener) {
+		propertyChangeSupport.removePropertyChangeListener(_propertyName,
+				_listener);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener _listener) {
+		propertyChangeSupport.removePropertyChangeListener(_listener);
+	}
+
+	/**
+     * 
+     */
+	public Atom() {
+		this("Oxygen", "O", 0, 0, 0.0, 0.0);
+	}
+
+	/**
+	 * @param string
+	 * @param string2
+	 * @param i
+	 * @param j
+	 * @param d
+	 * @param e
+	 */
+	public Atom(String _identifier, String _symbol, int _fromRange,
+			int _toRange, double _mass, double _charge) {
+		propertyChangeSupport = new PropertyChangeSupport(this);
+		this.identifier = _identifier;
+		this.symbol = _symbol;
+		this.fromRange = _fromRange;
+		this.toRange = _toRange;
+		this.mass = _mass;
+		this.charge = _charge;
+	}
 
 	/**
 	 * @return the identifier
@@ -57,6 +108,8 @@ public class Atom implements Cloneable {
 	 *            the identifier to set
 	 */
 	public void setIdentifier(String identifier) {
+		propertyChangeSupport.firePropertyChange("identifier", this.identifier,
+				identifier);
 		this.identifier = identifier;
 	}
 
@@ -72,6 +125,7 @@ public class Atom implements Cloneable {
 	 *            the symbol to set
 	 */
 	public void setSymbol(String symbol) {
+		propertyChangeSupport.firePropertyChange("symbol", this.symbol, symbol);
 		this.symbol = symbol;
 	}
 
@@ -87,7 +141,8 @@ public class Atom implements Cloneable {
 	 *            the fromRange to set
 	 */
 	public void setFromRange(int fromRange) {
-		this.fromRange = fromRange;
+		propertyChangeSupport.firePropertyChange("fromRange", this.fromRange,
+				this.fromRange = fromRange);
 	}
 
 	/**
@@ -102,7 +157,8 @@ public class Atom implements Cloneable {
 	 *            the toRange to set
 	 */
 	public void setToRange(int toRange) {
-		this.toRange = toRange;
+		propertyChangeSupport.firePropertyChange("toRange", this.toRange,
+				this.toRange = toRange);
 	}
 
 	/**
@@ -117,7 +173,8 @@ public class Atom implements Cloneable {
 	 *            the mass to set
 	 */
 	public void setMass(double mass) {
-		this.mass = mass;
+		propertyChangeSupport.firePropertyChange("mass", this.mass,
+				this.mass = mass);
 	}
 
 	/**
@@ -132,7 +189,8 @@ public class Atom implements Cloneable {
 	 *            the charge to set
 	 */
 	public void setCharge(double charge) {
-		this.charge = charge;
+		propertyChangeSupport.firePropertyChange("charge", this.charge,
+				this.charge = charge);
 	}
 
 	/**

@@ -31,115 +31,158 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /**
  * @author bjoernh
- *
- * 30.03.2012 14:58:15
- *
+ * 
+ *         30.03.2012 14:58:15
+ * 
  */
 public class Bond implements Cloneable {
-	private String type;
-	private int number;
-	private int fromRange;
-	private int toRange;
-	private double k;
-	private double r;
+    private String type;
+    private int number;
+    private int fromRange;
+    private int toRange;
+    private double k;
+    private double r;
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
+    private final PropertyChangeSupport pcs;
 
-	/**
-	 * @param type
-	 *            the type to set
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void addPropertyChangeListener(String _property,
+            PropertyChangeListener _listener) {
+        this.pcs.addPropertyChangeListener(_property, _listener);
+    }
 
-	/**
-	 * @return the number
-	 */
-	public int getNumber() {
-		return number;
-	}
+    public void removePropertyChangeListener(String _property,
+            PropertyChangeListener _listener) {
+        this.pcs.removePropertyChangeListener(_property, _listener);
+    }
 
-	/**
-	 * @param number
-	 *            the number to set
-	 */
-	public void setNumber(int number) {
-		this.number = number;
-	}
+    /**
+         * 
+         */
+    public Bond() {
+        this("", 0, 0, 0, 0.0, 0.0);
+    }
 
-	/**
-	 * @return the fromRange
-	 */
-	public int getFromRange() {
-		return fromRange;
-	}
+    /**
+     * @param string
+     * @param i
+     * @param j
+     * @param l
+     * @param d
+     * @param e
+     */
+    public Bond(String type, int number, int fromRange, int toRange, double k,
+            double r) {
+        this.pcs = new PropertyChangeSupport(this);
+        this.type = type;
+        this.number = number;
+        this.fromRange = fromRange;
+        this.toRange = toRange;
+        this.k = k;
+        this.r = r;
+    }
 
-	/**
-	 * @param fromRange
-	 *            the fromRange to set
-	 */
-	public void setFromRange(int fromRange) {
-		this.fromRange = fromRange;
-	}
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
 
-	/**
-	 * @return the toRange
-	 */
-	public int getToRange() {
-		return toRange;
-	}
+    /**
+     * @param type
+     *            the type to set
+     */
+    public void setType(String type) {
+        pcs.firePropertyChange("type", this.type, type);
+        this.type = type;
+    }
 
-	/**
-	 * @param toRange
-	 *            the toRange to set
-	 */
-	public void setToRange(int toRange) {
-		this.toRange = toRange;
-	}
+    /**
+     * @return the number
+     */
+    public int getNumber() {
+        return number;
+    }
 
-	/**
-	 * @return the k
-	 */
-	public double getK() {
-		return k;
-	}
+    /**
+     * @param number
+     *            the number to set
+     */
+    public void setNumber(int number) {
+        pcs.firePropertyChange("number", this.number, this.number = number);
+    }
 
-	/**
-	 * @param k
-	 *            the k to set
-	 */
-	public void setK(double k) {
-		this.k = k;
-	}
+    /**
+     * @return the fromRange
+     */
+    public int getFromRange() {
+        return fromRange;
+    }
 
-	/**
-	 * @return the r
-	 */
-	public double getR() {
-		return r;
-	}
+    /**
+     * @param fromRange
+     *            the fromRange to set
+     */
+    public void setFromRange(int fromRange) {
+        pcs.firePropertyChange("fromRange", this.fromRange,
+                this.fromRange = fromRange);
+    }
 
-	/**
-	 * @param r
-	 *            the r to set
-	 */
-	public void setR(double r) {
-		this.r = r;
-	}
+    /**
+     * @return the toRange
+     */
+    public int getToRange() {
+        return toRange;
+    }
 
-	/**
-	 * @see java.lang.Object#clone()
-	 */
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
+    /**
+     * @param toRange
+     *            the toRange to set
+     */
+    public void setToRange(int toRange) {
+        pcs.firePropertyChange("toRange", this.toRange, this.toRange = toRange);
+    }
+
+    /**
+     * @return the k
+     */
+    public double getK() {
+        return k;
+    }
+
+    /**
+     * @param k
+     *            the k to set
+     */
+    public void setK(double k) {
+        pcs.firePropertyChange("k", this.k, this.k = k);
+    }
+
+    /**
+     * @return the r
+     */
+    public double getR() {
+        return r;
+    }
+
+    /**
+     * @param r
+     *            the r to set
+     */
+    public void setR(double r) {
+        pcs.firePropertyChange("r", this.r, this.r = r);
+    }
+
+    /**
+     * @see java.lang.Object#clone()
+     */
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
