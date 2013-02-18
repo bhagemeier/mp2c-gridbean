@@ -31,24 +31,15 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
+import mp2c_1_0.Atom;
+import mp2c_1_0.MolecularSpecies;
+import mp2c_1_0.Mp2c_1_0Factory;
+
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.core.databinding.beans.BeansObservables;
-import org.eclipse.core.databinding.beans.IBeanValueProperty;
-import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.list.WritableList;
-import org.eclipse.core.databinding.observable.map.IObservableMap;
-import org.eclipse.core.databinding.property.Properties;
-import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
-import org.eclipse.jface.databinding.viewers.ObservableValueEditingSupport;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -63,10 +54,6 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-
-import eu.unicore.applications.mp2c.model.Atom;
-import eu.unicore.applications.mp2c.model.Bond;
-import eu.unicore.applications.mp2c.model.MolecularSpecies;
 
 /**
  * @author bjoernh
@@ -106,11 +93,11 @@ public class MolecularSpeciesTab extends Composite {
 	 * @param style
 	 */
 	public MolecularSpeciesTab(Composite parent, int style,
-			MolecularSpecies _species) {
+			MolecularSpecies species2) {
 		super(parent, style);
 		setLayout(new GridLayout(5, false));
 
-		this.species = _species;
+		this.species = species2;
 
 		createComposite(parent);
 
@@ -139,8 +126,6 @@ public class MolecularSpeciesTab extends Composite {
 				| SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
 
 		atomTableViewer.setContentProvider(new ArrayContentProvider());
-		atomTableViewer.setInput(new WritableList(species.getAtoms(),
-				Atom.class));
 
 		atomTable = atomTableViewer.getTable();
 		atomTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4,
@@ -156,7 +141,7 @@ public class MolecularSpeciesTab extends Composite {
 		mntmAddAtom.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				species.addAtom(new Atom());
+				species.getAtoms().add(Mp2c_1_0Factory.eINSTANCE.createAtom());
 				atomTableViewer.refresh();
 			}
 		});
@@ -167,7 +152,7 @@ public class MolecularSpeciesTab extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				for (TableItem atomTi : atomTable.getSelection()) {
-					species.removeAtom((Atom) atomTi.getData());
+					species.getAtoms().remove(atomTi.getData());
 
 				}
 				atomTableViewer.refresh();
@@ -321,7 +306,7 @@ public class MolecularSpeciesTab extends Composite {
 		mntmAddBond.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				species.addBond(new Bond());
+				species.getBonds().add(Mp2c_1_0Factory.eINSTANCE.createBond());
 				bondsTableViewer.refresh();
 			}
 		});
@@ -332,7 +317,7 @@ public class MolecularSpeciesTab extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				for (TableItem bondTi : bondsTable.getSelection()) {
-					species.removeBond((Bond) bondTi.getData());
+					species.getBonds().remove(bondTi.getData());
 				}
 				bondsTableViewer.refresh();
 			}
@@ -369,122 +354,6 @@ public class MolecularSpeciesTab extends Composite {
 
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
-		//
-		ObservableListContentProvider listContentProvider = new ObservableListContentProvider();
-		IObservableMap[] observeMaps = BeansObservables.observeMaps(
-				listContentProvider.getKnownElements(), Atom.class,
-				new String[] { "identifier", "symbol", "fromRange", "toRange",
-						"mass", "charge" });
-		atomTableViewer.setLabelProvider(new ObservableMapLabelProvider(
-				observeMaps));
-		atomTableViewer.setContentProvider(listContentProvider);
-		//
-		IObservableList selfList = Properties.selfList(Atom.class).observe(
-				species.getAtoms());
-		atomTableViewer.setInput(selfList);
-		//
-		CellEditor cellEditor = new TextCellEditor(atomTableViewer.getTable());
-		IValueProperty cellEditorProperty = BeanProperties.value("value");
-		IBeanValueProperty valueProperty = BeanProperties.value("identifier");
-		tvcAtomIdentifier.setEditingSupport(ObservableValueEditingSupport
-				.create(atomTableViewer, bindingContext, cellEditor,
-						cellEditorProperty, valueProperty));
-		//
-		CellEditor cellEditor_1 = new TextCellEditor(atomTableViewer.getTable());
-		IValueProperty cellEditorProperty_1 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_1 = BeanProperties.value("symbol");
-		tvcAtomSymbol.setEditingSupport(ObservableValueEditingSupport.create(
-				atomTableViewer, bindingContext, cellEditor_1,
-				cellEditorProperty_1, valueProperty_1));
-		//
-		CellEditor cellEditor_2 = new TextCellEditor(atomTableViewer.getTable());
-		IValueProperty cellEditorProperty_2 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_2 = BeanProperties.value("fromRange");
-		tvcAtomRangeFrom.setEditingSupport(ObservableValueEditingSupport
-				.create(atomTableViewer, bindingContext, cellEditor_2,
-						cellEditorProperty_2, valueProperty_2));
-		//
-		CellEditor cellEditor_3 = new TextCellEditor(atomTableViewer.getTable());
-		IValueProperty cellEditorProperty_3 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_3 = BeanProperties.value("toRange");
-		tvcAtomRangeTo.setEditingSupport(ObservableValueEditingSupport.create(
-				atomTableViewer, bindingContext, cellEditor_3,
-				cellEditorProperty_3, valueProperty_3));
-		//
-		CellEditor cellEditor_4 = new TextCellEditor(atomTableViewer.getTable());
-		IValueProperty cellEditorProperty_4 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_4 = BeanProperties.value("mass");
-		tvcAtomMass.setEditingSupport(ObservableValueEditingSupport.create(
-				atomTableViewer, bindingContext, cellEditor_4,
-				cellEditorProperty_4, valueProperty_4));
-		//
-		CellEditor cellEditor_5 = new TextCellEditor(atomTableViewer.getTable());
-		IValueProperty cellEditorProperty_5 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_5 = BeanProperties.value("charge");
-		tvcAtomCharge.setEditingSupport(ObservableValueEditingSupport.create(
-				atomTableViewer, bindingContext, cellEditor_5,
-				cellEditorProperty_5, valueProperty_5));
-		//
-		ObservableListContentProvider listContentProvider_1 = new ObservableListContentProvider();
-		IObservableMap[] observeMaps_1 = BeansObservables.observeMaps(
-				listContentProvider_1.getKnownElements(), Bond.class,
-				new String[] { "type", "number", "fromRange", "toRange", "r",
-						"k" });
-		bondsTableViewer.setLabelProvider(new ObservableMapLabelProvider(
-				observeMaps_1));
-		bondsTableViewer.setContentProvider(listContentProvider_1);
-		//
-		IObservableList selfList_1 = Properties.selfList(Bond.class).observe(
-				species.getBonds());
-		bondsTableViewer.setInput(selfList_1);
-		//
-		CellEditor cellEditor_6 = new TextCellEditor(
-				bondsTableViewer.getTable());
-		IValueProperty cellEditorProperty_6 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_6 = BeanProperties.value("type");
-		tvcBondType.setEditingSupport(ObservableValueEditingSupport.create(
-				bondsTableViewer, bindingContext, cellEditor_6,
-				cellEditorProperty_6, valueProperty_6));
-		//
-		CellEditor cellEditor_7 = new TextCellEditor(
-				bondsTableViewer.getTable());
-		IValueProperty cellEditorProperty_7 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_7 = BeanProperties.value("number");
-		tvcBondNumber.setEditingSupport(ObservableValueEditingSupport.create(
-				bondsTableViewer, bindingContext, cellEditor_7,
-				cellEditorProperty_7, valueProperty_7));
-		//
-		CellEditor cellEditor_8 = new TextCellEditor(
-				bondsTableViewer.getTable());
-		IValueProperty cellEditorProperty_8 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_8 = BeanProperties.value("fromRange");
-		tvcBondRangeFrom.setEditingSupport(ObservableValueEditingSupport
-				.create(bondsTableViewer, bindingContext, cellEditor_8,
-						cellEditorProperty_8, valueProperty_8));
-		//
-		CellEditor cellEditor_9 = new TextCellEditor(
-				bondsTableViewer.getTable());
-		IValueProperty cellEditorProperty_9 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_9 = BeanProperties.value("toRange");
-		tvcBondRangeTo.setEditingSupport(ObservableValueEditingSupport.create(
-				bondsTableViewer, bindingContext, cellEditor_9,
-				cellEditorProperty_9, valueProperty_9));
-		//
-		CellEditor cellEditor_10 = new TextCellEditor(
-				bondsTableViewer.getTable());
-		IValueProperty cellEditorProperty_10 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_10 = BeanProperties.value("r");
-		tvcBondR.setEditingSupport(ObservableValueEditingSupport.create(
-				bondsTableViewer, bindingContext, cellEditor_10,
-				cellEditorProperty_10, valueProperty_10));
-		//
-		CellEditor cellEditor_11 = new TextCellEditor(
-				bondsTableViewer.getTable());
-		IValueProperty cellEditorProperty_11 = BeanProperties.value("value");
-		IBeanValueProperty valueProperty_11 = BeanProperties.value("k");
-		tvcBondK.setEditingSupport(ObservableValueEditingSupport.create(
-				bondsTableViewer, bindingContext, cellEditor_11,
-				cellEditorProperty_11, valueProperty_11));
 		//
 		return bindingContext;
 	}

@@ -36,6 +36,8 @@ import java.io.IOException;
 
 import javax.xml.namespace.QName;
 
+import mp2c_1_0.Mp2c_1_0Factory;
+
 import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.clients.api.async.IProgressListener;
 import com.intel.gpe.gridbeans.parameters.FileParameterValue;
@@ -43,8 +45,6 @@ import com.intel.gpe.gridbeans.parameters.InputFileParameterValue;
 import com.intel.gpe.gridbeans.plugins.DataSetException;
 import com.intel.gpe.gridbeans.plugins.swt.SWTGridBeanPlugin;
 import com.intel.gpe.util.defaults.preferences.INode;
-
-import eu.unicore.applications.mp2c.model.Solute;
 
 /**
  * @author bjoernh
@@ -71,8 +71,8 @@ public class MP2CGridBeanPlugin extends SWTGridBeanPlugin {
 		addInputPanel(new ParallelExecutionSettingsGBPanel(client,
 				"Parallel Execution"));
 		// addInputPanel(new TextEditorGBPanel(client, "Solute"));
-		Solute solute = new Solute();
-		addInputPanel(new SoluteSettingsGBPanel(client, "Solute", solute));
+		addInputPanel(new SoluteSettingsGBPanel(client, "Solute",
+				Mp2c_1_0Factory.eINSTANCE.createSolute()));
 
 		String projectTmpDir = client.getFileFactory().getTemporaryDirName();
 		File prTmp = new File(projectTmpDir);

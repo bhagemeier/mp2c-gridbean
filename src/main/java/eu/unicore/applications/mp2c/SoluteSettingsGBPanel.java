@@ -31,14 +31,14 @@
  ********************************************************************************/
 package eu.unicore.applications.mp2c;
 
+import mp2c_1_0.Solute;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import com.intel.gpe.clients.api.Client;
 import com.intel.gpe.clients.api.async.IProgressListener;
 import com.intel.gpe.gridbeans.plugins.DataSetException;
-
-import eu.unicore.applications.mp2c.model.Solute;
 
 /**
  * @author bjoernh
@@ -54,12 +54,12 @@ public class SoluteSettingsGBPanel extends MP2CSWTGridBeanPanel {
 	/**
 	 * @param client
 	 * @param name
-	 * @param solute
+	 * @param solute2
 	 */
-	public SoluteSettingsGBPanel(Client client, String name, Solute solute) {
+	public SoluteSettingsGBPanel(Client client, String name, Solute solute2) {
 		super(client, name);
 
-		this.solute = solute;
+		this.solute = solute2;
 	}
 
 	/**
