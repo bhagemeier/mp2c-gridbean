@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.unicore.eu/applications/mp2c/1.0"
+            class="mp2c_1_0.Mp2c_1_0Package"
+            genModel="model/mp2c_1.0.genmodel"/>
+   </extension>
+
+</plugin>

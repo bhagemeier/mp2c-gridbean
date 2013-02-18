@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.fzj.unicore.rcp.gpe4eclipse.extensionpoints.GridBeanExtensions">
+      <contribution>
+         <gridBeanJar
+               gridBeanName="MP2C"
+               gridBeanVersion="1.0.0"
+               pathToJar="mp2c-gridbean-1.0.0-SNAPSHOT.jar">
+         </gridBeanJar>
+      </contribution>
+   </extension>
+
+</plugin>
