@@ -2,6 +2,7 @@ package eu.unicore.applications.mp2c;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class MP2CGridbean extends AbstractGridBean {
 
 		for (IGridBeanParameter iGridBeanParameter : inputFiles) {
 			addInputParameter(iGridBeanParameter);
-//			set(iGridBeanParameter.getName(), new InputFileParameterValue(
+			// set(iGridBeanParameter.getName(), new InputFileParameterValue(
 			// QNAME_2_FILENAME.get(iGridBeanParameter.getName())));
 		}
 
@@ -117,6 +118,14 @@ public class MP2CGridbean extends AbstractGridBean {
 	 */
 	public String getName() {
 		return "MP2C";
+	}
+
+	/**
+	 * @see com.intel.gpe.gridbeans.AbstractGridBean#getIconURL()
+	 */
+	@Override
+	public URL getIconURL() {
+		return getClass().getResource("mp2c.gif");
 	}
 
 }
