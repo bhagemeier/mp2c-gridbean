@@ -62,7 +62,7 @@ public class GeneralSettingsGBPanel extends SWTGridBeanPanel {
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new GeneralSettings(parent, SWT.NONE, generalConfig);
+		setComponent(new GeneralSettings(parent, SWT.NONE, generalConfig));
 	}
 
 }

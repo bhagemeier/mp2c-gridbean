@@ -41,9 +41,9 @@ import eu.unicore.applications.mp2c.model.Solute;
 
 /**
  * @author bjoernh
- *
- * 26.03.2012 15:11:20
- *
+ * 
+ *         26.03.2012 15:11:20
+ * 
  */
 public class SoluteSettingsGBPanel extends SWTGridBeanPanel {
 
@@ -54,8 +54,7 @@ public class SoluteSettingsGBPanel extends SWTGridBeanPanel {
 	 * @param name
 	 * @param solute2
 	 */
-	public SoluteSettingsGBPanel(Client client, String name,
- Solute solute2) {
+	public SoluteSettingsGBPanel(Client client, String name, Solute solute2) {
 		super(client, name);
 
 		this.solute = solute2;
@@ -65,7 +64,7 @@ public class SoluteSettingsGBPanel extends SWTGridBeanPanel {
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new SoluteSettings(parent, SWT.NONE, solute);
+		setComponent(new SoluteSettings(parent, SWT.NONE, solute));
 
 	}
 

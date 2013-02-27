@@ -41,9 +41,9 @@ import eu.unicore.applications.mp2c.model.Parallel;
 
 /**
  * @author bjoernh
- *
- * 26.03.2012 15:11:20
- *
+ * 
+ *         26.03.2012 15:11:20
+ * 
  */
 public class ParallelExecutionSettingsGBPanel extends SWTGridBeanPanel {
 
@@ -65,7 +65,7 @@ public class ParallelExecutionSettingsGBPanel extends SWTGridBeanPanel {
 	 * @see com.intel.gpe.gridbeans.plugins.swt.panels.ISWTGridBeanPanel#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	public void createControl(Composite parent) {
-		new ParallelExecutionSettings(parent, SWT.NONE, parallel);
+		setComponent(new ParallelExecutionSettings(parent, SWT.NONE, parallel));
 
 	}
 
