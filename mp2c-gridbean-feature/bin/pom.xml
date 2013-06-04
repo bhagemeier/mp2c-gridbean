@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>mp2c_gridbean_feature</groupId>
+  <artifactId>mp2c_gridbean_feature</artifactId>
+  <version>1.0.0</version>
+  <parent>
+    <groupId>eu.unicore.applications</groupId>
+    <artifactId>mp2c-gridbean-parent</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <build>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <plugins>
+      <!-- configure eclipse plugin for pde mode -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-rcp-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>rcp-init</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>eclipse</goal>
+            </goals>
+            <configuration>
+            </configuration>
+          </execution>
+          <execution>
+            <id>rcp-build</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>ext</goal>
+            </goals>
+            <configuration>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <pde>true</pde>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+</project>
