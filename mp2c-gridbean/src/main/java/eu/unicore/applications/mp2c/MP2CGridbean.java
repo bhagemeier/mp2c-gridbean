@@ -59,7 +59,7 @@ public class MP2CGridbean extends AbstractGridBean {
 		addIoParameters();
 		addParallelParameters();
 
-		new DefaultRealm();
+		// new DefaultRealm();
 
 	}
 

@@ -1,0 +1,25 @@
+**solute**          solutes are simulated
+true
+
+**ext-force**          external force
+1.0 1.0 1.0
+
+**restart**     switches to start from restart configurations
+++solute++
+..  ..
+
+++solvent++
+..  ..
+**end**
+**langevin**          perform Langevin dynamics
+++gamma++
+
+**end**
+++coupl++          coupling constant
+
+
+++max-scal++         max. number of steps for strict scaling
+
+********
+**exit**
+********

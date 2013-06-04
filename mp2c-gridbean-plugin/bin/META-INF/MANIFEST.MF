@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: mp2c-gridbean
+Bundle-SymbolicName: mp2c-gridbean-plugin;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: UNICORE
+Require-Bundle: de.fzj.unicore.rcp.gpe4eclipse;bundle-version="6.4.5",
+ mp2c-gridbean-model;bundle-version="1.0.0",
+ org.eclipse.ui.views.log;bundle-version="1.0.200"
+Bundle-ClassPath: .

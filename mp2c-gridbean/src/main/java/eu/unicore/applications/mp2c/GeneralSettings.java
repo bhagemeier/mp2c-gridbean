@@ -3,10 +3,6 @@ package eu.unicore.applications.mp2c;
 import java.util.Random;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -239,32 +235,7 @@ public class GeneralSettings extends Composite {
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
-		IObservableValue observeSelectionBtnExternalForceObserveWidget_3 = WidgetProperties
-				.selection().observe(btnExternalForce);
-		IObservableValue enabledExtForceXObserveValue = PojoProperties.value(
-				"enabled").observe(extForceX);
-		bindingContext.bindValue(
-				observeSelectionBtnExternalForceObserveWidget_3,
-				enabledExtForceXObserveValue, null, new UpdateValueStrategy(
-						UpdateValueStrategy.POLICY_NEVER));
-		//
-		IObservableValue observeSelectionBtnExternalForceObserveWidget_2 = WidgetProperties
-				.selection().observe(btnExternalForce);
-		IObservableValue enabledExtForceYObserveValue = PojoProperties.value(
-				"enabled").observe(extForceY);
-		bindingContext.bindValue(
-				observeSelectionBtnExternalForceObserveWidget_2,
-				enabledExtForceYObserveValue, null, new UpdateValueStrategy(
-						UpdateValueStrategy.POLICY_NEVER));
-		//
-		IObservableValue observeSelectionBtnExternalForceObserveWidget_1 = WidgetProperties
-				.selection().observe(btnExternalForce);
-		IObservableValue enabledExtForceZObserveValue = PojoProperties.value(
-				"enabled").observe(extForceZ);
-		bindingContext.bindValue(
-				observeSelectionBtnExternalForceObserveWidget_1,
-				enabledExtForceZObserveValue, null, new UpdateValueStrategy(
-						UpdateValueStrategy.POLICY_NEVER));
+
 		//
 		return bindingContext;
 	}

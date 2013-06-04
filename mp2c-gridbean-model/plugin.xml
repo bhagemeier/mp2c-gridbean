@@ -10,7 +10,9 @@
 
 <plugin>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
+   <extension
+         id="eu.unicore.applications.mp2c.model"
+         point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.unicore.eu/applications/mp2c/1.0"
             class="mp2c_1_0.Mp2c_1_0Package"

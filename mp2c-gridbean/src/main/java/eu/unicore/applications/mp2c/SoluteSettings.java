@@ -34,9 +34,6 @@ package eu.unicore.applications.mp2c;
 import mp2c_1_0.Mp2c_1_0Factory;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -179,51 +176,7 @@ public class SoluteSettings extends Composite {
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
-		IObservableValue observeSelectionBtnUsualLjpObserveWidget = WidgetProperties
-				.selection().observe(btnUsualLjp);
-		IObservableValue usualLjpSoluteObserveValue = PojoProperties.value(
-				"usualLjp").observe(solute);
-		bindingContext.bindValue(observeSelectionBtnUsualLjpObserveWidget,
-				usualLjpSoluteObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnShiftedLjpObserveWidget = WidgetProperties
-				.selection().observe(btnShiftedLjp);
-		IObservableValue shiftedLjpSoluteObserveValue = PojoProperties.value(
-				"shiftedLjp").observe(solute);
-		bindingContext.bindValue(observeSelectionBtnShiftedLjpObserveWidget,
-				shiftedLjpSoluteObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnLjShiftedForceObserveWidget = WidgetProperties
-				.selection().observe(btnLjShiftedForce);
-		IObservableValue shiftedForceLjpSoluteObserveValue = PojoProperties
-				.value("shiftedForceLjp").observe(solute);
-		bindingContext.bindValue(
-				observeSelectionBtnLjShiftedForceObserveWidget,
-				shiftedForceLjpSoluteObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnRadiusShiftedLjpObserveWidget = WidgetProperties
-				.selection().observe(btnRadiusShiftedLjp);
-		IObservableValue radiusShiftedLjpSoluteObserveValue = PojoProperties
-				.value("radiusShiftedLjp").observe(solute);
-		bindingContext.bindValue(
-				observeSelectionBtnRadiusShiftedLjpObserveWidget,
-				radiusShiftedLjpSoluteObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnRadiusShiftedLjShiftedObserveWidget = WidgetProperties
-				.selection().observe(btnRadiusShiftedLjShifted);
-		IObservableValue radiusShiftedLjpShiftedSoluteObserveValue = PojoProperties
-				.value("radiusShiftedLjpShifted").observe(solute);
-		bindingContext.bindValue(
-				observeSelectionBtnRadiusShiftedLjShiftedObserveWidget,
-				radiusShiftedLjpShiftedSoluteObserveValue, null, null);
-		//
-		IObservableValue observeSelectionBtnRadiusShiftedLjShiftedForceObserveWidget = WidgetProperties
-				.selection().observe(btnRadiusShiftedLjShiftedForce);
-		IObservableValue radiusShiftedLjpShiftedForceSoluteObserveValue = PojoProperties
-				.value("radiusShiftedLjpShiftedForce").observe(solute);
-		bindingContext.bindValue(
-				observeSelectionBtnRadiusShiftedLjShiftedForceObserveWidget,
-				radiusShiftedLjpShiftedForceSoluteObserveValue, null, null);
+
 		//
 		return bindingContext;
 	}
