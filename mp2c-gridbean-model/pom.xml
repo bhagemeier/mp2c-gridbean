@@ -1,0 +1,208 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>eu.unicore.applications</groupId>
+  <artifactId>mp2c-gridbean-model</artifactId>
+  <packaging>jar</packaging>
+
+  <parent>
+    <groupId>eu.unicore.applications</groupId>
+    <artifactId>mp2c-gridbean-parent</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <name>MP2C GridBean Model</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.emf</groupId>
+      <artifactId>org.eclipse.emf.ecore</artifactId>
+      <version>2.7.0-v20110605-0747</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.emf</groupId>
+      <artifactId>org.eclipse.emf.common</artifactId>
+      <version>2.7.0-v20110605-0747</version>
+    </dependency>
+  </dependencies>
+
+	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/*.*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-rcp-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>rcp-init</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>eclipse</goal>
+						</goals>
+						<configuration></configuration>
+					</execution>
+					<execution>
+						<id>rcp-build</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>ext</goal>
+						</goals>
+						<configuration></configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<pde>true</pde>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>delete-invalid-jar</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>target</directory>
+									<includes>
+										<include>*.jar</include>
+									</includes>
+									<followSymlinks>false</followSymlinks>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.groovy.maven</groupId>
+				<artifactId>gmaven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>Checking client.version and client.version.minor properties</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<source>
+								def projectVersion = project.version
+								log.info('Project version is: '+projectVersion)
+								def clientVersion =
+								project.properties['client.version']
+								String[] parts =
+								projectVersion.split('\\.')
+								if(clientVersion == null)
+								{
+								clientVersion = ""
+								for(int i = 0; i &lt; 3; i++)
+								{
+								clientVersion += parts[i]
+								if(i &lt; 2) clientVersion += "."
+								}
+								project.properties['client.version'] = clientVersion
+								}
+								log.info('Client version is: '+clientVersion)
+
+								def clientVersionMinor =
+								project.properties['client.version.minor']
+								if(clientVersionMinor == null)
+								{
+								clientVersionMinor = "."
+								for(int i = 3; i &lt; parts.length; i++)
+								{
+								clientVersionMinor += parts[i]
+								if(i &lt; parts.length-1) clientVersionMinor += "."
+								}
+								project.properties['client.version.minor'] = clientVersionMinor
+								}
+								log.info('Client minor version is: '+clientVersionMinor)
+								
+							</source>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+<!--
+  <build>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <plugins> -->
+      <!-- configure eclipse plugin for pde mode -->
+<!--      <plugin>
+        <artifactId>maven-rcp-plugin</artifactId>
+        <version>1.0.8</version>
+        <executions>
+          <execution>
+            <id>rcp-init</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>eclipse</goal>
+            </goals>
+            <configuration></configuration>
+          </execution>
+          <execution>
+            <id>rcp-build</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>ext</goal>
+            </goals>
+            <configuration></configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <pde>true</pde>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>delete-invalid-jar</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+            <configuration>
+              <filesets>
+                <fileset>
+                  <directory>target</directory>
+                  <includes>
+                    <include>*.jar</include>
+                  </includes>
+                  <followSymlinks>false</followSymlinks>
+                </fileset>
+              </filesets>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/*.*</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+-->
+</project>
